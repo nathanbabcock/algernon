@@ -1,7 +1,7 @@
 import { Physics, useBox, usePlane } from '@react-three/cannon';
 import { PointerLockControls } from '@react-three/drei';
 import React, { useEffect, useState } from "react";
-import { Canvas } from 'react-three-fiber';
+import { Canvas, useFrame } from 'react-three-fiber';
 
 function Plane(props: any) {
   // Register plane as a physics body with zero mass
@@ -29,19 +29,94 @@ function Box(props: any) {
   )
 }
 
+function SpecialBox(props: any) {
+  // Register box as a physics body with mass
+  const [ref, body] = useBox(() => ({ mass: 1, ...props }))
+
+  useFrame(() => {
+    const MOVESPEED = 10;
+    const inputVelocity = {x: 0, y: 0, z: 0};
+
+    if (props.controls.forward)
+      inputVelocity.y += MOVESPEED
+    if (props.controls.back)
+      inputVelocity.y -= MOVESPEED
+    if (props.controls.left)
+      inputVelocity.x -= MOVESPEED
+    if (props.controls.right)
+      inputVelocity.x += MOVESPEED
+
+    if (inputVelocity.x === 0 && inputVelocity.y === 0 && inputVelocity.z === 0)
+      return;
+
+    body.velocity.set(inputVelocity.x, inputVelocity.y, inputVelocity.z)
+  })
+
+  return (
+    <mesh ref={ref} castShadow receiveShadow>
+      <boxGeometry attach="geometry" args={[2, 2, 2]} />
+      <meshStandardMaterial attach="material" />
+    </mesh>
+  )
+}
+
 export default function App() {
   const [showPlane, set] = useState(true)
   // When React removes (unmounts) the upper plane after 5 sec, objects should drop ...
   // This may seem like magic, but as the plane unmounts it removes itself from cannon and that's that
   useEffect(() => void setTimeout(() => set(false), 5000), [])
-  useEffect(() => {document.addEventListener('keydown', (event: KeyboardEvent) => {
-    switch ( event.code ) {
-      case 'ArrowUp':
-      case 'KeyW':
-        console.log('move forward')
-        break;
-    }
-  })})
+
+  const controls = {
+    forward: false,
+    back: false,
+    left: false,
+    right: false,
+    jump: false,
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      switch ( event.code ) {
+        case 'ArrowUp':
+        case 'KeyW':
+          controls.forward = true;
+          break;
+        case 'ArrowDown':
+        case 'KeyS':
+          controls.back = true;
+          break;
+        case 'ArrowLeft':
+        case 'KeyA':
+          controls.left = true;
+          break;
+        case 'ArrowRight':
+        case 'KeyD':
+          controls.right = true;
+          break;
+      }
+    });
+
+    document.addEventListener('keyup', (event: KeyboardEvent) => {
+      switch ( event.code ) {
+        case 'ArrowUp':
+        case 'KeyW':
+          controls.forward = false;
+          break;
+        case 'ArrowDown':
+        case 'KeyS':
+          controls.back = false;
+          break;
+        case 'ArrowLeft':
+        case 'KeyA':
+          controls.left = false;
+          break;
+        case 'ArrowRight':
+        case 'KeyD':
+          controls.right = false;
+          break;
+      }
+    });
+  })
 
   return <Canvas
     camera={{
@@ -62,7 +137,8 @@ export default function App() {
       <Box position={[-1, 1, 8]} />
       <Box position={[-2, 2, 13]} />
       <Box position={[2, -1, 13]} />
-      {!showPlane && <Box position={[0.5, 1.0, 20]} />}
+
+      <SpecialBox position={[0.5, 1.0, 20]} controls={controls}/>
     </Physics>
   </Canvas>
 }
