@@ -12,3 +12,11 @@ body {
 #root {
   height: 100%;
 }
+
+.watermark {
+  position: fixed;
+  width: 32px;
+  bottom: 16px;
+  right: 16px;
+  opacity: 0.1;
+}
