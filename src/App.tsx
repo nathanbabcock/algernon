@@ -1,7 +1,8 @@
 import { Physics, useBox, usePlane } from '@react-three/cannon';
-import { PointerLockControls } from '@react-three/drei';
+import { OrbitControls, PointerLockControls } from '@react-three/drei';
 import React, { useEffect, useState } from "react";
-import { Canvas, useFrame } from 'react-three-fiber';
+import { Canvas, useFrame, useThree } from 'react-three-fiber';
+import { Vector3 } from 'three';
 
 function Plane(props: any) {
   // Register plane as a physics body with zero mass
@@ -23,7 +24,18 @@ function Box(props: any) {
   const [ref] = useBox(() => ({ mass: 1, ...props }))
   return (
     <mesh ref={ref} castShadow receiveShadow>
-      <boxGeometry attach="geometry" args={[2, 2, 2]} />
+      <boxGeometry attach="geometry"/>
+      <meshStandardMaterial attach="material" />
+    </mesh>
+  )
+}
+
+function Wall(props: any) {
+  // Register box as a physics body with mass
+  const [ref] = useBox(() => ({ type: 'Static', args: [4, 4, 4], ...props }))
+  return (
+    <mesh ref={ref} castShadow receiveShadow>
+      <boxGeometry attach="geometry" args={[4, 4, 4]}/>
       <meshStandardMaterial attach="material" />
     </mesh>
   )
@@ -32,6 +44,7 @@ function Box(props: any) {
 function SpecialBox(props: any) {
   // Register box as a physics body with mass
   const [ref, body] = useBox(() => ({ mass: 1, ...props }))
+  const { camera } = useThree()
 
   useFrame(() => {
     const MOVESPEED = 10;
@@ -46,6 +59,11 @@ function SpecialBox(props: any) {
     if (props.controls.right)
       inputVelocity.x += MOVESPEED
 
+    // const refPos = ref.current!.position
+    // const refRot = ref.current!.rotation
+    // camera.position.set(refPos.x, refPos.y, refPos.z)
+    // camera.rotation.set(refRot.x, refRot.y, refRot.z)
+
     if (inputVelocity.x === 0 && inputVelocity.y === 0 && inputVelocity.z === 0)
       return;
 
@@ -54,7 +72,7 @@ function SpecialBox(props: any) {
 
   return (
     <mesh ref={ref} castShadow receiveShadow>
-      <boxGeometry attach="geometry" args={[2, 2, 2]} />
+      <boxGeometry attach="geometry" />
       <meshStandardMaterial attach="material" />
     </mesh>
   )
@@ -125,7 +143,8 @@ export default function App() {
       far: 100000,
     }}
   >
-    <PointerLockControls />
+    {/* <PointerLockControls /> */}
+    <OrbitControls/>
     <ambientLight intensity={0.5} />
     <spotLight intensity={0.6} position={[30, 30, 50]} angle={0.2} penumbra={1} castShadow />
     <Physics gravity={[0, 0, -25]}>
@@ -137,6 +156,8 @@ export default function App() {
       <Box position={[-1, 1, 8]} />
       <Box position={[-2, 2, 13]} />
       <Box position={[2, -1, 13]} />
+
+      <Wall position={[-3, -3, -8]} />
 
       <SpecialBox position={[0.5, 1.0, 20]} controls={controls}/>
     </Physics>
