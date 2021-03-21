@@ -1,8 +1,7 @@
 import { Physics, useBox, usePlane } from '@react-three/cannon';
-import { OrbitControls, PointerLockControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import React, { useEffect, useState } from "react";
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
-import { Vector3 } from 'three';
 
 function Plane(props: any) {
   // Register plane as a physics body with zero mass
@@ -137,6 +136,7 @@ export default function App() {
   })
 
   return <Canvas
+    shadowMap
     camera={{
       position: [0, 0, 15],
       near: 0.1,
