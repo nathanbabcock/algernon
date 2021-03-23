@@ -1,7 +1,7 @@
 import { Physics, useBox, usePlane } from '@react-three/cannon';
-import { OrbitControls } from '@react-three/drei';
-import React, { useEffect, useState } from "react";
-import { Canvas, useFrame, useThree } from 'react-three-fiber';
+import React, { useEffect, useState } from 'react';
+import { Canvas, useFrame } from 'react-three-fiber';
+import PointerLockControls from './PointerLockControls';
 
 function Plane(props: any) {
   // Register plane as a physics body with zero mass
@@ -43,7 +43,7 @@ function Wall(props: any) {
 function SpecialBox(props: any) {
   // Register box as a physics body with mass
   const [ref, body] = useBox(() => ({ mass: 1, ...props }))
-  const { camera } = useThree()
+  // const { camera } = useThree()
 
   useFrame(() => {
     const MOVESPEED = 10;
@@ -143,8 +143,8 @@ export default function App() {
       far: 100000,
     }}
   >
-    {/* <PointerLockControls /> */}
-    <OrbitControls/>
+    
+    {/* <OrbitControls/> */}
     <ambientLight intensity={0.5} />
     <spotLight intensity={0.6} position={[30, 30, 50]} angle={0.2} penumbra={1} castShadow />
     <Physics gravity={[0, 0, -25]}>
@@ -161,5 +161,6 @@ export default function App() {
 
       <SpecialBox position={[0.5, 1.0, 20]} controls={controls}/>
     </Physics>
+    <PointerLockControls/>
   </Canvas>
 }
