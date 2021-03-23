@@ -71,7 +71,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
   }
 
   const controls = (deltaTime: number) => {
-    const speed = 25
+    const speed = 15
     if (playerOnFloor) {
       if (keyStates['KeyW'])
         playerVelocity.add( getForwardVector().multiplyScalar(speed * deltaTime))

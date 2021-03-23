@@ -21,13 +21,23 @@ export default function App() {
       {/* <OrbitControls/> */}
       <FPSControls collisionObjects={collisionObjects.current}/>
       <ambientLight intensity={0.5} />
-      <spotLight intensity={0.6} position={[30, 30, 50]} angle={0.2} penumbra={1} castShadow />
+      <spotLight
+        intensity={0.6}
+        position={[30, 30, 50]}
+        angle={0.2}
+        penumbra={1}
+        castShadow
+        shadow-mapSize-height={16384}
+        shadow-mapSize-width={16384}
+      />
       
       <group ref={collisionObjects}>
-        <Plane position={[0, 0, -100]} args={[100, 100]} receiveShadow/>
+        <Plane position={[0, 0, -10]} args={[100, 100]} receiveShadow>
+          <meshPhongMaterial attach="material" color="grey"/>
+        </Plane>
 
-        <Box position={[2, 2, -100]} args={[2, 2, 2]} castShadow receiveShadow>
-          <meshPhongMaterial color="red"/>
+        <Box position={[2, 2, -10]} args={[2, 2, 2]} castShadow receiveShadow>
+          <meshPhongMaterial attach="material" color="red"/>
         </Box>
       </group>
     </Canvas>
