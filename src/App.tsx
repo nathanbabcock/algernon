@@ -1,7 +1,7 @@
 import { Box, Plane } from '@react-three/drei'
 import React, { useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
-import { Group } from 'three'
+import { Euler, Group } from 'three'
 import FPSControls from './FPSControls'
 
 export default function App() {
@@ -14,6 +14,7 @@ export default function App() {
         position: [0, 0, 15],
         near: 0.1,
         far: 100000,
+        rotation: new Euler(0, 0, 0, 'YZX')
       }}
     >
       {/* <OrbitControls/> */}

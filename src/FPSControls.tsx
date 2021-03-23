@@ -6,7 +6,7 @@ import { Octree } from 'three/examples/jsm/math/Octree'
 
 export default function FPSControls(props: { collisionObjects?: Object3D }) {
   const GRAVITY = 10
-  const MOUSE_SENSITIVITY = 500
+  const MOUSE_SENSITIVITY = 1000
   const clock = new Clock()
   const worldOctree = new Octree()
   
@@ -26,7 +26,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
     document.addEventListener('mousedown', () => document.body.requestPointerLock())
     document.body.addEventListener('mousemove', (event: MouseEvent) => {
       if (document.pointerLockElement !== document.body) return
-      // camera.rotation.y -= event.movementX / MOUSE_SENSITIVITY
+      camera.rotation.z -= event.movementX / MOUSE_SENSITIVITY
       camera.rotation.x -= event.movementY / MOUSE_SENSITIVITY
     })
   })
@@ -63,7 +63,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
   }
 
   const getSideVector = () => {
-    camera.getWorldDirection( playerDirection )
+    camera.getWorldDirection(playerDirection)
     playerDirection.z = 0
     playerDirection.normalize()
     playerDirection.cross( camera.up )
