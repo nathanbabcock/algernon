@@ -1,7 +1,7 @@
 import { Box, Plane } from '@react-three/drei'
 import React, { useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
-import { Euler, Group } from 'three'
+import { Euler, Group, Vector3 } from 'three'
 import FPSControls from './FPSControls'
 
 export default function App() {
@@ -14,7 +14,8 @@ export default function App() {
         position: [0, 0, 15],
         near: 0.1,
         far: 100000,
-        rotation: new Euler(0, 0, 0, 'YZX')
+        rotation: new Euler(0, 0, 0, 'YZX'),
+        up: new Vector3(0, 0, 1),
       }}
     >
       {/* <OrbitControls/> */}
@@ -26,7 +27,7 @@ export default function App() {
         <Plane position={[0, 0, -100]} args={[100, 100]} receiveShadow/>
 
         <Box position={[2, 2, -100]} args={[2, 2, 2]} castShadow receiveShadow>
-          <meshLambertMaterial color="red"/>
+          <meshPhongMaterial color="red"/>
         </Box>
       </group>
     </Canvas>
