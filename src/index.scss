@@ -20,3 +20,24 @@ body {
   right: 16px;
   opacity: 0.1;
 }
+
+#pause {
+  visibility: hidden;
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  cursor: default;
+
+  &.visible {
+    visibility: visible;
+  }
+}

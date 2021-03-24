@@ -4,7 +4,7 @@ import { Clock, Object3D, Vector3 } from 'three'
 import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { Octree } from 'three/examples/jsm/math/Octree'
 
-export default function FPSControls(props: { collisionObjects?: Object3D }) {
+export default function FPSControls(props: { collisionObjects?: Object3D, setPaused: any }) {
   const GRAVITY = 15
   const MOUSE_SENSITIVITY = 1000
   const clock = new Clock()
@@ -29,17 +29,22 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
       camera.rotation.z -= event.movementX / MOUSE_SENSITIVITY
       camera.rotation.x -= event.movementY / MOUSE_SENSITIVITY
     }
+    const onPointerLockChange = () => {
+      props.setPaused(document.pointerLockElement !== document.body)
+    }
 
     document.addEventListener('mousemove', onMousemove)
     document.addEventListener('keydown', onKeydown)
     document.addEventListener('keyup', onKeyup)
     document.addEventListener('mousedown', onMouseup)
+    document.addEventListener('pointerlockchange', onPointerLockChange)
 
     return () => {
       document.removeEventListener('mousemove', onMousemove)
       document.removeEventListener('keydown', onKeydown)
       document.removeEventListener('keyup', onKeyup)
       document.removeEventListener('mousedown', onMouseup)
+      document.addEventListener('pointerlockchange', onPointerLockChange)
     }
   })
 

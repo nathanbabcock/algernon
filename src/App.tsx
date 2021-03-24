@@ -1,5 +1,5 @@
 import { Box, Plane } from '@react-three/drei'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
 import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
@@ -7,6 +7,14 @@ import FPSControls from './FPSControls'
 
 export default function App() {
   const collisionObjects = useRef<Group>()
+
+  const setPaused = (paused: boolean) => {
+    if (paused)
+      document.getElementById('pause')!.classList.add('visible')
+    else
+      document.getElementById('pause')!.classList.remove('visible')
+  }
+  setPaused(document.pointerLockElement !== document.body)
 
   return (
     <Canvas
@@ -19,7 +27,7 @@ export default function App() {
         up: new Vector3(0, 0, 1),
       }}
     >
-      <FPSControls collisionObjects={collisionObjects.current}/>
+      <FPSControls collisionObjects={collisionObjects.current} setPaused={setPaused}/>
       <ambientLight intensity={0.5} />
       <spotLight
         intensity={0.6}
