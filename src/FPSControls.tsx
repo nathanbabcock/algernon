@@ -11,7 +11,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
   const worldOctree = new Octree()
   
   const { camera, scene } = useThree()
-  setTimeout(() => worldOctree.fromGraphNode(scene), 100)
+  useEffect(() => void(setTimeout(() => worldOctree.fromGraphNode(scene), 100)))
 
   const playerCollider = new Capsule(new Vector3(0, 0, 0), new Vector3(0, 0, 1), 0.35)
   const playerVelocity = new Vector3()

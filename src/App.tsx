@@ -2,6 +2,7 @@ import { Box, Plane } from '@react-three/drei'
 import React, { useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
+import Infinite1DMaze from './components/Infinite1DMaze'
 import MazeCornerPiece from './components/MazeCornerPiece'
 import MazeStraightPiece from './components/MazeStraightPiece'
 import FPSControls from './FPSControls'
@@ -39,13 +40,11 @@ export default function App() {
           <meshPhongMaterial attach="material" color="grey"/>
         </Plane>
 
-        <Box position={[0, 0, 0]} args={[2, 2, 2]} castShadow receiveShadow>
+        <Box position={[0, 0, -0.9]} args={[2, 2, 2]} castShadow receiveShadow>
           <meshPhongMaterial attach="material" color="red"/>
         </Box>
 
-        <MazeStraightPiece/>
-        <MazeStraightPiece position={[0, 4, 0]}/>
-        <MazeCornerPiece position={[0, 8, 0]} rotation={[0, 0, -Math.PI / 2]}/>
+        <Infinite1DMaze/>
       </group>
     </Canvas>
   )

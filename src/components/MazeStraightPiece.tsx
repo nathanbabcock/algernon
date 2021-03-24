@@ -2,13 +2,15 @@ import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Frustum, Mesh } from 'three/src/Three';
+import { MazeSegment } from './Infinite1DMaze';
 
 export default function MazeStraightPiece(props: any) {
   const { camera } = useThree()
   const ref = useRef<Mesh>()
 
   useFrame(() => {
-    if (!ref.current) return;
+    const segment = props.segment as MazeSegment
+    if (!ref.current || !segment) return;
 
     const frustum = new Frustum()
     camera.updateMatrixWorld()
@@ -21,7 +23,8 @@ export default function MazeStraightPiece(props: any) {
       if (!(child as any).geometry) return;
       if (frustum.intersectsObject(child)) visibleNow = true;
     })
-    // console.log('visible?', visibleNow)
+    segment.isVisible = visibleNow
+    if (segment.isVisible) segment.hasBeenSeen = true
   })
 
   return (
