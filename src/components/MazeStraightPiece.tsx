@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Frustum, Mesh } from 'three/src/Three';
 
-export default function MazePieceStraight(props: any) {
+export default function MazeStraightPiece(props: any) {
   const { camera } = useThree()
   const ref = useRef<Mesh>()
 
@@ -26,11 +26,11 @@ export default function MazePieceStraight(props: any) {
 
   return (
     <group {...props} ref={ref}>
-      <Box position={[-1.5, 0, 1]} args={[1, 4, 2]} castShadow receiveShadow>
+      <Box position={[-1.5, 0, 1.5]} args={[1, 4, 3]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
 
-      <Box position={[1.5, 0, 1]} args={[1, 4, 2]} castShadow receiveShadow>
+      <Box position={[1.5, 0, 1.5]} args={[1, 4, 3]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
     </group>
