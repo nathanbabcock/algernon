@@ -1,11 +1,9 @@
 import { Box } from '@react-three/drei';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
-import { Frustum, Matrix4, Mesh } from 'three/src/Three';
+import { Frustum, Mesh } from 'three/src/Three';
 
 export default function MazePieceStraight(props: any) {
-  const [seen, setSeen] = useState(false)
-  const [visible, setVisible] = useState(false)
   const { camera } = useThree()
   const ref = useRef<Mesh>()
 
@@ -28,11 +26,11 @@ export default function MazePieceStraight(props: any) {
 
   return (
     <group {...props} ref={ref}>
-      <Box position={[-1.5, 0, 1]} args={[1, 2, 2]} castShadow receiveShadow>
+      <Box position={[-1.5, 0, 1]} args={[1, 4, 2]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
 
-      <Box position={[1.5, 0, 1]} args={[1, 2, 2]} castShadow receiveShadow>
+      <Box position={[1.5, 0, 1]} args={[1, 4, 2]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
     </group>

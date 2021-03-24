@@ -36,7 +36,7 @@ export default function App() {
           <meshPhongMaterial attach="material" color="grey"/>
         </Plane>
 
-        <Box position={[2, 2, 0]} args={[2, 2, 2]} castShadow receiveShadow>
+        <Box position={[0, 0, 0]} args={[2, 2, 2]} castShadow receiveShadow>
           <meshPhongMaterial attach="material" color="red"/>
         </Box>
 

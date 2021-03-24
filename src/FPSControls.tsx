@@ -21,14 +21,26 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
   const keyStates: any = {}
 
   useEffect(() => {
-    document.addEventListener('keydown', (event: KeyboardEvent) => keyStates[ event.code ] = true)
-    document.addEventListener('keyup', (event: KeyboardEvent) => keyStates[ event.code ] = false)
-    document.addEventListener('mousedown', () => document.body.requestPointerLock())
-    document.body.addEventListener('mousemove', (event: MouseEvent) => {
+    const onKeydown = (event: KeyboardEvent) => keyStates[ event.code ] = true
+    const onKeyup = (event: KeyboardEvent) => keyStates[ event.code ] = false
+    const onMouseup = () => document.body.requestPointerLock()
+    const onMousemove = (event: MouseEvent) => {
       if (document.pointerLockElement !== document.body) return
       camera.rotation.z -= event.movementX / MOUSE_SENSITIVITY
       camera.rotation.x -= event.movementY / MOUSE_SENSITIVITY
-    })
+    }
+
+    document.addEventListener('mousemove', onMousemove)
+    document.addEventListener('keydown', onKeydown)
+    document.addEventListener('keyup', onKeyup)
+    document.addEventListener('mousedown', onMouseup)
+
+    return () => {
+      document.removeEventListener('mousemove', onMousemove)
+      document.removeEventListener('keydown', onKeydown)
+      document.removeEventListener('keyup', onKeyup)
+      document.removeEventListener('mousedown', onMouseup)
+    }
   })
 
   const playerCollisions = () => {
