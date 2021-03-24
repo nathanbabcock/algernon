@@ -2,6 +2,7 @@ import { Box, Plane } from '@react-three/drei'
 import React, { useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
+import MazePieceStraight from './components/MazePieceStraight'
 import FPSControls from './FPSControls'
 
 export default function App() {
@@ -18,12 +19,11 @@ export default function App() {
         up: new Vector3(0, 0, 1),
       }}
     >
-      {/* <OrbitControls/> */}
       <FPSControls collisionObjects={collisionObjects.current}/>
       <ambientLight intensity={0.5} />
       <spotLight
         intensity={0.6}
-        position={[30, 30, 50]}
+        position={[30, 45, 50]}
         angle={0.2}
         penumbra={1}
         castShadow
@@ -32,13 +32,15 @@ export default function App() {
       />
       
       <group ref={collisionObjects}>
-        <Plane position={[0, 0, -10]} args={[100, 100]} receiveShadow>
+        <Plane position={[0, 0, 0]} args={[1000, 1000]} receiveShadow>
           <meshPhongMaterial attach="material" color="grey"/>
         </Plane>
 
-        <Box position={[2, 2, -10]} args={[2, 2, 2]} castShadow receiveShadow>
+        <Box position={[2, 2, 0]} args={[2, 2, 2]} castShadow receiveShadow>
           <meshPhongMaterial attach="material" color="red"/>
         </Box>
+
+        <MazePieceStraight/>
       </group>
     </Canvas>
   )

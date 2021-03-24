@@ -5,7 +5,7 @@ import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { Octree } from 'three/examples/jsm/math/Octree'
 
 export default function FPSControls(props: { collisionObjects?: Object3D }) {
-  const GRAVITY = 10
+  const GRAVITY = 15
   const MOUSE_SENSITIVITY = 1000
   const clock = new Clock()
   const worldOctree = new Octree()
@@ -13,7 +13,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
   const { camera, scene } = useThree()
   setTimeout(() => worldOctree.fromGraphNode(scene), 100)
 
-  const playerCollider = new Capsule(new Vector3(0, 0.35, 0), new Vector3(0, 1, 0), 0.35)
+  const playerCollider = new Capsule(new Vector3(0, 0, 0), new Vector3(0, 0, 1), 0.35)
   const playerVelocity = new Vector3()
   const playerDirection = new Vector3()
 
@@ -82,7 +82,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D }) {
       if (keyStates['KeyD'])
         playerVelocity.add(getSideVector().multiplyScalar(speed * deltaTime))
       if (keyStates['Space']) 
-        playerVelocity.z = 15
+        playerVelocity.z = 7.5
     }
   }  
 
