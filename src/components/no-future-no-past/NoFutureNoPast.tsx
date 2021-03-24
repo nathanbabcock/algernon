@@ -7,26 +7,26 @@ import MazeDeadEnd from '../maze-pieces/MazeDeadEnd';
 import MazeStraight from '../maze-pieces/MazeStraight';
 
 export default function NoFutureNoPast(props: any) {
-  const noFuture: MazeSegment = {
+  const [noFuture] = useState({
     id: 1,
     type: MazeDeadEnd,
     position: new Vector3(8, 8, 0),
     rotation: new Euler(0, 0, -Math.PI/2),
-  } as MazeSegment
+  } as MazeSegment)
 
-  const noPast: MazeSegment = {
+  const [noPast] = useState({
     id: -1,
     type: MazeDeadEnd,
     position: new Vector3(0, 8, 0),
     rotation: new Euler(0, 0, Math.PI/2),
-  } as MazeSegment
+  } as MazeSegment)
 
-  const exit: MazeSegment = {
+  const [exit] = useState({
     id: 0,
     type: MazeStraight,
     position: new Vector3(8, 8, 0),
     rotation: new Euler(0, 0, -Math.PI/2),
-  } as MazeSegment
+  } as MazeSegment)
 
   const [maze, setMaze] = useState([
     {
@@ -72,9 +72,7 @@ export default function NoFutureNoPast(props: any) {
       console.log('NO FUTURE')
     }
 
-    console.log(maze[0], noPast, maze[0] === noPast)
-
-    if (noPast.hasBeenSeen && !noFuture.isVisible) {
+    if (noPast.hasBeenSeen && !exit.hasBeenSeen && !noFuture.isVisible) {
       setMaze([
         noPast,
         maze[1],
@@ -87,6 +85,7 @@ export default function NoFutureNoPast(props: any) {
   return (
     <group {...props}>
       {maze.map(segment => {
+        if (!segment) return null
         const MazePiece = segment.type
         return <MazePiece position={segment.position} rotation={segment.rotation} segment={segment} key={segment.id}/>
       })}

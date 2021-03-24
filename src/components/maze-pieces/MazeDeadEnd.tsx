@@ -8,8 +8,6 @@ export default function MazeDeadEnd(props: any) {
   const { camera } = useThree()
   const ref = useRef<Group>()
 
-  console.log('dead end segment', props.segment)
-
   useFrame(() => {
     const segment = props.segment as MazeSegment
     if (!ref.current || !segment) return;
