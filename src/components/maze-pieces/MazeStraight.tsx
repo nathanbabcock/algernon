@@ -1,12 +1,12 @@
 import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
-import { Frustum, Mesh } from 'three/src/Three';
-import { MazeSegment } from './Infinite1DMaze';
+import { Frustum, Group } from 'three';
+import { MazeSegment } from '../Infinite1DMaze';
 
-export default function MazeStraightPiece(props: any) {
+export default function MazeStraight(props: any) {
   const { camera } = useThree()
-  const ref = useRef<Mesh>()
+  const ref = useRef<Group>()
 
   useFrame(() => {
     const segment = props.segment as MazeSegment

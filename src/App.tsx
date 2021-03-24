@@ -2,15 +2,11 @@ import { Box, Plane } from '@react-three/drei'
 import React, { useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
-import Infinite1DMaze from './components/Infinite1DMaze'
-import MazeCornerPiece from './components/MazeCornerPiece'
-import MazeStraightPiece from './components/MazeStraightPiece'
+import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
 import FPSControls from './FPSControls'
 
 export default function App() {
   const collisionObjects = useRef<Group>()
-
-  const test=<div></div>
 
   return (
     <Canvas
@@ -44,7 +40,7 @@ export default function App() {
           <meshPhongMaterial attach="material" color="red"/>
         </Box>
 
-        <Infinite1DMaze/>
+        <NoFutureNoPast/>
       </group>
     </Canvas>
   )

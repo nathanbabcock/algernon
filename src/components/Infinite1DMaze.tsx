@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Vector2, Vector3 } from 'three';
-import MazeCornerPiece from './MazeCornerPiece';
-import MazeStraightPiece from './MazeStraightPiece';
+import MazeCorner from './maze-pieces/MazeCorner';
+import MazeDeadEnd from './maze-pieces/MazeDeadEnd';
+import MazeStraight from './maze-pieces/MazeStraight';
 
 export type MazeSegment = {
-  type: typeof MazeStraightPiece | typeof MazeCornerPiece,
+  id: number,
+  type: typeof MazeStraight | typeof MazeCorner | typeof MazeDeadEnd,
   rotation: Euler,
   position: Vector3,
   isVisible: boolean,
@@ -19,12 +22,12 @@ export const getConnections = (segment?: MazeSegment) => {
   if (!segment) return [];
 
   let connections;
-  if (segment.type === MazeStraightPiece) {
+  if (segment.type === MazeStraight) {
     connections = [
       new Vector2(0, 1),
       new Vector2(0, -1),
     ]
-  } else if (segment.type === MazeCornerPiece) {
+  } else if (segment.type === MazeCorner) {
     connections = [
       new Vector2(0, 1),
       new Vector2(1, 0),
@@ -64,7 +67,7 @@ export const addMazeSegment = (segment: MazeSegment, direction: Direction) => {
 export default function Infinite1DMaze(props: any) {
   const [maze, setMaze] = useState([
     {
-      type: MazeStraightPiece,
+      type: MazeStraight,
       rotation: new Euler(0, 0, Math.PI / 2),
       position: new Vector3(0, 0, 0),
       isVisible: false,
