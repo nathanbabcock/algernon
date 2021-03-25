@@ -10,6 +10,9 @@ type FPSControlsProps = {
   setPaused: any
 }
 
+const PLAYER_HEIGHT = 1
+const PLAYER_CROUCH_HEIGHT = 0.5
+
 export default function FPSControls(props: FPSControlsProps) {
   const GRAVITY = 15
   const MOUSE_SENSITIVITY = 1000
@@ -18,7 +21,7 @@ export default function FPSControls(props: FPSControlsProps) {
   const { camera } = useThree()
   useEffect(() => void(setTimeout(() => props.requestCollisionUpdate()), 100))
 
-  const playerCollider = new Capsule(new Vector3(0, 0, 0), new Vector3(0, 0, 1), 0.35)
+  const playerCollider = new Capsule(new Vector3(0, 0, 0), new Vector3(0, 0, PLAYER_HEIGHT), 0.35)
   const playerVelocity = new Vector3()
   const playerDirection = new Vector3(0, 0, 0)
 
@@ -101,16 +104,25 @@ export default function FPSControls(props: FPSControlsProps) {
   }
 
   const controls = (deltaTime: number) => {
+    const crouch = keyStates['ControlLeft'] || keyStates['KeyC']
+    if (crouch) {
+      playerCollider.end.setZ(playerCollider.start.z + PLAYER_CROUCH_HEIGHT)
+    } else {
+      playerCollider.end.setZ(playerCollider.start.z + PLAYER_HEIGHT)
+    }
+    const walk = keyStates['ShiftLeft']
+    const speedMultiplier = crouch || walk ? 0.25 : 1
+
     const speed = 15
     if (playerOnFloor) {
       if (keyStates['KeyW'])
-        playerVelocity.add( getForwardVector().multiplyScalar(speed * deltaTime))
+        playerVelocity.add( getForwardVector().multiplyScalar(speed * deltaTime * speedMultiplier))
       if (keyStates['KeyS'])
-        playerVelocity.add( getForwardVector().multiplyScalar(-speed * deltaTime))
+        playerVelocity.add( getForwardVector().multiplyScalar(-speed * deltaTime * speedMultiplier))
       if (keyStates['KeyA'])
-        playerVelocity.add( getSideVector().multiplyScalar(-speed * deltaTime))
+        playerVelocity.add( getSideVector().multiplyScalar(-speed * deltaTime * speedMultiplier))
       if (keyStates['KeyD'])
-        playerVelocity.add(getSideVector().multiplyScalar(speed * deltaTime))
+        playerVelocity.add(getSideVector().multiplyScalar(speed * deltaTime * speedMultiplier))
       if (keyStates['Space']) 
         playerVelocity.z = 7.5
     }
