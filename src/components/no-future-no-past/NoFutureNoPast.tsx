@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Vector3 } from 'three';
-import { MazeSegment } from '../Infinite1DMaze';
+import { MAZEPIECE_HALFWIDTH, MazeSegment } from '../Infinite1DMaze';
 import MazeCorner from '../maze-pieces/MazeCorner';
 import MazeDeadEnd from '../maze-pieces/MazeDeadEnd';
 import MazeStraight from '../maze-pieces/MazeStraight';
 
-export default function NoFutureNoPast(props: any) {
+export type NoFutureNoPastProps = {
+  requestCollisionUpdate: any
+}
+
+export default function NoFutureNoPast(props: NoFutureNoPastProps) {
+  const [entrance] = useState({
+    id: -2,
+    type: MazeStraight,
+    position: new Vector3(0, 0, 0),
+    rotation: new Euler(0, 0, 0),
+  } as MazeSegment)
+
   const [noFuture] = useState({
     id: 1,
     type: MazeDeadEnd,
@@ -17,24 +28,19 @@ export default function NoFutureNoPast(props: any) {
   const [noPast] = useState({
     id: -1,
     type: MazeDeadEnd,
-    position: new Vector3(0, 8, 0),
-    rotation: new Euler(0, 0, Math.PI/2),
+    position: new Vector3(0, 0, 0),
+    rotation: new Euler(0, 0, -Math.PI),
   } as MazeSegment)
 
   const [exit] = useState({
-    id: 0,
+    id: 2,
     type: MazeStraight,
     position: new Vector3(8, 8, 0),
     rotation: new Euler(0, 0, -Math.PI/2),
   } as MazeSegment)
 
   const [maze, setMaze] = useState([
-    {
-      id: 2,
-      type: MazeStraight,
-      position: new Vector3(0, 0, 0),
-      rotation: new Euler(0, 0, 0),
-    },
+    entrance,
     {
       id: 3,
       type: MazeStraight,
@@ -59,26 +65,75 @@ export default function NoFutureNoPast(props: any) {
   const { camera } = useThree()
 
   useFrame(() => {
-    // Recombobulate the maze
-    if (camera.position.clone().sub(noFuture.position).length() < 3 && noFuture.hasBeenSeen && !maze[2].isVisible) {
-      setMaze([
-        // maze[0],
-        // maze[1],
-        noPast,
-        maze[3],
-        maze[4],
-      ])
-      noFuture.isVisible = false
-      console.log('NO FUTURE')
+    const getCurrentSegment = () => {
+      let currentMazeSegment = null
+      maze.forEach(segment => {
+        if ( camera.position.x <= segment.position.x + MAZEPIECE_HALFWIDTH
+          && camera.position.x >= segment.position.x - MAZEPIECE_HALFWIDTH
+          && camera.position.y <= segment.position.y + MAZEPIECE_HALFWIDTH
+          && camera.position.y >= segment.position.y - MAZEPIECE_HALFWIDTH
+        ) {
+          currentMazeSegment = segment
+        }
+      })
+      return currentMazeSegment
     }
+    const currentSegment = getCurrentSegment()
 
-    if (noPast.hasBeenSeen && !exit.hasBeenSeen && !noFuture.isVisible) {
+    // Recombobulate the maze
+    if (noFuture.hasBeenSeen && !entrance.isVisible && !maze.includes(noPast) && currentSegment) {
       setMaze([
         noPast,
         maze[1],
+        maze[2],
+        maze[3],
+        noFuture,
+      ])
+      noFuture.isVisible = false
+      console.log('NO FUTURE')
+      props.requestCollisionUpdate()
+    }
+
+    if (noPast.hasBeenSeen && !noFuture.isVisible && !maze.includes(exit)) {
+      setMaze([
+        noPast,
+        maze[1],
+        maze[2],
+        maze[3],
         exit,
       ])
       console.log('NO PAST')
+      props.requestCollisionUpdate()
+      return
+    }
+
+    if (noPast.hasBeenSeen && !noFuture.isVisible && !maze.includes(exit)) {
+      setMaze([
+        noPast,
+        maze[1],
+        maze[2],
+        maze[3],
+        exit,
+      ])
+      console.log('NO PAST')
+      props.requestCollisionUpdate()
+      return
+    }
+
+    if (!currentSegment && noPast.hasBeenSeen && !exit.isVisible && !maze.includes(entrance)) {
+      setMaze([
+        entrance,
+        maze[1],
+        maze[2],
+        maze[3],
+        noFuture,
+      ])
+      entrance.hasBeenSeen = false
+      exit.hasBeenSeen = false
+      noFuture.hasBeenSeen = false
+      noPast.hasBeenSeen = false
+      props.requestCollisionUpdate()
+      return
     }
   })
 

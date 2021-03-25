@@ -1,12 +1,21 @@
 import { Box, Plane } from '@react-three/drei'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
+import { Octree } from 'three/examples/jsm/math/Octree'
 import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
 import FPSControls from './FPSControls'
 
 export default function App() {
   const collisionObjects = useRef<Group>()
+
+  const octree = useRef<Octree>(new Octree())
+  const requestCollisionUpdate = () => {
+    setTimeout(() => {
+      octree.current = new Octree();
+      octree.current.fromGraphNode(collisionObjects.current!)
+    }, 100);
+  }
 
   const setPaused = (paused: boolean) => {
     if (paused)
@@ -27,7 +36,7 @@ export default function App() {
         up: new Vector3(0, 0, 1),
       }}
     >
-      <FPSControls collisionObjects={collisionObjects.current} setPaused={setPaused}/>
+      <FPSControls octree={octree} requestCollisionUpdate={requestCollisionUpdate} setPaused={setPaused}/>
       <ambientLight intensity={0.5} />
       <spotLight
         intensity={0.6}
@@ -48,7 +57,7 @@ export default function App() {
           <meshPhongMaterial attach="material" color="red"/>
         </Box>
 
-        <NoFutureNoPast/>
+        <NoFutureNoPast requestCollisionUpdate={requestCollisionUpdate}/>
       </group>
     </Canvas>
   )

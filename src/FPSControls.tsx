@@ -1,17 +1,22 @@
 import { useEffect } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
-import { Clock, Object3D, Vector3 } from 'three'
+import { Clock, Group, Vector3 } from 'three'
 import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { Octree } from 'three/examples/jsm/math/Octree'
 
-export default function FPSControls(props: { collisionObjects?: Object3D, setPaused: any }) {
+type FPSControlsProps = {
+  octree: React.MutableRefObject<Octree>,
+  requestCollisionUpdate: any,
+  setPaused: any
+}
+
+export default function FPSControls(props: FPSControlsProps) {
   const GRAVITY = 15
   const MOUSE_SENSITIVITY = 1000
   const clock = new Clock()
-  const worldOctree = new Octree()
   
-  const { camera, scene } = useThree()
-  useEffect(() => void(setTimeout(() => worldOctree.fromGraphNode(scene), 100)))
+  const { camera } = useThree()
+  useEffect(() => void(setTimeout(() => props.requestCollisionUpdate()), 100))
 
   const playerCollider = new Capsule(new Vector3(0, 0, 0), new Vector3(0, 0, 1), 0.35)
   const playerVelocity = new Vector3()
@@ -49,7 +54,7 @@ export default function FPSControls(props: { collisionObjects?: Object3D, setPau
   })
 
   const playerCollisions = () => {
-    const result = worldOctree.capsuleIntersect(playerCollider)
+    const result = props.octree.current.capsuleIntersect(playerCollider)
     playerOnFloor = false
     if (!result) return
     playerOnFloor = result.normal.z > 0
