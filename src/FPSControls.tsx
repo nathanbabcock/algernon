@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
-import { Clock, Group, Vector3 } from 'three'
+import { Clock, Vector3 } from 'three'
 import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { Octree } from 'three/examples/jsm/math/Octree'
 
@@ -20,12 +20,15 @@ export default function FPSControls(props: FPSControlsProps) {
 
   const playerCollider = new Capsule(new Vector3(0, 0, 0), new Vector3(0, 0, 1), 0.35)
   const playerVelocity = new Vector3()
-  const playerDirection = new Vector3()
+  const playerDirection = new Vector3(0, 0, 0)
 
   let playerOnFloor = false
   const keyStates: any = {}
 
   useEffect(() => {
+    camera.rotation.x = Math.PI/2
+    camera.rotation.z = 0
+
     const onKeydown = (event: KeyboardEvent) => keyStates[ event.code ] = true
     const onKeyup = (event: KeyboardEvent) => keyStates[ event.code ] = false
     const onMouseup = () => document.body.requestPointerLock()
@@ -35,7 +38,12 @@ export default function FPSControls(props: FPSControlsProps) {
       camera.rotation.x -= event.movementY / MOUSE_SENSITIVITY
     }
     const onPointerLockChange = () => {
-      props.setPaused(document.pointerLockElement !== document.body)
+      const paused = document.pointerLockElement !== document.body
+      props.setPaused(paused)
+      // if (!paused)
+      //   document.body.requestFullscreen()
+      // else
+      //   document.exitFullscreen()
     }
 
     document.addEventListener('mousemove', onMousemove)

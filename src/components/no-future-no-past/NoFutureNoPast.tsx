@@ -1,4 +1,3 @@
-import { Text } from '@react-three/drei';
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Vector3 } from 'three';
@@ -8,11 +7,7 @@ import MazeStraight from '../maze-pieces/MazeStraight';
 import NoFuture from './NoFuture';
 import NoPast from './NoPast';
 
-export type NoFutureNoPastProps = {
-  requestCollisionUpdate: any
-}
-
-export default function NoFutureNoPast(props: NoFutureNoPastProps) {
+export default function NoFutureNoPast(props: any) {
   const [entrance] = useState({
     id: -2,
     type: MazeStraight,

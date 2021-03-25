@@ -1,4 +1,4 @@
-import { Box, Plane } from '@react-three/drei'
+import { Plane } from '@react-three/drei'
 import React, { Suspense, useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
@@ -58,7 +58,7 @@ export default function App() {
         </Box> */}
 
         <Suspense fallback={null}>
-          <NoFutureNoPast requestCollisionUpdate={requestCollisionUpdate}/>
+          <NoFutureNoPast position={[0, 4, 0]} requestCollisionUpdate={requestCollisionUpdate}/>
         </Suspense>
       </group>
     </Canvas>
