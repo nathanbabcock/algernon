@@ -2,7 +2,7 @@ import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Frustum, Group } from 'three';
-import { MazeSegment } from '../Infinite1DMaze';
+import { MAZEPIECE_HEIGHT, MazeSegment } from '../Infinite1DMaze';
 
 export default function MazeCorner(props: any) {
   const { camera } = useThree()
@@ -29,15 +29,15 @@ export default function MazeCorner(props: any) {
 
   return (
     <group {...props} ref={ref}>
-      <Box position={[-1.5, 0, 1.5]} args={[1, 4, 3]} castShadow receiveShadow>
+      <Box position={[-1.5, 0, MAZEPIECE_HEIGHT/2]} args={[1, 4, MAZEPIECE_HEIGHT]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
 
-      <Box position={[0, -1.5, 1.5]} args={[1, 4, 3]} rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
+      <Box position={[0, -1.5, MAZEPIECE_HEIGHT/2]} args={[1, 4, MAZEPIECE_HEIGHT]} rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
 
-      <Box position={[1.5, 1.5, 1.5]} args={[1, 1, 3]} rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
+      <Box position={[1.5, 1.5, MAZEPIECE_HEIGHT/2]} args={[1, 1, MAZEPIECE_HEIGHT]} rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
         <meshPhongMaterial attach="material" color="white"/>
       </Box>
     </group>

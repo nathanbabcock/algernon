@@ -1,5 +1,5 @@
 import { Box, Plane } from '@react-three/drei'
-import React, { useRef } from 'react'
+import React, { Suspense, useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
 import { Octree } from 'three/examples/jsm/math/Octree'
@@ -53,11 +53,13 @@ export default function App() {
           <meshPhongMaterial attach="material" color="grey"/>
         </Plane>
 
-        <Box position={[0, 0, -0.9]} args={[2, 2, 2]} castShadow receiveShadow>
+        {/* <Box position={[0, 0, -0.9]} args={[2, 2, 2]} castShadow receiveShadow>
           <meshPhongMaterial attach="material" color="red"/>
-        </Box>
+        </Box> */}
 
-        <NoFutureNoPast requestCollisionUpdate={requestCollisionUpdate}/>
+        <Suspense fallback={null}>
+          <NoFutureNoPast requestCollisionUpdate={requestCollisionUpdate}/>
+        </Suspense>
       </group>
     </Canvas>
   )

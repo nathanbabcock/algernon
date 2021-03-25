@@ -1,10 +1,12 @@
+import { Text } from '@react-three/drei';
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Vector3 } from 'three';
 import { MAZEPIECE_HALFWIDTH, MazeSegment } from '../Infinite1DMaze';
 import MazeCorner from '../maze-pieces/MazeCorner';
-import MazeDeadEnd from '../maze-pieces/MazeDeadEnd';
 import MazeStraight from '../maze-pieces/MazeStraight';
+import NoFuture from './NoFuture';
+import NoPast from './NoPast';
 
 export type NoFutureNoPastProps = {
   requestCollisionUpdate: any
@@ -20,14 +22,14 @@ export default function NoFutureNoPast(props: NoFutureNoPastProps) {
 
   const [noFuture] = useState({
     id: 1,
-    type: MazeDeadEnd,
+    type: NoFuture,
     position: new Vector3(8, 8, 0),
     rotation: new Euler(0, 0, -Math.PI/2),
   } as MazeSegment)
 
   const [noPast] = useState({
     id: -1,
-    type: MazeDeadEnd,
+    type: NoPast,
     position: new Vector3(0, 0, 0),
     rotation: new Euler(0, 0, -Math.PI),
   } as MazeSegment)
@@ -120,7 +122,7 @@ export default function NoFutureNoPast(props: NoFutureNoPastProps) {
       return
     }
 
-    if (!currentSegment && noPast.hasBeenSeen && !exit.isVisible && !maze.includes(entrance)) {
+    if (!currentSegment && noPast.hasBeenSeen && !exit.isVisible && !noPast.isVisible && !maze.includes(entrance)) {
       setMaze([
         entrance,
         maze[1],

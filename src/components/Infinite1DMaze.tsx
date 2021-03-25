@@ -5,10 +5,12 @@ import { Euler, Vector2, Vector3 } from 'three';
 import MazeCorner from './maze-pieces/MazeCorner';
 import MazeDeadEnd from './maze-pieces/MazeDeadEnd';
 import MazeStraight from './maze-pieces/MazeStraight';
+import NoFuture from './no-future-no-past/NoFuture';
+import NoPast from './no-future-no-past/NoPast';
 
 export type MazeSegment = {
   id: number,
-  type: typeof MazeStraight | typeof MazeCorner | typeof MazeDeadEnd,
+  type: typeof MazeStraight | typeof MazeCorner | typeof MazeDeadEnd | typeof NoFuture | typeof NoPast,
   rotation: Euler,
   position: Vector3,
   isVisible: boolean,
@@ -17,6 +19,7 @@ export type MazeSegment = {
 };
 
 export const MAZEPIECE_HALFWIDTH = 2
+export const MAZEPIECE_HEIGHT = 2
 
 export const getConnections = (segment?: MazeSegment) => {
   if (!segment) return [];
