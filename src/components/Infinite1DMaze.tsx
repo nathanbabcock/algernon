@@ -1,71 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
-import { Euler, Vector2, Vector3 } from 'three';
-import MazeCorner from './maze-pieces/MazeCorner';
-import MazeDeadEnd from './maze-pieces/MazeDeadEnd';
+import { Euler, Vector3 } from 'three';
+import { MAZEPIECE_HALFWIDTH, MazeSegment } from './maze-pieces/MazeLibrary';
 import MazeStraight from './maze-pieces/MazeStraight';
-import NoFuture from './no-future-no-past/NoFuture';
-import NoPast from './no-future-no-past/NoPast';
-
-export type MazeSegment = {
-  id: number,
-  type: typeof MazeStraight | typeof MazeCorner | typeof MazeDeadEnd | typeof NoFuture | typeof NoPast,
-  rotation: Euler,
-  position: Vector3,
-  isVisible: boolean,
-  hasBeenSeen: boolean,
-  openDirections: string,
-};
-
-export const MAZEPIECE_HALFWIDTH = 2
-export const MAZEPIECE_HEIGHT = 2
-
-export const getConnections = (segment?: MazeSegment) => {
-  if (!segment) return [];
-
-  let connections;
-  if (segment.type === MazeStraight) {
-    connections = [
-      new Vector2(0, 1),
-      new Vector2(0, -1),
-    ]
-  } else if (segment.type === MazeCorner) {
-    connections = [
-      new Vector2(0, 1),
-      new Vector2(1, 0),
-    ]
-  } else {
-    throw new Error(`unknown segment type ${segment.type}`)
-  }
-
-  connections.forEach(vector => {
-    vector.rotateAround(new Vector2(0, 0), segment.rotation.z).roundToZero()
-  })
-
-  return connections
-}
-
-/**
- * @param segment the segment to attach the new one to
- * @param prevSegment the segment that connects the first param to the rest of the maze
- * @returns the added segment, or null if not possible
- */
-export const addMazeSegmentOld = (segment: MazeSegment, prevSegment?: MazeSegment): MazeSegment | null => {
-  const segmentConnectionPoints = getConnections(segment)
-  const previousConnectionPoints = getConnections(prevSegment)
-  const openConnectionPoints = segmentConnectionPoints.filter(connection => 
-    !previousConnectionPoints.find(prevConnection => prevConnection.equals(connection.clone().multiply(new Vector2(1, -1)))
-      || prevConnection.equals(connection.clone().multiply(new Vector2(-1, 1))))
-  )
-  console.log(openConnectionPoints)
-  return null
-}
-
-export type Direction = 'n' | 's' | 'e' | 'w'
-export const addMazeSegment = (segment: MazeSegment, direction: Direction) => {
-  
-}
 
 export default function Infinite1DMaze(props: any) {
   const [maze, setMaze] = useState([
@@ -92,8 +30,6 @@ export default function Infinite1DMaze(props: any) {
     //   hasBeenSeen: false,
     // }
   ] as MazeSegment[]);
-
-  console.log(addMazeSegment(maze[0], 'n'))
 
   const { camera } = useThree()
 
