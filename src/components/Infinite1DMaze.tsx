@@ -1,60 +1,36 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
-import { useFrame, useThree } from 'react-three-fiber';
+import React, { useEffect, useState } from 'react';
+import { useFrame } from 'react-three-fiber';
 import { Euler, Vector3 } from 'three';
-import { MAZEPIECE_HALFWIDTH, MazeSegment } from './maze-pieces/MazeLibrary';
-import MazeStraight from './maze-pieces/MazeStraight';
+import getSegmentComponent from './maze-pieces/get-segment-component';
+import { getConnections, getPossibleSegments, MazeSegment } from './maze-pieces/MazeLibrary';
 
 export default function Infinite1DMaze(props: any) {
+
+  const straight = {
+    type: 'straight',
+    rotation: new Euler(0, 0, Math.PI / 2),
+    position: new Vector3(0, 0, 0),
+  } as MazeSegment
+
+  const connections = getConnections(straight)
+  const segment = getPossibleSegments(connections[0])[1]
+  const segment2 = getPossibleSegments(connections[1])[0]
+
   const [maze, setMaze] = useState([
-    {
-      type: MazeStraight,
-      rotation: new Euler(0, 0, Math.PI / 2),
-      position: new Vector3(0, 0, 0),
-      isVisible: false,
-      hasBeenSeen: false,
-      openDirections: 'ns'
-    },
-    // {
-    //   type: MazeStraightPiece,
-    //   rotation: new Euler(0, 0, 0),
-    //   position: new Vector3(0, 4, 0),
-    //   isVisible: false,
-    //   hasBeenSeen: false,
-    // },
-    // {
-    //   type: MazeCornerPiece,
-    //   rotation: new Euler(0, 0, -Math.PI / 2),
-    //   position: new Vector3(0, 8, 0),
-    //   isVisible: false,
-    //   hasBeenSeen: false,
-    // }
+    straight,
+    segment,
+    segment2,
   ] as MazeSegment[]);
 
-  const { camera } = useThree()
-
-  useFrame(() => {
-    // Recombobulate the maze
-    const getCurrentSegment = () => {
-      let currentMazeSegment = null
-      maze.forEach(segment => {
-        if ( camera.position.x <= segment.position.x + MAZEPIECE_HALFWIDTH
-          && camera.position.x >= segment.position.x - MAZEPIECE_HALFWIDTH
-          && camera.position.y <= segment.position.y + MAZEPIECE_HALFWIDTH
-          && camera.position.y >= segment.position.y - MAZEPIECE_HALFWIDTH
-        ) {
-          currentMazeSegment = segment
-        }
-      })
-      return currentMazeSegment
-    }
-  })
+  useFrame(() => {})
 
   return (
     <group {...props}>
       {maze.map(segment => {
-        const MazePiece = segment.type
-        return <MazePiece position={segment.position} rotation={segment.rotation} segment={segment}/>
+        if (!segment) return null
+        const MazePiece = getSegmentComponent(segment.type)
+        return <MazePiece position={segment.position} rotation={segment.rotation} segment={segment} key={segment.id}/>
       })}
     </group>  
   )

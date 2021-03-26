@@ -2,7 +2,7 @@ import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Frustum, Group } from 'three';
-import { MAZEPIECE_HEIGHT, MazeSegment } from '../Infinite1DMaze';
+import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary';
 
 export default function MazeStraight(props: any) {
   const { camera } = useThree()

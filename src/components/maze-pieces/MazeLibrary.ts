@@ -58,7 +58,7 @@ export function getPossibleSegments(givenConnection: MazeConnection): MazeSegmen
       )
       
       const rotatedPosition = connection.position.clone().applyQuaternion(quaternion)
-      const translatedPosition = givenConnection.position.clone().sub(rotatedPosition)
+      const translatedPosition = givenConnection.position.clone().add(rotatedPosition)
 
       const segment = {
         type,

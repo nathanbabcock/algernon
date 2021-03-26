@@ -1,37 +1,34 @@
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Vector3 } from 'three';
-import { MAZEPIECE_HALFWIDTH, MazeSegment } from '../Infinite1DMaze';
-import MazeCorner from '../maze-pieces/MazeCorner';
-import MazeStraight from '../maze-pieces/MazeStraight';
-import NoFuture from './NoFuture';
-import NoPast from './NoPast';
+import getSegmentComponent from '../maze-pieces/get-segment-component';
+import { MAZEPIECE_HALFWIDTH, MazeSegment } from '../maze-pieces/MazeLibrary';
 
 export default function NoFutureNoPast(props: any) {
   const [entrance] = useState({
     id: -2,
-    type: MazeStraight,
+    type: 'straight',
     position: new Vector3(0, 0, 0),
     rotation: new Euler(0, 0, 0),
   } as MazeSegment)
 
   const [noFuture] = useState({
     id: 1,
-    type: NoFuture,
+    type: 'no-future',
     position: new Vector3(8, 8, 0),
     rotation: new Euler(0, 0, -Math.PI/2),
   } as MazeSegment)
 
   const [noPast] = useState({
     id: -1,
-    type: NoPast,
+    type: 'no-past',
     position: new Vector3(0, 0, 0),
     rotation: new Euler(0, 0, -Math.PI),
   } as MazeSegment)
 
   const [exit] = useState({
     id: 2,
-    type: MazeStraight,
+    type: 'straight',
     position: new Vector3(8, 8, 0),
     rotation: new Euler(0, 0, -Math.PI/2),
   } as MazeSegment)
@@ -40,19 +37,19 @@ export default function NoFutureNoPast(props: any) {
     entrance,
     {
       id: 3,
-      type: MazeStraight,
+      type: 'straight',
       position: new Vector3(0, 4, 0),
       rotation: new Euler(0, 0, 0),
     },
     {
       id: 4,
-      type: MazeCorner,
+      type: 'corner',
       position: new Vector3(0, 8, 0),
       rotation: new Euler(0, 0, -Math.PI/2),
     },
     {
       id: 5,
-      type: MazeStraight,
+      type: 'straight',
       position: new Vector3(4, 8, 0),
       rotation: new Euler(0, 0, -Math.PI/2),
     },
@@ -138,7 +135,7 @@ export default function NoFutureNoPast(props: any) {
     <group {...props}>
       {maze.map(segment => {
         if (!segment) return null
-        const MazePiece = segment.type
+        const MazePiece = getSegmentComponent(segment.type)
         return <MazePiece position={segment.position} rotation={segment.rotation} segment={segment} key={segment.id}/>
       })}
     </group>  

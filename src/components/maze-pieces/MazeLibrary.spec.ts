@@ -1,6 +1,6 @@
 import '@testing-library/react'
 import { Euler, Vector3 } from 'three'
-import {  addSegment, getConnections, getPossibleSegments, MazeConnection, MazeConnectionConfig, MAZEPIECE_HALFWIDTH, MazeSegment } from './MazeLibrary'
+import { getConnections, getPossibleSegments, MazeConnection, MazeConnectionConfig, MAZEPIECE_HALFWIDTH, MazeSegment } from './MazeLibrary'
 
 describe('MazeLibrary', () => {
   it('has a config for maze connections', () => {
@@ -94,5 +94,29 @@ describe('MazeLibrary', () => {
     const segments = getPossibleSegments(connection)
     expect(Math.abs(segments[0].position.x)).toBeCloseTo(MAZEPIECE_HALFWIDTH)
     expect(Math.abs(segments[1].position.x)).toBeCloseTo(MAZEPIECE_HALFWIDTH)
+  })
+
+  it('can add a new segment, given an existing segment', () => {
+    const segment = {
+      type: 'straight',
+      position: new Vector3(),
+      rotation: new Euler()
+    } as MazeSegment
+    const connection = getConnections(segment)[0]
+    const newSegment = getPossibleSegments(connection)[0]
+
+    expect(newSegment.position.clone().sub(segment.position).length()).toBeCloseTo(MAZEPIECE_HALFWIDTH*2)
+  })
+
+  it('can add a new segment on either side', () => {
+    const segment = {
+      type: 'straight',
+      position: new Vector3(),
+      rotation: new Euler()
+    } as MazeSegment
+    const connection = getConnections(segment)[1]
+    const newSegment = getPossibleSegments(connection)[1]
+
+    expect(newSegment.position.clone().sub(segment.position).length()).toBeCloseTo(MAZEPIECE_HALFWIDTH*2)
   })
 })

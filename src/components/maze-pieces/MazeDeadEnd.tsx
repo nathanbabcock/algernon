@@ -2,7 +2,7 @@ import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Frustum, Group } from 'three';
-import { MAZEPIECE_HEIGHT, MazeSegment } from '../Infinite1DMaze';
+import { MazeSegment, MAZEPIECE_HEIGHT } from './MazeLibrary';
 
 export default function MazeDeadEnd(props: any) {
   const { camera } = useThree()
@@ -10,7 +10,7 @@ export default function MazeDeadEnd(props: any) {
 
   useFrame(() => {
     const segment = props.segment as MazeSegment
-    if (!ref.current || !segment) return;
+    if (!ref.current || !segment) return
 
     const frustum = new Frustum()
     camera.updateMatrixWorld()
