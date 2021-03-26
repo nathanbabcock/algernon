@@ -117,11 +117,12 @@ export function getPossibleSegments(givenConnection: MazeConnection, givenSegmen
     segment.connections.forEach(connection => {
       const quaternion = new Quaternion().setFromUnitVectors(
         connection.forward.clone().normalize(),
-        givenConnection.forward.clone().normalize()
+        givenConnection.forward.clone().multiplyScalar(-1).normalize()
       )
 
       const rotatedPosition = connection.position.clone().applyQuaternion(quaternion)
-      const translatedPosition = givenConnection.position.clone().add(rotatedPosition)
+      const translatedPosition = givenConnection.position.clone().sub(rotatedPosition)
+      // const translatedPosition = rotatedPosition.clone()
 
       segment.rotation.setFromQuaternion(quaternion)
       segment.position.copy(translatedPosition)

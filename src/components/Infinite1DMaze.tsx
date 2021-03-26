@@ -10,29 +10,38 @@ export default function Infinite1DMaze(props: any) {
   straight.rotation.set(0, 0, Math.PI / 2)
 
   const connections = straight.getTransformedConnections()
-  const segment = getPossibleSegments(connections[0])[1]
+  const segment = getPossibleSegments(connections[0])[0]
   const segment2 = getPossibleSegments(connections[1])[0]
 
   straight.addConnectedSegment(0, segment)
   straight.addConnectedSegment(1, segment2)
 
-
   const openIndex = segment.connections.findIndex(connection => !connection.connectedTo)
   const dynamicSegment = getPossibleSegments(segment.getTransformedConnections()[openIndex])[0]
   segment.addConnectedSegment(openIndex, dynamicSegment)
-  console.log(segment)
-  console.log(dynamicSegment)
+
+  const openIndex2 = segment2.connections.findIndex(connection => !connection.connectedTo)
+  const dynamicSegment2 = getPossibleSegments(segment2.getTransformedConnections()[openIndex2])[0]
+  segment.addConnectedSegment(openIndex2, dynamicSegment2)
+
+  const openIndex3 = dynamicSegment.connections.findIndex(connection => !connection.connectedTo)
+  const dynamicSegment3 = getPossibleSegments(dynamicSegment.getTransformedConnections()[openIndex3])[0]
+  segment.addConnectedSegment(openIndex3, dynamicSegment)
 
   straight.id = 0
   segment.id = 1
   segment2.id = 2
   dynamicSegment.id = 3
+  dynamicSegment2.id = 4
+  dynamicSegment3.id = 5
 
   const [maze, setMaze] = useState([
     straight,
     segment,
     segment2,
-    // dynamicSegment,
+    dynamicSegment,
+    dynamicSegment2,
+    dynamicSegment3,
   ] as MazeSegment[]);
 
   // dynamicSegment is "twisted" -- attached to the wrong connection point on `segment`
