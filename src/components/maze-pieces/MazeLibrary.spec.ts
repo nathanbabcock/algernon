@@ -1,49 +1,35 @@
 import '@testing-library/react'
-import { Euler, Vector3 } from 'three'
-import { getConnections, getPossibleSegments, MazeConnection, MazeConnectionConfig, MAZEPIECE_HALFWIDTH, MazeSegment } from './MazeLibrary'
+import { Vector3 } from 'three'
+import { getPossibleSegments, MazeConnection, MAZEPIECE_HALFWIDTH, MazeStraightSegment } from './MazeLibrary'
 
 describe('MazeLibrary', () => {
   it('has a config for maze connections', () => {
-    expect(MazeConnectionConfig).toBeDefined()
+    expect(MazeLibrary).toBeDefined()
   })
 
   it('creates a maze segment', () => {
-    const segment = {
-      type: 'straight',
-      rotation: new Euler(),
-      position: new Vector3(),
-    } as MazeSegment
+    const segment = new MazeStraightSegment()
     expect(segment).toBeDefined()
   })
 
   it('gets all the connections from a maze segment', () => {
-    const segment = {
-      type: 'straight',
-      rotation: new Euler(),
-      position: new Vector3(),
-    } as MazeSegment
-    const connections = getConnections(segment)
+    const segment = new MazeStraightSegment()
+    const connections = segment.getTransformedConnections()
     expect(connections).toBeDefined()
   })
 
   it('rotates the connection direction based on the parent object', () => {
-    const segment = {
-      type: 'straight',
-      rotation: new Euler(0, 0, -Math.PI/2),
-      position: new Vector3(),
-    } as MazeSegment
-    const connections = getConnections(segment)
+    const segment = new MazeStraightSegment()
+    segment.rotation.set(0, 0, -Math.PI/2)
+    const connections = segment.getTransformedConnections()
     expect(connections[0].forward.x).toBeCloseTo(1)
     expect(connections[0].forward.y).toBeCloseTo(0)
   })
 
   it('translates the connection position based on the parent object rotation', () => {
-    const segment = {
-      type: 'straight',
-      rotation: new Euler(0, 0, -Math.PI/2),
-      position: new Vector3()
-    } as MazeSegment
-    const connections = getConnections(segment)
+    const segment = new MazeStraightSegment()
+    segment.rotation.set(0, 0, -Math.PI/2)
+    const connections = segment.getTransformedConnections()
     expect(connections[0].position.x).toBeCloseTo(MAZEPIECE_HALFWIDTH)
     expect(connections[0].position.y).toBeCloseTo(0)
     expect(connections[1].position.x).toBeCloseTo(-MAZEPIECE_HALFWIDTH)
@@ -51,12 +37,10 @@ describe('MazeLibrary', () => {
   })
 
   it('translates the connection position based on the parent object position', () => {
-    const segment = {
-      type: 'straight',
-      rotation: new Euler(0, 0, -Math.PI/2),
-      position: new Vector3(10, 10, 10),
-    } as MazeSegment
-    const connections = getConnections(segment)
+    const segment = new MazeStraightSegment()
+    segment.rotation.set(0, 0, -Math.PI/2)
+    segment.position.set(10, 10, 10)
+    const connections = segment.getTransformedConnections()
     expect(connections[0].position.x).toBeCloseTo(MAZEPIECE_HALFWIDTH + segment.position.x)
     expect(connections[0].position.y).toBeCloseTo(0 + segment.position.y)
     expect(connections[1].position.x).toBeCloseTo(-MAZEPIECE_HALFWIDTH + segment.position.x)
@@ -97,26 +81,32 @@ describe('MazeLibrary', () => {
   })
 
   it('can add a new segment, given an existing segment', () => {
-    const segment = {
-      type: 'straight',
-      position: new Vector3(),
-      rotation: new Euler()
-    } as MazeSegment
-    const connection = getConnections(segment)[0]
+    const segment = new MazeStraightSegment()
+    const connection = segment.getTransformedConnections()[0]
     const newSegment = getPossibleSegments(connection)[0]
 
     expect(newSegment.position.clone().sub(segment.position).length()).toBeCloseTo(MAZEPIECE_HALFWIDTH*2)
   })
 
   it('can add a new segment on either side', () => {
-    const segment = {
-      type: 'straight',
-      position: new Vector3(),
-      rotation: new Euler()
-    } as MazeSegment
-    const connection = getConnections(segment)[1]
+    const segment = new MazeStraightSegment()
+    const connection = segment.getTransformedConnections()[1]
     const newSegment = getPossibleSegments(connection)[1]
 
     expect(newSegment.position.clone().sub(segment.position).length()).toBeCloseTo(MAZEPIECE_HALFWIDTH*2)
+  })
+
+  it('keeps track of connections between segments', () => {
+    const segment = new MazeStraightSegment()
+    const connection = segment.getTransformedConnections()[1]
+    const newSegment = getPossibleSegments(connection, segment)[1]
+    segment.addConnectedSegment(1, newSegment)
+
+    expect(segment.connections[1].connectedTo).toBe(newSegment)
+    expect(newSegment.connections[0].connectedTo).toBe(segment)
+  })
+
+  it('doesn\'t spawn segments on top of other segments', () => {
+    expect(false).toBe(true)
   })
 })

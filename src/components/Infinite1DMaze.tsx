@@ -1,27 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFrame } from 'react-three-fiber';
-import { Euler, Vector3 } from 'three';
 import getSegmentComponent from './maze-pieces/get-segment-component';
-import { getConnections, getPossibleSegments, MazeSegment } from './maze-pieces/MazeLibrary';
+import { getPossibleSegments, MazeSegment, MazeStraightSegment } from './maze-pieces/MazeLibrary';
 
 export default function Infinite1DMaze(props: any) {
 
-  const straight = {
-    type: 'straight',
-    rotation: new Euler(0, 0, Math.PI / 2),
-    position: new Vector3(0, 0, 0),
-  } as MazeSegment
+  const straight = new MazeStraightSegment()
+  straight.rotation.set(0, 0, Math.PI / 2)
 
-  const connections = getConnections(straight)
+  const connections = straight.getTransformedConnections()
   const segment = getPossibleSegments(connections[0])[1]
   const segment2 = getPossibleSegments(connections[1])[0]
+
+  straight.addConnectedSegment(0, segment)
+  straight.addConnectedSegment(1, segment2)
+
+
+  const openIndex = segment.connections.findIndex(connection => !connection.connectedTo)
+  const dynamicSegment = getPossibleSegments(segment.getTransformedConnections()[openIndex])[0]
+  segment.addConnectedSegment(openIndex, dynamicSegment)
+  console.log(segment)
+  console.log(dynamicSegment)
+
+  straight.id = 0
+  segment.id = 1
+  segment2.id = 2
+  dynamicSegment.id = 3
 
   const [maze, setMaze] = useState([
     straight,
     segment,
     segment2,
+    // dynamicSegment,
   ] as MazeSegment[]);
+
+  // dynamicSegment is "twisted" -- attached to the wrong connection point on `segment`
 
   useFrame(() => {})
 
