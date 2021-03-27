@@ -15,9 +15,8 @@ export default function Infinite1DMaze(props: any) {
     if (!currentSegment) return
     const update = mazeManager.updateMaze(currentSegment)
     if (update.added > 0 || update.removed > 0) {
-      console.log(update)
       setMaze([...mazeManager.maze])
-      // props.requestCollisionUpdate()
+      props.requestCollisionUpdate()
     }
   })
 

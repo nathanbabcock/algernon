@@ -22,42 +22,37 @@ export default class Infinite1DMazeManager {
       this.addSegment()
   }
 
-  public addSegment(): MazeSegment {
-    const connections = this.endOfChain.getTransformedConnections()
-    const openIndex = this.endOfChain.connections.findIndex(connection => !connection.connectedTo)
+  public addSegment(toFront = false): MazeSegment {
+    const origin = toFront ? this.startOfChain : this.endOfChain
+    const connections = origin.getTransformedConnections()
+    const openIndex = origin.connections.findIndex(connection => !connection.connectedTo)
     if (openIndex === -1) {
       console.group('Infinite1DMazeManager fatal error')
       console.error('Could not find an open connection to attach to in addSegment()')
       console.info('Maze:', this.maze)
-      console.info('End of chain:', this.endOfChain)
-      console.info('Connections:', this.endOfChain.connections)
+      console.info('End of chain:', origin)
+      console.info('Connections:', origin.connections)
       console.groupEnd()
     }
-    const segments = getPossibleSegments(connections[openIndex], this.endOfChain)
-    const segment = segments[Math.floor(Math.random() * segments.length)];
+    const segments = getPossibleSegments(connections[openIndex], origin)
+    const segment = segments[Math.floor(Math.random() * segments.length)]
     segment.id = this.curIndex++
-    this.endOfChain.addConnectedSegment(openIndex, segment)
-    this.maze.push(segment)
-    return segment
-  }
+    origin.addConnectedSegment(openIndex, segment)
+    toFront ? this.maze.unshift(segment) : this.maze.push(segment)
 
-  // TODO can be a `givenSegment` parameter on addSegmentToStart()?
-  public addSegmentToStart(): MazeSegment {
-    const connections = this.startOfChain.getTransformedConnections()
-    const openIndex = this.startOfChain.connections.findIndex(connection => !connection.connectedTo)
-    if (openIndex === -1) {
-      console.group('Infinite1DMazeManager fatal error')
-      console.error('Could not find an open connection to attach to in addSegment()')
-      console.info('Maze:', this.maze)
-      console.info('End of chain:', this.startOfChain)
-      console.info('Connections:', this.startOfChain.connections)
-      console.groupEnd()
+    // HACK: Forcibly prevent multiple consecutive corners
+    // Under the current (POC) spawning model, you can see straight down diagonals
+    // and witness new segments spawning in (an edge case)
+    if (origin.type === 'corner' && segment.type === 'corner') {
+      this.removeSegment(toFront ? 0 : this.maze.length-1)
+      return this.addSegment(toFront)
     }
-    const segments = getPossibleSegments(connections[openIndex], this.startOfChain)
-    const segment = segments[Math.floor(Math.random() * segments.length)];
-    segment.id = this.curIndex++
-    this.startOfChain.addConnectedSegment(openIndex, segment)
-    this.maze.unshift(segment)
+    // It could be slightly ameliorated by increasing the number of corner segments spawned
+    // to 3 or more (making diagonals less likely), but they could still occur,
+    // and above 2 there is an additional risk of self-collision (maze looping back over itself)
+
+    // The proper solution requires a modified spawning algorithm.
+
     return segment
   }
 
@@ -135,20 +130,17 @@ export default class Infinite1DMazeManager {
 
     // Add turns to start
     while (turns < 2) {
-      const newSegment = this.addSegmentToStart()
+      const newSegment = this.addSegment(true)
       if (newSegment.type !== 'straight') turns++
       added++
     }
 
     // Remove turns from beginning
     if (added === 0 && i > 0) {
-      for (let j = 0; j < i; j++) {
-        this.removeSegment(j)
+      for (i; i > 0; i--) {
+        this.removeSegment(0)
         removed++
-
         // Removing from the front of array means everything shifts up 1 index
-        j--
-        i--
         // Actually this loop brings i down to j=0, rather than moving j up to i as it appears
       }
     }
