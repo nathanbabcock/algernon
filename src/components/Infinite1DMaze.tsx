@@ -44,8 +44,6 @@ export default function Infinite1DMaze(props: any) {
     dynamicSegment3,
   ] as MazeSegment[]);
 
-  // dynamicSegment is "twisted" -- attached to the wrong connection point on `segment`
-
   useFrame(() => {})
 
   return (

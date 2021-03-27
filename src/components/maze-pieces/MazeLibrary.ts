@@ -109,6 +109,9 @@ export function getPossibleSegments(givenConnection: MazeConnection, givenSegmen
       segment.position.copy(translatedPosition)
       if (givenSegment) connection.connectedTo = givenSegment
 
+      if (segment.rotation.x < 0) // SUS
+        segment.rotation.set(0, segment.rotation.y, segment.rotation.z)
+
       // Add that transformed segment to the list of possible segments
       possibleSegments.push(segment)
     })
