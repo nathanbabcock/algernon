@@ -9,40 +9,48 @@ export default function Infinite1DMaze(props: any) {
   const straight = new MazeStraightSegment()
   straight.rotation.set(0, 0, Math.PI / 2)
 
-  const connections = straight.getTransformedConnections()
-  const segment = getPossibleSegments(connections[0])[0]
-  const segment2 = getPossibleSegments(connections[1])[0]
+  let endOfChain = straight
+  let preMaze: MazeSegment[] = [ straight ]
+  for (let i = 1; i < 4; i++) {
+    const connections = endOfChain.getTransformedConnections()
+    const openIndex = endOfChain.connections.findIndex(connection => !connection.connectedTo)
+    const segments = getPossibleSegments(connections[openIndex], endOfChain)
+    const segment = segments[Math.floor(Math.random() * segments.length)];
+    segment.id = i
+    endOfChain.addConnectedSegment(openIndex, segment)
+    endOfChain = segment
+    preMaze.push(segment)
+  }
 
-  straight.addConnectedSegment(0, segment)
-  straight.addConnectedSegment(1, segment2)
+  // Left turns never occur...why?
 
-  const openIndex = segment.connections.findIndex(connection => !connection.connectedTo)
-  const dynamicSegment = getPossibleSegments(segment.getTransformedConnections()[openIndex])[0]
-  segment.addConnectedSegment(openIndex, dynamicSegment)
+  // const connections = straight.getTransformedConnections()
+  // const segment = getPossibleSegments(connections[0])[0]
+  // const segment2 = getPossibleSegments(connections[1])[0]
 
-  const openIndex2 = segment2.connections.findIndex(connection => !connection.connectedTo)
-  const dynamicSegment2 = getPossibleSegments(segment2.getTransformedConnections()[openIndex2])[0]
-  segment.addConnectedSegment(openIndex2, dynamicSegment2)
+  // straight.addConnectedSegment(0, segment)
+  // straight.addConnectedSegment(1, segment2)
 
-  const openIndex3 = dynamicSegment.connections.findIndex(connection => !connection.connectedTo)
-  const dynamicSegment3 = getPossibleSegments(dynamicSegment.getTransformedConnections()[openIndex3])[0]
-  segment.addConnectedSegment(openIndex3, dynamicSegment)
+  // const openIndex = segment.connections.findIndex(connection => !connection.connectedTo)
+  // const dynamicSegment = getPossibleSegments(segment.getTransformedConnections()[openIndex])[0]
+  // segment.addConnectedSegment(openIndex, dynamicSegment)
 
-  straight.id = 0
-  segment.id = 1
-  segment2.id = 2
-  dynamicSegment.id = 3
-  dynamicSegment2.id = 4
-  dynamicSegment3.id = 5
+  // const openIndex2 = segment2.connections.findIndex(connection => !connection.connectedTo)
+  // const dynamicSegment2 = getPossibleSegments(segment2.getTransformedConnections()[openIndex2])[0]
+  // segment.addConnectedSegment(openIndex2, dynamicSegment2)
 
-  const [maze, setMaze] = useState([
-    straight,
-    segment, 
-    segment2,
-    dynamicSegment,
-    dynamicSegment2,
-    dynamicSegment3,
-  ] as MazeSegment[]);
+  // const openIndex3 = dynamicSegment.connections.findIndex(connection => !connection.connectedTo)
+  // const dynamicSegment3 = getPossibleSegments(dynamicSegment.getTransformedConnections()[openIndex3])[0]
+  // segment.addConnectedSegment(openIndex3, dynamicSegment)
+
+  // straight.id = 0
+  // segment.id = 1
+  // segment2.id = 2
+  // dynamicSegment.id = 3
+  // dynamicSegment2.id = 4
+  // dynamicSegment3.id = 5
+
+  const [maze, setMaze] = useState(preMaze);
 
   useFrame(() => {})
 

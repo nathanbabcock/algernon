@@ -82,9 +82,27 @@ export class MazeCornerSegment extends MazeSegment {
   }
 }
 
+export class MazeDeadEndSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    // {
+    //   position: new Vector3(0, MAZEPIECE_HALFWIDTH, 0),
+    //   forward: new Vector3(0, 1, 0),
+    // },
+    {
+      position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
+      forward: new Vector3(0, -1, 0),
+    },
+  ] as MazeConnection[]
+
+  constructor() {
+    super('corner')
+  }
+}
+
 const MazeLibrary = [
-  // MazeStraightSegment,
+  MazeStraightSegment,
   MazeCornerSegment,
+  // MazeDeadEndSegment,
 ]
 
 export function getPossibleSegments(givenConnection: MazeConnection, givenSegment?: MazeSegment): MazeSegment[] {
@@ -93,10 +111,12 @@ export function getPossibleSegments(givenConnection: MazeConnection, givenSegmen
 
   // Loop over pieces in library
   MazeLibrary.forEach(Segment => {
-    const segment = new Segment()
-    
     // Loop over connections in piece
-    segment.connections.forEach(connection => {
+    new Segment().connections.forEach((connection, index) => {
+      const newSegment = new Segment()
+      // clone the segment to avoid modifying state on the one we're iterating over
+      // (those state changes would be retained across iterations)
+
       const quaternion = new Quaternion().setFromUnitVectors(
         connection.forward.clone().normalize(),
         givenConnection.forward.clone().multiplyScalar(-1).normalize()
@@ -105,15 +125,15 @@ export function getPossibleSegments(givenConnection: MazeConnection, givenSegmen
       const rotatedPosition = connection.position.clone().applyQuaternion(quaternion)
       const translatedPosition = givenConnection.position.clone().sub(rotatedPosition)
 
-      segment.rotation.setFromQuaternion(quaternion)
-      segment.position.copy(translatedPosition)
-      if (givenSegment) connection.connectedTo = givenSegment
+      newSegment.rotation.setFromQuaternion(quaternion)
+      newSegment.position.copy(translatedPosition)
+      if (givenSegment) newSegment.connections[index].connectedTo = givenSegment
 
-      if (segment.rotation.x < 0) // SUS
-        segment.rotation.set(0, segment.rotation.y, segment.rotation.z)
+      if (newSegment.rotation.x < 0) // SUS
+        newSegment.rotation.set(0, newSegment.rotation.y, newSegment.rotation.z)
 
       // Add that transformed segment to the list of possible segments
-      possibleSegments.push(segment)
+      possibleSegments.push(newSegment)
     })
   })
 

@@ -101,19 +101,6 @@ export default function NoFutureNoPast(props: any) {
       return
     }
 
-    if (noPast.hasBeenSeen && !noFuture.isVisible && !maze.includes(exit)) {
-      setMaze([
-        noPast,
-        maze[1],
-        maze[2],
-        maze[3],
-        exit,
-      ])
-      console.log('NO PAST')
-      props.requestCollisionUpdate()
-      return
-    }
-
     if (!currentSegment && noPast.hasBeenSeen && !exit.isVisible && !noPast.isVisible && !maze.includes(entrance)) {
       setMaze([
         entrance,
