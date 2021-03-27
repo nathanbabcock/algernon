@@ -1,6 +1,6 @@
 import '@testing-library/react'
 import { Vector3 } from 'three'
-import { getPossibleSegments, MazeConnection, MAZEPIECE_HALFWIDTH, MazeStraightSegment } from './MazeLibrary'
+import { MazeLibrary, getPossibleSegments, MazeConnection, MAZEPIECE_HALFWIDTH, MazeStraightSegment } from './MazeLibrary'
 
 describe('MazeLibrary', () => {
   it('has a config for maze connections', () => {
@@ -105,8 +105,14 @@ describe('MazeLibrary', () => {
     expect(segment.connections[1].connectedTo).toBe(newSegment)
     expect(newSegment.connections[1].connectedTo).toBe(segment)
   })
-})
 
-function MazeLibrary(MazeLibrary: any) {
-  throw new Error('Function not implemented.')
-}
+  it('can create custom segments from a specified array', () => {
+    // const segment = new MazeStraightSegment()
+    // const connection = segment.getTransformedConnections()[1]
+    // const newSegment = getPossibleSegments(connection, segment)[1]
+    // segment.addConnectedSegment(1, newSegment)
+
+    // expect(segment.connections[1].connectedTo).toBe(newSegment)
+    // expect(newSegment.connections[1].connectedTo).toBe(segment)
+  })
+})

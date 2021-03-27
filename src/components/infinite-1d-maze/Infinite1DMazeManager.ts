@@ -1,4 +1,4 @@
-import { getPossibleSegments, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
+import { getPossibleSegments, MazeNoFutureNoPastSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
 
 export default class Infinite1DMazeManager {
   public curIndex = 0
@@ -34,7 +34,13 @@ export default class Infinite1DMazeManager {
       console.info('Connections:', origin.connections)
       console.groupEnd()
     }
-    const segments = getPossibleSegments(connections[openIndex], origin)
+    let segments
+    if (Math.random() < 0.9) {
+      segments = getPossibleSegments(connections[openIndex], origin)
+    } else {
+      // Randomly choose a *special* maze segment
+      segments = getPossibleSegments(connections[openIndex], origin, [MazeNoFutureNoPastSegment])
+    }
     const segment = segments[Math.floor(Math.random() * segments.length)]
     segment.id = this.curIndex++
     origin.addConnectedSegment(openIndex, segment)

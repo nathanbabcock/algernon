@@ -24,12 +24,13 @@ export abstract class MazeSegment {
     this.type = type
   }
 
-  /**
-   * TODO new foundation for getCurrentSegment()
-   * Recursive with children, if applicable
-   */
   public containsPoint(point: Vector3): boolean {
-    return false
+    return (
+         point.x <= this.position.x + MAZEPIECE_HALFWIDTH
+      && point.x >= this.position.x - MAZEPIECE_HALFWIDTH
+      && point.y <= this.position.y + MAZEPIECE_HALFWIDTH
+      && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
+    )
   }
 
   public getTransformedConnections(): MazeConnection[] {
@@ -92,35 +93,96 @@ export class MazeCornerSegment extends MazeSegment {
 
 export class MazeDeadEndSegment extends MazeSegment {
   public connections: MazeConnection[] = [
-    // {
-    //   position: new Vector3(0, MAZEPIECE_HALFWIDTH, 0),
-    //   forward: new Vector3(0, 1, 0),
-    // },
     {
       position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
       forward: new Vector3(0, -1, 0),
     },
   ] as MazeConnection[]
 
-  constructor() {
-    super('corner')
+  constructor(id?: number) {
+    super('dead-end', id)
   }
 }
 
-const MazeLibrary = [
+export class MazeNoFutureSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    {
+      position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
+      forward: new Vector3(0, -1, 0),
+    },
+  ] as MazeConnection[]
+
+  constructor(id?: number) {
+    super('no-future', id)
+  }
+}
+
+export class MazeNoPastSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    {
+      position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
+      forward: new Vector3(0, -1, 0),
+    },
+  ] as MazeConnection[]
+
+  constructor(id?: number) {
+    super('no-past', id)
+  }
+}
+
+export class MazeNoFutureNoPastSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    {
+      position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
+      forward: new Vector3(0, -1, 0),
+    },
+    {
+      position: new Vector3(MAZEPIECE_HALFWIDTH * 5, MAZEPIECE_HALFWIDTH * 4, 0),
+      forward: new Vector3(1, 0, 0),
+    },
+  ] as MazeConnection[]
+
+  // TODO: make recursive with children (but requires a `maze` property in MazeSegment)
+  public containsPoint(point: Vector3): boolean {
+    return (
+         point.x <= this.position.x + MAZEPIECE_HALFWIDTH * 5
+      && point.x >= this.position.x - MAZEPIECE_HALFWIDTH
+      && point.y <= this.position.y + MAZEPIECE_HALFWIDTH * 5
+      && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
+    )
+  }
+
+  constructor(id?: number) {
+    super('no-future-no-past', id)
+  }
+}
+
+export const MazeLibrary = [
   MazeStraightSegment,
   MazeCornerSegment,
   // MazeDeadEndSegment,
 ]
 
-export function getPossibleSegments(givenConnection: MazeConnection, givenSegment?: MazeSegment): MazeSegment[] {
-  // TODO @refactor -- flatten this nested loop with flatMap()
+/**
+ * @param givenConnection How to connect this segment to the rest of the maze
+ * @param givenSegment The segment which the givenConnection is attached to
+ * @param library (optionally) a list of types to create segments from
+ * @returns A list of all the segments which could be created at this spot.
+ * This includes all rotations and pairings of connections on the created segment
+ */
+export function getPossibleSegments(
+  givenConnection: MazeConnection,
+  givenSegment?: MazeSegment,
+  library?: any,
+): MazeSegment[] {
+  if (!library) library = MazeLibrary
+
   const possibleSegments: MazeSegment[] = [];
 
   // Loop over pieces in library
-  MazeLibrary.forEach(Segment => {
+  library.forEach((Segment: any) => {
     // Loop over connections in piece
-    new Segment().connections.forEach((connection, index) => {
+    new Segment().connections.forEach((connection: MazeConnection, index: number) => {
       const newSegment = new Segment()
       // clone the segment to avoid modifying state on the one we're iterating over
       // (those state changes would be retained across iterations)

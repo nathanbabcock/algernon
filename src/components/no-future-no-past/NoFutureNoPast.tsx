@@ -1,59 +1,38 @@
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
-import { Euler, Vector3 } from 'three';
 import getCurrentSegment from '../maze-pieces/get-current-segment';
 import getSegmentComponent from '../maze-pieces/get-segment-component';
-import { MAZEPIECE_HALFWIDTH, MazeSegment } from '../maze-pieces/MazeLibrary';
-
+import { MazeCornerSegment, MazeNoFutureSegment, MazeNoPastSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary';
 export default function NoFutureNoPast(props: any) {
-  const [entrance] = useState({
-    id: -2,
-    type: 'straight',
-    position: new Vector3(0, 0, 0),
-    rotation: new Euler(0, 0, 0),
-  } as MazeSegment)
+  const [entrance] = useState(new MazeStraightSegment(-2))
 
-  const [noFuture] = useState({
-    id: 1,
-    type: 'no-future',
-    position: new Vector3(8, 8, 0),
-    rotation: new Euler(0, 0, -Math.PI/2),
-  } as MazeSegment)
+  const [noFuture] = useState(new MazeNoFutureSegment(1))
+  noFuture.position.set(8, 8, 0)
+  noFuture.rotation.set(0, 0, -Math.PI/2)
 
-  const [noPast] = useState({
-    id: -1,
-    type: 'no-past',
-    position: new Vector3(0, 0, 0),
-    rotation: new Euler(0, 0, -Math.PI),
-  } as MazeSegment)
+  const [noPast] = useState(new MazeNoPastSegment(-1))
+  noPast.rotation.set(0, 0, -Math.PI)
 
-  const [exit] = useState({
-    id: 2,
-    type: 'straight',
-    position: new Vector3(8, 8, 0),
-    rotation: new Euler(0, 0, -Math.PI/2),
-  } as MazeSegment)
+  const [exit] = useState(new MazeStraightSegment(2))
+  exit.position.set(8, 8, 0)
+  exit.rotation.set(0, 0, -Math.PI/2)
+
+  const [straight1] = useState(new MazeStraightSegment(3))
+  straight1.position.set(0, 4, 0)
+
+  const [corner] = useState(new MazeCornerSegment(4))
+  corner.position.set(0, 8, 0)
+  corner.rotation.set(0, 0, -Math.PI/2)
+
+  const [straight2] = useState(new MazeStraightSegment(5))
+  straight2.position.set(4, 8, 0)
+  straight2.rotation.set(0, 0, -Math.PI/2)
 
   const [maze, setMaze] = useState([
     entrance,
-    {
-      id: 3,
-      type: 'straight',
-      position: new Vector3(0, 4, 0),
-      rotation: new Euler(0, 0, 0),
-    },
-    {
-      id: 4,
-      type: 'corner',
-      position: new Vector3(0, 8, 0),
-      rotation: new Euler(0, 0, -Math.PI/2),
-    },
-    {
-      id: 5,
-      type: 'straight',
-      position: new Vector3(4, 8, 0),
-      rotation: new Euler(0, 0, -Math.PI/2),
-    },
+    straight1,
+    corner,
+    straight2,
     noFuture
   ] as MazeSegment[]);
 

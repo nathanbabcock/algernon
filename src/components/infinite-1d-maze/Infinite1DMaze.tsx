@@ -27,7 +27,13 @@ export default function Infinite1DMaze(props: any) {
       {maze.map(segment => {
         if (!segment) return null
         const MazePiece = getSegmentComponent(segment.type)
-        return <MazePiece position={segment.position} rotation={segment.rotation} segment={segment} key={segment.id}/>
+        return <MazePiece
+          key={segment.id}
+          segment={segment}
+          position={segment.position}
+          rotation={segment.rotation}
+          requestCollisionUpdate={props.requestCollisionUpdate}
+        />
       })}
     </group>  
   )

@@ -1,5 +1,5 @@
 import { Camera } from 'three'
-import { MazeSegment, MAZEPIECE_HALFWIDTH } from './MazeLibrary'
+import { MazeSegment } from './MazeLibrary'
 
 /**
  * @important currently disregards local transforms
@@ -11,13 +11,8 @@ import { MazeSegment, MAZEPIECE_HALFWIDTH } from './MazeLibrary'
 export default function getCurrentSegment(maze: MazeSegment[], camera: Camera) {
   let currentMazeSegment = null
   maze.forEach(segment => {
-    if ( camera.position.x <= segment.position.x + MAZEPIECE_HALFWIDTH
-      && camera.position.x >= segment.position.x - MAZEPIECE_HALFWIDTH
-      && camera.position.y <= segment.position.y + MAZEPIECE_HALFWIDTH
-      && camera.position.y >= segment.position.y - MAZEPIECE_HALFWIDTH
-    ) {
+    if (segment.containsPoint(camera.position))
       currentMazeSegment = segment
-    }
   })
   return currentMazeSegment
 };
