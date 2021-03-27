@@ -16,6 +16,8 @@ export default function Infinite1DMaze(props: any) {
     const update = mazeManager.updateMaze(currentSegment)
     if (update.added > 0 || update.removed > 0) {
       setMaze([...mazeManager.maze])
+
+      // TODO this is too laggy -- requires an engine refactor to use @react-three/cannon
       props.requestCollisionUpdate()
     }
   })

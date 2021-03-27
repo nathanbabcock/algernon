@@ -24,6 +24,14 @@ export abstract class MazeSegment {
     this.type = type
   }
 
+  /**
+   * TODO new foundation for getCurrentSegment()
+   * Recursive with children, if applicable
+   */
+  public containsPoint(point: Vector3): boolean {
+    return false
+  }
+
   public getTransformedConnections(): MazeConnection[] {
     let connections
     connections = this.connections.map(connection => {
