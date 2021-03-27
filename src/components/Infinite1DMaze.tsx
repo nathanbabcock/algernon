@@ -37,7 +37,7 @@ export default function Infinite1DMaze(props: any) {
 
   const [maze, setMaze] = useState([
     straight,
-    segment,
+    segment, 
     segment2,
     dynamicSegment,
     dynamicSegment2,

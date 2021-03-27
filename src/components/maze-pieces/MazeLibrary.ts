@@ -1,18 +1,7 @@
-import React from 'react';
 import { Euler, Quaternion, Vector3 } from 'three';
 
 export const MAZEPIECE_HALFWIDTH = 2
 export const MAZEPIECE_HEIGHT = 2
-
-// export type MazeSegment = {
-//   id: number,
-//   type: string,
-//   rotation: Euler,
-//   position: Vector3,
-//   isVisible: boolean,
-//   hasBeenSeen: boolean,
-//   openDirections: string,
-// };
 
 export type MazeConnection = {
   position: Vector3,
@@ -76,33 +65,26 @@ export class MazeStraightSegment extends MazeSegment {
   }
 }
 
-// export const MazeConnectionConfig = {
-//   'straight': [
-//     {
-//       position: new Vector3(0, MAZEPIECE_HALFWIDTH, 0),
-//       forward: new Vector3(0, 1, 0),
-//     },
-//     {
-//       position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
-//       forward: new Vector3(0, -1, 0),
-//     },
-//   ] as MazeConnection[]
-// }
+export class MazeCornerSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    {
+      position: new Vector3(0, MAZEPIECE_HALFWIDTH, 0),
+      forward: new Vector3(0, 1, 0),
+    },
+    {
+      position: new Vector3(MAZEPIECE_HALFWIDTH, 0, 0),
+      forward: new Vector3(1, 0, 0),
+    },
+  ] as MazeConnection[]
 
-// export function getConnections(segment: MazeSegment): MazeConnection[] {
-//   let connections = MazeConnectionConfig[segment.type as keyof typeof MazeConnectionConfig]
-//   connections = connections.map(connection => {
-//     return {
-//       forward: connection.forward.clone().applyEuler(segment.rotation),
-//       position: connection.position.clone().applyEuler(segment.rotation).add(segment.position),
-//     } as MazeConnection
-//   })
-
-//   return connections;
-// }
+  constructor() {
+    super('corner')
+  }
+}
 
 const MazeLibrary = [
-  MazeStraightSegment,
+  // MazeStraightSegment,
+  MazeCornerSegment,
 ]
 
 export function getPossibleSegments(givenConnection: MazeConnection, givenSegment?: MazeSegment): MazeSegment[] {
@@ -122,7 +104,6 @@ export function getPossibleSegments(givenConnection: MazeConnection, givenSegmen
 
       const rotatedPosition = connection.position.clone().applyQuaternion(quaternion)
       const translatedPosition = givenConnection.position.clone().sub(rotatedPosition)
-      // const translatedPosition = rotatedPosition.clone()
 
       segment.rotation.setFromQuaternion(quaternion)
       segment.position.copy(translatedPosition)
