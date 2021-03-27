@@ -103,7 +103,7 @@ describe('MazeLibrary', () => {
     segment.addConnectedSegment(1, newSegment)
 
     expect(segment.connections[1].connectedTo).toBe(newSegment)
-    expect(newSegment.connections[0].connectedTo).toBe(segment)
+    expect(newSegment.connections[1].connectedTo).toBe(segment)
   })
 })
 
