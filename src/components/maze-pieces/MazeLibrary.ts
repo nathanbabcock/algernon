@@ -60,8 +60,8 @@ export class MazeStraightSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor() {
-    super('straight')
+  constructor(id?: number) {
+    super('straight', id)
   }
 }
 
@@ -77,8 +77,8 @@ export class MazeCornerSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor() {
-    super('corner')
+  constructor(id?: number) {
+    super('corner', id)
   }
 }
 

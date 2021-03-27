@@ -3,7 +3,7 @@ import React, { Suspense, useRef } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Group, Vector3 } from 'three'
 import { Octree } from 'three/examples/jsm/math/Octree'
-import Infinite1DMaze from './components/Infinite1DMaze'
+import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
 import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
 import FPSControls from './FPSControls'
 
@@ -61,7 +61,8 @@ export default function App() {
         <Suspense fallback={null}>
           {/* <NoFutureNoPast position={[0, 4, 0]} requestCollisionUpdate={requestCollisionUpdate}/> */}
 
-          <Infinite1DMaze position={[0, 4, 0]} rotation={[0, 0, -Math.PI/2]} requestCollisionUpdate={requestCollisionUpdate}/>
+          {/* <Infinite1DMaze position={[0, 4, 0]} rotation={[0, 0, -Math.PI/2]} requestCollisionUpdate={requestCollisionUpdate}/> */}
+          <Infinite1DMaze requestCollisionUpdate={requestCollisionUpdate}/>
         </Suspense>
       </group>
     </Canvas>

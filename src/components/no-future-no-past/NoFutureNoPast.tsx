@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Vector3 } from 'three';
+import getCurrentSegment from '../maze-pieces/get-current-segment';
 import getSegmentComponent from '../maze-pieces/get-segment-component';
 import { MAZEPIECE_HALFWIDTH, MazeSegment } from '../maze-pieces/MazeLibrary';
 
@@ -59,20 +60,7 @@ export default function NoFutureNoPast(props: any) {
   const { camera } = useThree()
 
   useFrame(() => {
-    const getCurrentSegment = () => {
-      let currentMazeSegment = null
-      maze.forEach(segment => {
-        if ( camera.position.x <= segment.position.x + MAZEPIECE_HALFWIDTH
-          && camera.position.x >= segment.position.x - MAZEPIECE_HALFWIDTH
-          && camera.position.y <= segment.position.y + MAZEPIECE_HALFWIDTH
-          && camera.position.y >= segment.position.y - MAZEPIECE_HALFWIDTH
-        ) {
-          currentMazeSegment = segment
-        }
-      })
-      return currentMazeSegment
-    }
-    const currentSegment = getCurrentSegment()
+    const currentSegment = getCurrentSegment(maze, camera)
 
     // Recombobulate the maze
     if (noFuture.hasBeenSeen && !entrance.isVisible && !maze.includes(noPast) && currentSegment) {
