@@ -1,6 +1,5 @@
 import { Vector3 } from 'three'
 import { MazeConnection, MazeCornerSegment, MazeNoFutureSegment, MazeNoPastSegment, MAZEPIECE_HALFWIDTH, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
-import React from 'react'
 
 export class MazeNoFutureNoPastSegment extends MazeSegment {
   public maze: MazeSegment[] = []
@@ -67,6 +66,16 @@ export class MazeNoFutureNoPastSegment extends MazeSegment {
       && point.y <= this.position.y + MAZEPIECE_HALFWIDTH * 5
       && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
     )
+  }
+
+  public getCurrentSegment(point: Vector3): MazeSegment | null {
+    if (!this.maze || this.maze.length === 0) return null
+    let currentMazeSegment = null
+    this.maze.forEach(segment => {
+      if (segment.containsPoint(point, this))
+        currentMazeSegment = segment
+    })
+    return currentMazeSegment
   }
 
   public update(point: Vector3) {

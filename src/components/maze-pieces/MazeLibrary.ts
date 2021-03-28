@@ -40,12 +40,16 @@ export abstract class MazeSegment {
     return currentMazeSegment
   }
 
-  public containsPoint(point: Vector3): boolean {
+  public containsPoint(point: Vector3, parentSegment?: MazeSegment): boolean {
+    const pos = this.position.clone()
+    if (parentSegment) // Apply parent transform
+      pos.applyEuler(parentSegment.rotation).add(parentSegment.position)
+
     return (
-         point.x <= this.position.x + MAZEPIECE_HALFWIDTH
-      && point.x >= this.position.x - MAZEPIECE_HALFWIDTH
-      && point.y <= this.position.y + MAZEPIECE_HALFWIDTH
-      && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
+         point.x <= pos.x + MAZEPIECE_HALFWIDTH
+      && point.x >= pos.x - MAZEPIECE_HALFWIDTH
+      && point.y <= pos.y + MAZEPIECE_HALFWIDTH
+      && point.y >= pos.y - MAZEPIECE_HALFWIDTH
     )
   }
 
