@@ -58,14 +58,15 @@ export class MazeNoFutureNoPastSegment extends MazeSegment {
     ]
   }
 
-  // TODO: make recursive with children (but requires a `maze` property in MazeSegment)
   public containsPoint(point: Vector3): boolean {
-    return (
-         point.x <= this.position.x + MAZEPIECE_HALFWIDTH * 5
-      && point.x >= this.position.x - MAZEPIECE_HALFWIDTH
-      && point.y <= this.position.y + MAZEPIECE_HALFWIDTH * 5
-      && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
-    )
+    return !!this.maze.find(segment => segment.containsPoint(point, this))
+
+    // return (
+    //      point.x <= this.position.x + MAZEPIECE_HALFWIDTH * 5
+    //   && point.x >= this.position.x - MAZEPIECE_HALFWIDTH
+    //   && point.y <= this.position.y + MAZEPIECE_HALFWIDTH * 5
+    //   && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
+    // )
   }
 
   public getCurrentSegment(point: Vector3): MazeSegment | null {

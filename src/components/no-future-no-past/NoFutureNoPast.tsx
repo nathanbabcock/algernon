@@ -8,8 +8,9 @@ export default function NoFutureNoPast(props: any) {
   const [ segment ] = useState<MazeNoFutureNoPastSegment>(props.segment || new MazeNoFutureNoPastSegment())
   const [ maze, setMaze ] = useState(segment.maze)
   const { camera } = useThree()
-  if (props.position) segment.position.set(...(props.position as [number, number, number]))
-  if (props.rotation) segment.rotation.set(...(props.rotation as [number, number, number]))
+
+  if (props.segment && props.position instanceof Array) segment.position.set(...(props.position as [number, number, number]))
+  if (props.segment && props.rotation instanceof Array) segment.rotation.set(...(props.rotation as [number, number, number]))
 
   useFrame(() => {
     if (segment.update(camera.position)) {
