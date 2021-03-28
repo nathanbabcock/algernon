@@ -1,4 +1,5 @@
-import { getPossibleSegments, MazeNoFutureNoPastSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
+import { getPossibleSegments, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
+import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
 
 export default class Infinite1DMazeManager {
   public curIndex = 0

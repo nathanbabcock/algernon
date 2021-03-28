@@ -16,12 +16,28 @@ export abstract class MazeSegment {
   public position = new Vector3()
   public isVisible = false
   public hasBeenSeen = false
+  public maze?: MazeSegment[]
 
   public connections: MazeConnection[] = []
 
   constructor(type: string, id = 0) {
     this.id = id
     this.type = type
+  }
+
+  /**
+   * If this segment has a submaze, gets the current segment within that submaze
+   * @param point world position within the maze, typically three.camera.position
+   * @returns current segemnt within this.maze or null if point is not within this.maze
+   */
+  public getCurrentSegment(point: Vector3): MazeSegment | null {
+    if (!this.maze || this.maze.length === 0) return null
+    let currentMazeSegment = null
+    this.maze.forEach(segment => {
+      if (segment.containsPoint(point))
+        currentMazeSegment = segment
+    })
+    return currentMazeSegment
   }
 
   public containsPoint(point: Vector3): boolean {
@@ -127,33 +143,6 @@ export class MazeNoPastSegment extends MazeSegment {
 
   constructor(id?: number) {
     super('no-past', id)
-  }
-}
-
-export class MazeNoFutureNoPastSegment extends MazeSegment {
-  public connections: MazeConnection[] = [
-    {
-      position: new Vector3(0, -MAZEPIECE_HALFWIDTH, 0),
-      forward: new Vector3(0, -1, 0),
-    },
-    {
-      position: new Vector3(MAZEPIECE_HALFWIDTH * 5, MAZEPIECE_HALFWIDTH * 4, 0),
-      forward: new Vector3(1, 0, 0),
-    },
-  ] as MazeConnection[]
-
-  // TODO: make recursive with children (but requires a `maze` property in MazeSegment)
-  public containsPoint(point: Vector3): boolean {
-    return (
-         point.x <= this.position.x + MAZEPIECE_HALFWIDTH * 5
-      && point.x >= this.position.x - MAZEPIECE_HALFWIDTH
-      && point.y <= this.position.y + MAZEPIECE_HALFWIDTH * 5
-      && point.y >= this.position.y - MAZEPIECE_HALFWIDTH
-    )
-  }
-
-  constructor(id?: number) {
-    super('no-future-no-past', id)
   }
 }
 

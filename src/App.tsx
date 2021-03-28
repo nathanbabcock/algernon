@@ -59,10 +59,11 @@ export default function App() {
         </Box> */}
 
         <Suspense fallback={null}>
-          {/* <NoFutureNoPast position={[0, 4, 0]} requestCollisionUpdate={requestCollisionUpdate}/> */}
+          {/* <NoFutureNoPast position={[-10, -10, 0]} rotation={[0, 0, Math.PI/2]} requestCollisionUpdate={requestCollisionUpdate}/> */}
+          <NoFutureNoPast requestCollisionUpdate={requestCollisionUpdate}/>
 
           {/* <Infinite1DMaze position={[0, 4, 0]} rotation={[0, 0, -Math.PI/2]} requestCollisionUpdate={requestCollisionUpdate}/> */}
-          <Infinite1DMaze requestCollisionUpdate={requestCollisionUpdate}/>
+          {/* <Infinite1DMaze requestCollisionUpdate={requestCollisionUpdate}/> */}
         </Suspense>
       </group>
     </Canvas>
