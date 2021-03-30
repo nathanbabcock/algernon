@@ -2,6 +2,7 @@ import { Physics, usePlane } from '@react-three/cannon'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
+import Camera from './components/Camera'
 import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
 import FPSControls from './FPSControls'
 
@@ -12,16 +13,14 @@ export default function App () {
   }
 
   return (
-    <Canvas
-      shadowMap
-      camera={{
-        position: [0, 0, 15],
-        near: 0.1,
-        far: 100000,
-        rotation: new Euler(0, 0, 0, 'YZX'),
-        up: new Vector3(0, 0, 1),
-      }}
-    >
+    <Canvas shadowMap>
+      <Camera
+        position={[0, 0, 15]}
+        near={0.1}
+        far={100000}
+        rotation={[0, 0, 0, 'YZX']}
+        up={[0, 0, 1]}
+      />
       <ambientLight intensity={0.5} />
       <spotLight
         intensity={0.6}
@@ -32,7 +31,6 @@ export default function App () {
         shadow-mapSize-height={16384}
         shadow-mapSize-width={16384}
       />
-
       <Physics gravity={[0, 0, -25]} defaultContactMaterial={contactMaterial}>
         <PhysicsWorld/>
       </Physics>
