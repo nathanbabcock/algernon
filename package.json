@@ -2,6 +2,8 @@
   "name": "algernon",
   "version": "0.1.0",
   "private": true,
+  "main": "src/electron.js",
+  "homepage": "./",
   "dependencies": {
     "@react-three/cannon": "^0.6.1",
     "@react-three/drei": "^3.11.2",
@@ -22,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +50,7 @@
     "@types/cannon": "^0.1.5",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
-    "@types/three": "^0.126.1"
+    "@types/three": "^0.126.1",
+    "electron": "^12.0.2"
   }
 }

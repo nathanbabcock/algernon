@@ -41,7 +41,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
       console.groupEnd()
     }
     let segments
-    if (Math.random() < 0.9) {
+    if (Math.random() < 2) { // Temporarily disabled due to bugs
       segments = getPossibleSegments(connections[openIndex], origin)
     } else {
       // Randomly choose a *special* maze segment

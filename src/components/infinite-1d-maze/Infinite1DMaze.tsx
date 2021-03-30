@@ -4,7 +4,7 @@ import { useFrame, useThree } from 'react-three-fiber';
 import { Vector3, Euler } from 'three';
 import getCurrentSegment from '../maze-pieces/get-current-segment';
 import getSegmentComponent from '../maze-pieces/get-segment-component';
-import Infinite1DMazeSegment from './Infinite1DMazeManager';
+import Infinite1DMazeSegment from './Infinite1DMazeSegment';
 
 export default function Infinite1DMaze(props: any) {
   let position = new Vector3()

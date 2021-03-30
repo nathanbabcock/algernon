@@ -1,6 +1,6 @@
 import '@testing-library/react'
 import { MazeCornerSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
-import Infinite1DMazeSegment from './Infinite1DMazeManager'
+import Infinite1DMazeSegment from './Infinite1DMazeSegment'
 
 const getTurnsAhead = (maze: MazeSegment[], curSegment: MazeSegment) => {
   const curIndex = maze.indexOf(curSegment)
