@@ -13,7 +13,11 @@ let mainWindow;
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({
+        width: 1920,
+        height: 1080,
+        icon: `${__dirname}/../public/algernon-bg.png`,
+    });
 
     // and load the index.html of the app.
     const startUrl = process.env.ELECTRON_START_URL || url.format({
@@ -22,9 +26,6 @@ function createWindow() {
         slashes: true
     });
     mainWindow.loadURL(startUrl);
-
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
