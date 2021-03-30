@@ -4,6 +4,16 @@
   "private": true,
   "main": "src/electron.js",
   "homepage": "./",
+  "scripts": {
+    "start": "react-scripts start",
+    "dev": "nf start",
+    "electron": "electron .",
+    "build": "react-scripts build",
+    "make": "electron-forge make",
+    "package": "electron-forge package",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@react-three/cannon": "^0.6.1",
     "@react-three/drei": "^3.11.2",
@@ -11,6 +21,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "cannon": "^0.6.2",
+    "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
@@ -20,13 +31,18 @@
     "typescript": "^4.2.3",
     "web-vitals": "^1.0.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron": "electron .",
-    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "@types/cannon": "^0.1.5",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.2",
+    "@types/three": "^0.126.1",
+    "electron": "^12.0.2",
+    "foreman": "^3.0.1"
   },
   "eslintConfig": {
     "extends": [
@@ -46,11 +62,31 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@types/cannon": "^0.1.5",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.2",
-    "@types/three": "^0.126.1",
-    "electron": "^12.0.2"
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "algernon"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
