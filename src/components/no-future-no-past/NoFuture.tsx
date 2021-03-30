@@ -3,8 +3,8 @@ import MazeDeadEnd from '../maze-pieces/MazeDeadEnd';
 import { Text } from '@react-three/drei'
 
 export default function NoFuture(props: any) {
-  return <group {...props}>
-    <MazeDeadEnd segment={props.segment}/>
+  return <group>
+    <MazeDeadEnd segment={props.segment} rotation={props.rotation} position={props.position}/>
     <Text
       color="black"
       position={[0, 0.999, 1]}

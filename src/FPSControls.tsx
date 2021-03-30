@@ -16,7 +16,8 @@ export default function FPSControls(props: FPSControlsProps) {
   const cylinderArgs: [number, number, number, number] = [PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_HEIGHT, 8]
   const [playerCylinder, cylinderBody] = useCylinder(() => ({
     mass: 1,
-    angularDamping: 1,
+    linearDamping: 0.5,
+    fixedRotation: true,
     args: cylinderArgs,
     rotation: [Math.PI/2, 0, 0],
   }))
@@ -79,7 +80,7 @@ export default function FPSControls(props: FPSControlsProps) {
     camera.position.set(cylinderPos.x, cylinderPos.y, cylinderPos.z + PLAYER_HEIGHT/2)
 
     const inputVelocity = new Vector3()
-    const MOVESPEED = 10
+    const MOVESPEED = 5
 
     if (keyStates['KeyW'])
       inputVelocity.add(getForwardVector())

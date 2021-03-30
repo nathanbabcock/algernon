@@ -6,6 +6,13 @@ import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
 import FPSControls from './FPSControls'
 
 export default function App () {
+  const contactMaterial = {
+    contactEquationStiffness: 1e4,
+    friction: 0.001,
+    // frictionEquationRelaxation: 100,
+    // restitution: 0,
+  }
+
   return (
     <Canvas
       shadowMap
@@ -28,7 +35,7 @@ export default function App () {
         shadow-mapSize-width={16384}
       />
 
-      <Physics gravity={[0, 0, -25]}>
+      <Physics gravity={[0, 0, -25]} defaultContactMaterial={contactMaterial}>
         <PhysicsWorld/>
       </Physics>
     </Canvas>

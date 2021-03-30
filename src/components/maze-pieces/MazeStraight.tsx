@@ -1,24 +1,30 @@
 import { useBox } from '@react-three/cannon';
-import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
-import { Frustum, Group } from 'three';
+import { Euler, Frustum, Group, Vector3 } from 'three';
 import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary';
 
 export default function MazeStraight(props: any) {
   const { camera } = useThree()
   const ref = useRef<Group>()
 
+  const parentPos: Vector3 = props.position || new Vector3()
+  const parentRot: Euler = props.rotation || new Euler()
+
   const wallArgs: [number, number, number] = [1, 4, MAZEPIECE_HEIGHT]
+  const leftWallPos = parentPos.clone().add(new Vector3(-1.5, 0, MAZEPIECE_HEIGHT / 2).applyEuler(parentRot))
   const [leftWall] = useBox(() => ({
     type: 'Static',
     args: wallArgs,
-    position: [-1.5, 0, MAZEPIECE_HEIGHT / 2]
+    position: [leftWallPos.x, leftWallPos.y, leftWallPos.z],
+    rotation: [parentRot.x, parentRot.y, parentRot.z],
   }))
+  const rightWallPos = parentPos.clone().add(new Vector3(1.5, 0, MAZEPIECE_HEIGHT / 2).applyEuler(parentRot))
   const [rightWall] = useBox(() => ({
     type: 'Static',
     args: wallArgs,
-    position: [1.5, 0, MAZEPIECE_HEIGHT / 2]
+    position: [rightWallPos.x, rightWallPos.y, rightWallPos.z],
+    rotation: [parentRot.x, parentRot.y, parentRot.z],
   }))
 
   useFrame(() => {
@@ -41,7 +47,7 @@ export default function MazeStraight(props: any) {
   })
 
   return (
-    <group {...props} ref={ref}>
+    <group ref={ref}>
       <mesh ref={leftWall} castShadow receiveShadow>
         <boxBufferGeometry args={wallArgs}/>
         <meshPhongMaterial attach="material" color="white"/>
