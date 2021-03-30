@@ -33,9 +33,8 @@ export default function FPSControls(props: FPSControlsProps) {
     const onKeydown = (event: KeyboardEvent) => {
       keyStates[ event.code ] = true
       
-      const paused = document.pointerLockElement !== document.body
-      if (event.code === 'Escape') {
-        props.setPaused(!paused)
+      if (event.code === 'Escape' && document.pointerLockElement === document.body) {
+        props.setPaused(true)
         document.exitPointerLock()
       }
     }

@@ -12,8 +12,8 @@
     "dev": "nf start",
     "electron": "electron .",
     "build": "react-scripts build",
-    "make": "electron-forge make",
-    "package": "electron-forge package",
+    "make": "npm run build && electron-forge make",
+    "package": "npm run build && electron-forge package",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -67,7 +67,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "asar": true
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
