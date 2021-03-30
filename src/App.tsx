@@ -9,8 +9,6 @@ export default function App () {
   const contactMaterial = {
     contactEquationStiffness: 1e4,
     friction: 0.001,
-    // frictionEquationRelaxation: 100,
-    // restitution: 0,
   }
 
   return (
