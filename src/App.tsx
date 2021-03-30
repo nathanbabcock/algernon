@@ -1,4 +1,4 @@
-import { Physics, usePlane } from '@react-three/cannon'
+import { Physics, useBox, usePlane } from '@react-three/cannon'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
@@ -26,11 +26,6 @@ export default function App () {
         shadow-mapSize-height={16384}
         shadow-mapSize-width={16384}
       />
-
-      <mesh castShadow receiveShadow position={[5, 5, 5]}>
-        <boxBufferGeometry args={[1, 1, 1]}/>
-        <meshBasicMaterial color="green" wireframe/>
-      </mesh>
 
       <Physics gravity={[0, 0, -25]}>
         <PhysicsWorld/>
@@ -62,11 +57,18 @@ export function PhysicsWorld() {
   }
   setPaused(document.pointerLockElement !== document.body)
 
+  const [box] = useBox(() => ({type: 'Static', args: [5, 5, 5]}))
+
   return (<Suspense fallback={null}>
 
     <FPSControls setPaused={setPaused}/>
 
     <GroundPlane/>
+
+    <mesh ref={box} castShadow receiveShadow>
+      <boxBufferGeometry args={[5, 5, 5]}/>
+      <meshBasicMaterial color="green" wireframe/>
+    </mesh>
 
     {/* <Box position={[0, 0, -0.9]} args={[2, 2, 2]} castShadow receiveShadow>
       <meshPhongMaterial attach="material" color="red"/>

@@ -1,39 +1,40 @@
 import { useCylinder } from '@react-three/cannon'
 import { useEffect, useState } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
-import { Object3D, Vector3 } from 'three'
+import { Vector3 } from 'three'
+
+const PLAYER_HEIGHT = 1
+// const PLAYER_CROUCH_HEIGHT = 0.5
+const PLAYER_RADIUS = 0.35
+const MOUSE_SENSITIVITY = 1000
 
 type FPSControlsProps = {
   setPaused: any
 }
 
-const PLAYER_HEIGHT = 1
-const PLAYER_CROUCH_HEIGHT = 0.5
-const PLAYER_RADIUS = 0.35
-
-const MOUSE_SENSITIVITY = 1000
-
 export default function FPSControls(props: FPSControlsProps) {
-  const cylinderArgs: [number, number, number, number] = [PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_HEIGHT, 32]
-  const [playerCylinder, cylinderBody] = useCylinder(() => ({ mass: 1, angularDamping: 1, args: cylinderArgs, rotation: [Math.PI/2, 0, 0] }))
+  const cylinderArgs: [number, number, number, number] = [PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_HEIGHT, 8]
+  const [playerCylinder, cylinderBody] = useCylinder(() => ({
+    mass: 1,
+    angularDamping: 1,
+    args: cylinderArgs,
+    rotation: [Math.PI/2, 0, 0],
+  }))
 
   const { camera } = useThree()
 
   const [keyStates] = useState<any>({})
 
-  const [pitchObject] = useState(new Object3D())
-
-  const [yawObject] = useState(new Object3D())
-  yawObject.position.z = PLAYER_HEIGHT
-  yawObject.add(pitchObject)
-
   useEffect(() => {
+    camera.rotation.x = Math.PI/2
+    camera.rotation.z = 0
+
     const onKeydown = (event: KeyboardEvent) => keyStates[ event.code ] = true
     const onKeyup = (event: KeyboardEvent) => keyStates[ event.code ] = false
     const onMouseup = () => document.body.requestPointerLock()
     const onMousemove = (event: MouseEvent) => {
       if (document.pointerLockElement !== document.body) return
-      camera.rotation.z += event.movementX / MOUSE_SENSITIVITY
+      camera.rotation.z -= event.movementX / MOUSE_SENSITIVITY
       camera.rotation.x -= event.movementY / MOUSE_SENSITIVITY
     }
     const onPointerLockChange = () => {
@@ -82,23 +83,21 @@ export default function FPSControls(props: FPSControlsProps) {
     if (keyStates['KeyS'])
       inputVelocity.sub(getForwardVector().multiplyScalar(MOVESPEED))
     if (keyStates['KeyA'])
-      inputVelocity.add(getSideVector().multiplyScalar(MOVESPEED))
-    if (keyStates['KeyD'])
       inputVelocity.sub(getSideVector().multiplyScalar(MOVESPEED))
+    if (keyStates['KeyD'])
+      inputVelocity.add(getSideVector().multiplyScalar(MOVESPEED))
 
     const cylinderPos = playerCylinder!.current!.position
-    camera.position.set(cylinderPos.x, cylinderPos.y, cylinderPos.z)
+    camera.position.set(cylinderPos.x, cylinderPos.y, cylinderPos.z + PLAYER_HEIGHT/2)
 
     if (inputVelocity.x === 0 && inputVelocity.y === 0 && inputVelocity.z === 0)
       return
     
-    // inputVelocity.applyEuler(camera.rotation)
     cylinderBody.velocity.set(inputVelocity.x, inputVelocity.y, inputVelocity.z)
-    // console.log(inputVelocity.x, inputVelocity.y, inputVelocity.z)
   })
 
   return (
-    <mesh ref={playerCylinder} receiveShadow>
+    <mesh ref={playerCylinder} receiveShadow visible={false}>
       <cylinderBufferGeometry args={cylinderArgs}/>
       <meshBasicMaterial color="green" wireframe/>
     </mesh>
