@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
+import { Vector3, Euler } from 'three';
 import getSegmentComponent from '../maze-pieces/get-segment-component';
 import { MazeSegment } from '../maze-pieces/MazeLibrary';
 import { MazeNoFutureNoPastSegment } from './NoFutureNoPastSegment';
 
 export default function NoFutureNoPast(props: any) {
-  const [ segment ] = useState<MazeNoFutureNoPastSegment>(props.segment || new MazeNoFutureNoPastSegment())
-  const [ maze, setMaze ] = useState(segment.maze)
-  const { camera } = useThree()
+  let position = new Vector3()
+  let rotation = new Euler()
+  if (props.position instanceof Array) position.set(...(props.position as [number, number, number]))
+  if (props.rotation instanceof Array) rotation.set(...(props.rotation as [number, number, number]))
+  if (props.position instanceof Vector3) position.copy(props.position)
+  if (props.rotation instanceof Euler) rotation.copy(props.rotation)
 
-  if (props.segment && props.position instanceof Array) segment.position.set(...(props.position as [number, number, number]))
-  if (props.segment && props.rotation instanceof Array) segment.rotation.set(...(props.rotation as [number, number, number]))
+  const [ segment ] = useState<MazeNoFutureNoPastSegment>(props.segment || new MazeNoFutureNoPastSegment(position, rotation))
+  const { camera } = useThree()
+  const [ maze, setMaze ] = useState(segment.maze)
 
   useFrame(() => {
     if (segment.update(camera.position)) {
@@ -19,7 +24,7 @@ export default function NoFutureNoPast(props: any) {
   })
 
   return (
-    <group {...props}>
+    <group>
       {maze.map((segment: MazeSegment) => {
         if (!segment) return null
         const MazePiece = getSegmentComponent(segment.type)

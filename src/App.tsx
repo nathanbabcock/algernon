@@ -2,7 +2,7 @@ import { Physics, usePlane } from '@react-three/cannon'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
-import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
+import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
 import FPSControls from './FPSControls'
 
 export default function App () {
@@ -65,8 +65,9 @@ export function PhysicsWorld() {
 
     <GroundPlane/>
 
-    <NoFutureNoPast/>
+    {/* <NoFutureNoPast position={[10, 10, 0]} rotation={[0, 0, -Math.PI/2]}/> */}
 
-    {/* <Infinite1DMaze requestCollisionUpdate={requestCollisionUpdate}/> */}
+    <Infinite1DMaze/>
+
   </Suspense>)
 }

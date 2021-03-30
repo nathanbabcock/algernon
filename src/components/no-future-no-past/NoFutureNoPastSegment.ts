@@ -1,4 +1,4 @@
-import { Vector3 } from 'three'
+import { Euler, Vector3 } from 'three'
 import { MazeConnection, MazeCornerSegment, MazeNoFutureSegment, MazeNoPastSegment, MAZEPIECE_HALFWIDTH, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
 
 export class MazeNoFutureNoPastSegment extends MazeSegment {
@@ -22,32 +22,46 @@ export class MazeNoFutureNoPastSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor(id?: number) {
-    super('no-future-no-past', id)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('no-future-no-past', position, rotation, id)
 
-    this.entrance = new MazeStraightSegment(-2)
+    this.entrance = new MazeStraightSegment(position.clone(), rotation.clone(), -2)
 
-    this.noFuture = new MazeNoFutureSegment(1)
-    this.noFuture.position.set(8, 8, 0)
-    this.noFuture.rotation.set(0, 0, -Math.PI/2)
+    this.noFuture = new MazeNoFutureSegment(
+      new Vector3(8, 8, 0).applyEuler(rotation).add(position),
+      new Euler(rotation.x, rotation.y, rotation.z - Math.PI/2),
+      1,
+    )
   
-    this.noPast = new MazeNoPastSegment(-1)
-    this.noPast.rotation.set(0, 0, -Math.PI)
+    this.noPast = new MazeNoPastSegment(
+      position.clone(),
+      new Euler(rotation.x, rotation.y, rotation.z - Math.PI),
+      -1,
+    )
   
-    this.exit = new MazeStraightSegment(2)
-    this.exit.position.set(8, 8, 0)
-    this.exit.rotation.set(0, 0, -Math.PI/2)
+    this.exit = new MazeStraightSegment(
+      new Vector3(8, 8, 0).applyEuler(rotation).add(position),
+      new Euler(rotation.x, rotation.y, rotation.z - Math.PI/2),
+      2,
+    )
   
-    this.straight1 = new MazeStraightSegment(3)
-    this.straight1.position.set(0, 4, 0)
+    this.straight1 = new MazeStraightSegment(
+      new Vector3(0, 4, 0).applyEuler(rotation).add(position),
+      rotation.clone(),
+      3,
+    )
   
-    this.corner = new MazeCornerSegment(4)
-    this.corner.position.set(0, 8, 0)
-    this.corner.rotation.set(0, 0, -Math.PI/2)
+    this.corner = new MazeCornerSegment(
+      new Vector3(0, 8, 0).applyEuler(rotation).add(position),
+      new Euler(rotation.x, rotation.y, rotation.z - Math.PI/2),
+      4,
+    )
   
-    this.straight2 = new MazeStraightSegment(5)
-    this.straight2.position.set(4, 8, 0)
-    this.straight2.rotation.set(0, 0, -Math.PI/2)
+    this.straight2 = new MazeStraightSegment(
+      new Vector3(4, 8, 0).applyEuler(rotation).add(position),
+      new Euler(rotation.x, rotation.y, rotation.z - Math.PI/2),
+      5,
+    )
   
     this.maze = [
       this.entrance,

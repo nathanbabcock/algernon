@@ -20,9 +20,11 @@ export abstract class MazeSegment {
 
   public connections: MazeConnection[] = []
 
-  constructor(type: string, id = 0) {
+  constructor(type: string, position: Vector3, rotation: Euler, id = 0) {
     this.id = id
     this.type = type
+    this.position = position
+    this.rotation = rotation
   }
 
   /**
@@ -42,8 +44,8 @@ export abstract class MazeSegment {
 
   public containsPoint(point: Vector3, parentSegment?: MazeSegment): boolean {
     const pos = this.position.clone()
-    if (parentSegment) // Apply parent transform
-      pos.applyEuler(parentSegment.rotation).add(parentSegment.position)
+    // if (parentSegment) // Apply parent transform
+    //   pos.applyEuler(parentSegment.rotation).add(parentSegment.position)
 
     return (
          point.x <= pos.x + MAZEPIECE_HALFWIDTH
@@ -89,8 +91,8 @@ export class MazeStraightSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor(id?: number) {
-    super('straight', id)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('straight', position, rotation, id)
   }
 }
 
@@ -106,8 +108,8 @@ export class MazeCornerSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor(id?: number) {
-    super('corner', id)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('corner', position, rotation, id)
   }
 }
 
@@ -119,8 +121,8 @@ export class MazeDeadEndSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor(id?: number) {
-    super('dead-end', id)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('dead-end', position, rotation, id)
   }
 }
 
@@ -132,8 +134,8 @@ export class MazeNoFutureSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor(id?: number) {
-    super('no-future', id)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('no-future', position, rotation, id)
   }
 }
 
@@ -145,8 +147,8 @@ export class MazeNoPastSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
-  constructor(id?: number) {
-    super('no-past', id)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('no-past', position, rotation, id)
   }
 }
 
@@ -165,7 +167,7 @@ export const MazeLibrary = [
  */
 export function getPossibleSegments(
   givenConnection: MazeConnection,
-  givenSegment?: MazeSegment,
+  givenSegment: MazeSegment,
   library?: any,
 ): MazeSegment[] {
   if (!library) library = MazeLibrary
@@ -175,8 +177,8 @@ export function getPossibleSegments(
   // Loop over pieces in library
   library.forEach((Segment: any) => {
     // Loop over connections in piece
-    new Segment().connections.forEach((connection: MazeConnection, index: number) => {
-      const newSegment = new Segment()
+    new Segment(givenSegment.position, givenSegment.rotation).connections.forEach((connection: MazeConnection, index: number) => {
+
       // clone the segment to avoid modifying state on the one we're iterating over
       // (those state changes would be retained across iterations)
 
@@ -188,12 +190,12 @@ export function getPossibleSegments(
       const rotatedPosition = connection.position.clone().applyQuaternion(quaternion)
       const translatedPosition = givenConnection.position.clone().sub(rotatedPosition)
 
-      newSegment.rotation.setFromQuaternion(quaternion)
-      newSegment.position.copy(translatedPosition)
+      let rotation = new Euler().setFromQuaternion(quaternion)
+      if (rotation.x < 0) // SUS
+        rotation.set(0, rotation.y, rotation.z)
+      
+      const newSegment = new Segment(translatedPosition, rotation)
       if (givenSegment) newSegment.connections[index].connectedTo = givenSegment
-
-      if (newSegment.rotation.x < 0) // SUS
-        newSegment.rotation.set(0, newSegment.rotation.y, newSegment.rotation.z)
 
       // Add that transformed segment to the list of possible segments
       possibleSegments.push(newSegment)

@@ -1,7 +1,8 @@
+import { Vector3, Euler } from 'three'
 import { getPossibleSegments, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
 
-export default class Infinite1DMazeManager {
+export default class Infinite1DMazeSegment extends MazeSegment  {
   public curIndex = 0
   public maze: MazeSegment[] = [] 
 
@@ -13,10 +14,14 @@ export default class Infinite1DMazeManager {
     return this.maze[0]
   }
 
-  constructor() {
-    const straight = new MazeStraightSegment()
-    straight.id = this.curIndex++
-    straight.rotation.set(0, 0, Math.PI / 2)
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('infinite-1d', position, rotation)
+
+    const straight = new MazeStraightSegment(
+      position.clone(),
+      new Euler(rotation.x, rotation.y, rotation.z + Math.PI / 2),
+      this.curIndex++
+    )
     this.maze.push(straight)
 
     for (let i = 1; i < 4; i++)
