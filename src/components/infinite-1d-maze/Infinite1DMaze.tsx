@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
+import { Vector3, Euler } from 'three';
 import getCurrentSegment from '../maze-pieces/get-current-segment';
 import getSegmentComponent from '../maze-pieces/get-segment-component';
-import Infinite1DMazeManager from './Infinite1DMazeManager';
+import Infinite1DMazeSegment from './Infinite1DMazeManager';
 
 export default function Infinite1DMaze(props: any) {
-  const [mazeManager] = useState(new Infinite1DMazeManager())
+  let position = new Vector3()
+  let rotation = new Euler()
+  if (props.position instanceof Array) position.set(...(props.position as [number, number, number]))
+  if (props.rotation instanceof Array) rotation.set(...(props.rotation as [number, number, number]))
+  if (props.position instanceof Vector3) position.copy(props.position)
+  if (props.rotation instanceof Euler) rotation.copy(props.rotation)
+
+  const [mazeManager] = useState<Infinite1DMazeSegment>(props.segment || new Infinite1DMazeSegment(position, rotation))
   const [maze, setMaze] = useState(mazeManager.maze);
   const { camera } = useThree()
 
@@ -16,14 +24,11 @@ export default function Infinite1DMaze(props: any) {
     const update = mazeManager.updateMaze(currentSegment)
     if (update.added > 0 || update.removed > 0) {
       setMaze([...mazeManager.maze])
-
-      // TODO this is too laggy -- requires an engine refactor to use @react-three/cannon
-      props.requestCollisionUpdate()
     }
   })
 
   return (
-    <group {...props}>
+    <group>
       {maze.map(segment => {
         if (!segment) return null
         const MazePiece = getSegmentComponent(segment.type)
@@ -32,7 +37,6 @@ export default function Infinite1DMaze(props: any) {
           segment={segment}
           position={segment.position}
           rotation={segment.rotation}
-          requestCollisionUpdate={props.requestCollisionUpdate}
         />
       })}
     </group>  

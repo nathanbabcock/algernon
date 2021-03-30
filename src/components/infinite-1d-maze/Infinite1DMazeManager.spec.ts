@@ -1,6 +1,6 @@
 import '@testing-library/react'
 import { MazeCornerSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
-import Infinite1DMazeManager from './Infinite1DMazeManager'
+import Infinite1DMazeSegment from './Infinite1DMazeManager'
 
 const getTurnsAhead = (maze: MazeSegment[], curSegment: MazeSegment) => {
   const curIndex = maze.indexOf(curSegment)
@@ -12,16 +12,16 @@ const getTurnsAhead = (maze: MazeSegment[], curSegment: MazeSegment) => {
 
 describe('Infinite 1D Maze Manager', () => {
   it('exists', () => {
-    expect(new Infinite1DMazeManager()).toBeDefined()
+    expect(new Infinite1DMazeSegment()).toBeDefined()
   })
 
   it('populates an initial maze', () => {
-    const mazeManager = new Infinite1DMazeManager()
+    const mazeManager = new Infinite1DMazeSegment()
     expect(mazeManager.maze.length).toBeGreaterThan(0)
   })
 
   it('adds turns to the end of the maze if needed', () => {
-    const mazeManager = new Infinite1DMazeManager()
+    const mazeManager = new Infinite1DMazeSegment()
     mazeManager.maze = [ new MazeStraightSegment(0) ]
     mazeManager.curIndex = 1
     const curSegment = mazeManager.maze[0]
@@ -34,7 +34,7 @@ describe('Infinite 1D Maze Manager', () => {
   })
 
   it('removes turns from the end of the maze if needed', () => {
-    const mazeManager = new Infinite1DMazeManager()
+    const mazeManager = new Infinite1DMazeSegment()
     mazeManager.maze = [
       new MazeCornerSegment(0),
       new MazeCornerSegment(1),
@@ -52,7 +52,7 @@ describe('Infinite 1D Maze Manager', () => {
   })
 
   it('stabilizes after a single update', () => {
-    const mazeManager = new Infinite1DMazeManager()
+    const mazeManager = new Infinite1DMazeSegment()
     mazeManager.maze = [
       new MazeCornerSegment(0),
       new MazeCornerSegment(1),
