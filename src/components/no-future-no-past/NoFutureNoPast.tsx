@@ -15,7 +15,6 @@ export default function NoFutureNoPast(props: any) {
   useFrame(() => {
     if (segment.update(camera.position)) {
       setMaze([...segment.maze])
-      props.requestCollisionUpdate()
     }
   })
 

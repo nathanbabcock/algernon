@@ -1,7 +1,8 @@
-import { Physics, useBox, usePlane } from '@react-three/cannon'
+import { Physics, usePlane } from '@react-three/cannon'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
+import NoFutureNoPast from './components/no-future-no-past/NoFutureNoPast'
 import FPSControls from './FPSControls'
 
 export default function App () {
@@ -45,10 +46,6 @@ function GroundPlane() {
 }
 
 export function PhysicsWorld() {
-  const requestCollisionUpdate = () => {
-    console.warn('becoming deprecated')
-  }
-
   const setPaused = (paused: boolean) => {
     if (paused)
       document.getElementById('pause')!.classList.add('visible')
@@ -57,27 +54,14 @@ export function PhysicsWorld() {
   }
   setPaused(document.pointerLockElement !== document.body)
 
-  const [box] = useBox(() => ({type: 'Static', args: [5, 5, 5]}))
-
   return (<Suspense fallback={null}>
 
     <FPSControls setPaused={setPaused}/>
 
     <GroundPlane/>
 
-    <mesh ref={box} castShadow receiveShadow>
-      <boxBufferGeometry args={[5, 5, 5]}/>
-      <meshBasicMaterial color="green" wireframe/>
-    </mesh>
+    <NoFutureNoPast/>
 
-    {/* <Box position={[0, 0, -0.9]} args={[2, 2, 2]} castShadow receiveShadow>
-      <meshPhongMaterial attach="material" color="red"/>
-    </Box> */}
-    
-    {/* <NoFutureNoPast position={[-10, -10, 0]} rotation={[0, 0, Math.PI/2]} requestCollisionUpdate={requestCollisionUpdate}/> */}
-    {/* <NoFutureNoPast requestCollisionUpdate={requestCollisionUpdate}/> */}
-
-    {/* <Infinite1DMaze position={[0, 4, 0]} rotation={[0, 0, -Math.PI/2]} requestCollisionUpdate={requestCollisionUpdate}/> */}
     {/* <Infinite1DMaze requestCollisionUpdate={requestCollisionUpdate}/> */}
   </Suspense>)
 }

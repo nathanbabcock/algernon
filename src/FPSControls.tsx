@@ -75,24 +75,25 @@ export default function FPSControls(props: FPSControlsProps) {
   }
 
   useFrame(() => {
+    const cylinderPos = playerCylinder!.current!.position
+    camera.position.set(cylinderPos.x, cylinderPos.y, cylinderPos.z + PLAYER_HEIGHT/2)
+
     const inputVelocity = new Vector3()
     const MOVESPEED = 10
 
     if (keyStates['KeyW'])
-      inputVelocity.add(getForwardVector().multiplyScalar(MOVESPEED))
+      inputVelocity.add(getForwardVector())
     if (keyStates['KeyS'])
-      inputVelocity.sub(getForwardVector().multiplyScalar(MOVESPEED))
+      inputVelocity.sub(getForwardVector())
     if (keyStates['KeyA'])
-      inputVelocity.sub(getSideVector().multiplyScalar(MOVESPEED))
+      inputVelocity.sub(getSideVector())
     if (keyStates['KeyD'])
-      inputVelocity.add(getSideVector().multiplyScalar(MOVESPEED))
-
-    const cylinderPos = playerCylinder!.current!.position
-    camera.position.set(cylinderPos.x, cylinderPos.y, cylinderPos.z + PLAYER_HEIGHT/2)
+      inputVelocity.add(getSideVector())
 
     if (inputVelocity.x === 0 && inputVelocity.y === 0 && inputVelocity.z === 0)
       return
-    
+
+    inputVelocity.normalize().multiplyScalar(MOVESPEED)
     cylinderBody.velocity.set(inputVelocity.x, inputVelocity.y, inputVelocity.z)
   })
 

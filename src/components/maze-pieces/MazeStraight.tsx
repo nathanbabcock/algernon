@@ -1,3 +1,4 @@
+import { useBox } from '@react-three/cannon';
 import { Box } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
@@ -7,6 +8,18 @@ import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary';
 export default function MazeStraight(props: any) {
   const { camera } = useThree()
   const ref = useRef<Group>()
+
+  const wallArgs: [number, number, number] = [1, 4, MAZEPIECE_HEIGHT]
+  const [leftWall] = useBox(() => ({
+    type: 'Static',
+    args: wallArgs,
+    position: [-1.5, 0, MAZEPIECE_HEIGHT / 2]
+  }))
+  const [rightWall] = useBox(() => ({
+    type: 'Static',
+    args: wallArgs,
+    position: [1.5, 0, MAZEPIECE_HEIGHT / 2]
+  }))
 
   useFrame(() => {
     const segment = props.segment as MazeSegment
@@ -29,13 +42,15 @@ export default function MazeStraight(props: any) {
 
   return (
     <group {...props} ref={ref}>
-      <Box position={[-1.5, 0, MAZEPIECE_HEIGHT / 2]} args={[1, 4, MAZEPIECE_HEIGHT]} castShadow receiveShadow>
+      <mesh ref={leftWall} castShadow receiveShadow>
+        <boxBufferGeometry args={wallArgs}/>
         <meshPhongMaterial attach="material" color="white"/>
-      </Box>
+      </mesh>
 
-      <Box position={[1.5, 0, MAZEPIECE_HEIGHT / 2]} args={[1, 4, MAZEPIECE_HEIGHT]} castShadow receiveShadow>
+      <mesh ref={rightWall} castShadow receiveShadow>
+        <boxBufferGeometry args={wallArgs}/>
         <meshPhongMaterial attach="material" color="white"/>
-      </Box>
+      </mesh>
     </group>
   )
 };
