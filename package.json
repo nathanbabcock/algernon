@@ -1,7 +1,10 @@
 {
   "name": "algernon",
-  "version": "0.1.0",
+  "author": "excalo",
+  "version": "0.0.1",
+  "description": "An infinite maze",
   "private": true,
+  "license": "UNLICENSED",
   "main": "src/electron.js",
   "homepage": "./",
   "scripts": {

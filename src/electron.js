@@ -18,6 +18,7 @@ function createWindow() {
         height: 1080,
         icon: `${__dirname}/../public/algernon-bg.png`,
     });
+    mainWindow.setMenuBarVisibility(false);
 
     // and load the index.html of the app.
     const startUrl = process.env.ELECTRON_START_URL || url.format({

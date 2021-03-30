@@ -30,9 +30,17 @@ export default function FPSControls(props: FPSControlsProps) {
     camera.rotation.x = Math.PI/2
     camera.rotation.z = 0
 
-    const onKeydown = (event: KeyboardEvent) => keyStates[ event.code ] = true
+    const onKeydown = (event: KeyboardEvent) => {
+      keyStates[ event.code ] = true
+      
+      const paused = document.pointerLockElement !== document.body
+      if (event.code === 'Escape') {
+        props.setPaused(!paused)
+        document.exitPointerLock()
+      }
+    }
     const onKeyup = (event: KeyboardEvent) => keyStates[ event.code ] = false
-    const onMouseup = () => document.body.requestPointerLock()
+    const onMousedown = () => document.body.requestPointerLock()
     const onMousemove = (event: MouseEvent) => {
       if (document.pointerLockElement !== document.body) return
       camera.rotation.z -= event.movementX / MOUSE_SENSITIVITY
@@ -46,14 +54,14 @@ export default function FPSControls(props: FPSControlsProps) {
     document.addEventListener('mousemove', onMousemove)
     document.addEventListener('keydown', onKeydown)
     document.addEventListener('keyup', onKeyup)
-    document.addEventListener('mousedown', onMouseup)
+    document.addEventListener('mousedown', onMousedown)
     document.addEventListener('pointerlockchange', onPointerLockChange)
 
     return () => {
       document.removeEventListener('mousemove', onMousemove)
       document.removeEventListener('keydown', onKeydown)
       document.removeEventListener('keyup', onKeyup)
-      document.removeEventListener('mousedown', onMouseup)
+      document.removeEventListener('mousedown', onMousedown)
       document.addEventListener('pointerlockchange', onPointerLockChange)
     }
   })
