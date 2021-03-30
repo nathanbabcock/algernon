@@ -1,9 +1,9 @@
 import { Physics, usePlane } from '@react-three/cannon'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
-import { Euler, Vector3 } from 'three'
 import Camera from './components/Camera'
 import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
+import Skydome from './components/Skydome'
 import FPSControls from './FPSControls'
 
 export default function App () {
@@ -31,8 +31,9 @@ export default function App () {
         shadow-mapSize-height={16384}
         shadow-mapSize-width={16384}
       />
+      <Skydome />
       <Physics gravity={[0, 0, -25]} defaultContactMaterial={contactMaterial}>
-        <PhysicsWorld/>
+        <PhysicsWorld />
       </Physics>
     </Canvas>
   )
