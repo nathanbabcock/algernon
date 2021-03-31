@@ -14,7 +14,7 @@ export default function App () {
   }
 
   return (
-    <Canvas shadowMap>
+    <Canvas shadowMap shadowMap-autoUpdate={true}>
       <Camera
         position={[0, 0, 15]}
         near={0.1}
