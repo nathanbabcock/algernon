@@ -1,12 +1,12 @@
 import { Physics } from '@react-three/cannon'
 import { Stars } from '@react-three/drei'
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Canvas } from 'react-three-fiber'
-import Fountain from './components/rooms/Fountain'
-import FountainRoom from './components/rooms/FountainRoom'
+import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
 import Camera from './components/three/Camera'
 import FPSControls from './components/three/FPSControls'
 import GroundPlane from './components/three/GroundPlane'
+import preloadAssets from './components/three/preload'
 import Skydome from './components/three/Skydome'
 import { FOG_COLOR } from './theme'
 
@@ -15,6 +15,8 @@ export default function App () {
     contactEquationStiffness: 1e4,
     friction: 0.001,
   }
+
+  useEffect(preloadAssets)
 
   return (
     <Canvas shadowMap>
@@ -33,8 +35,8 @@ export default function App () {
         intensity={0.6}
         position={[50, 50, 50]}
         castShadow
-        // shadow-mapSize-height={16384}
-        // shadow-mapSize-width={16384}
+        // shadow-mapSize-height={4096}
+        // shadow-mapSize-width={4096}
       />
       <Skydome />
       <Stars
@@ -68,8 +70,7 @@ export function PhysicsWorld() {
     <Suspense fallback={null}>
       <FPSControls setPaused={setPaused}/>
       <GroundPlane/>
-      {/* <Infinite1DMaze/> */}
-      <FountainRoom />
+      <Infinite1DMaze/>
     </Suspense>
   )
 }

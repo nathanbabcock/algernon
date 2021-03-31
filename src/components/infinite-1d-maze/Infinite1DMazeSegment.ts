@@ -1,6 +1,7 @@
 import { Vector3, Euler } from 'three'
 import { getPossibleSegments, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
+import FountainRoomSegment from '../rooms/FountainRoomSegment'
 
 export default class Infinite1DMazeSegment extends MazeSegment  {
   public curIndex = 0
@@ -28,24 +29,22 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
       this.addSegment()
   }
 
-  public addSegment(toFront = false): MazeSegment {
+  public addSegment(toFront = false): MazeSegment | null {
     const origin = toFront ? this.startOfChain : this.endOfChain
     const connections = origin.getTransformedConnections()
     const openIndex = origin.connections.findIndex(connection => !connection.connectedTo)
-    if (openIndex === -1) {
-      console.group('Infinite1DMazeManager fatal error')
-      console.error('Could not find an open connection to attach to in addSegment()')
-      console.info('Maze:', this.maze)
-      console.info('End of chain:', origin)
-      console.info('Connections:', origin.connections)
-      console.groupEnd()
-    }
+
+    if (openIndex === -1)
+      return null
+
     let segments
-    if (Math.random() < 2) { // Temporarily disabled due to bugs
-      segments = getPossibleSegments(connections[openIndex], origin)
-    } else {
-      // Randomly choose a *special* maze segment
+    const roll = Math.random()
+    if (roll < 0.015) {
+      segments = getPossibleSegments(connections[openIndex], origin, [FountainRoomSegment])
+    } else if (roll < 0.030) {
       segments = getPossibleSegments(connections[openIndex], origin, [MazeNoFutureNoPastSegment])
+    } else { // Randomly choose a *special* maze segment
+      segments = getPossibleSegments(connections[openIndex], origin)
     }
     const segment = segments[Math.floor(Math.random() * segments.length)]
     segment.id = this.curIndex++
@@ -55,7 +54,9 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     // HACK: Forcibly prevent multiple consecutive corners
     // Under the current (POC) spawning model, you can see straight down diagonals
     // and witness new segments spawning in (an edge case)
-    if (origin.type === 'corner' && segment.type === 'corner') {
+    if ( (origin.type === 'corner' && segment.type === 'corner')
+      || (origin.type === 'no-future-no-past' && segment.type === 'no-future-no-past')
+    ) {
       this.removeSegment(toFront ? 0 : this.maze.length-1)
       return this.addSegment(toFront)
     }
@@ -112,6 +113,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     // Add turns to end
     while (turns < 2) {
       const newSegment = this.addSegment()
+      if (!newSegment) break
       if (newSegment.type !== 'straight') turns++
       added++
     }
@@ -143,6 +145,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     // Add turns to start
     while (turns < 2) {
       const newSegment = this.addSegment(true)
+      if (!newSegment) break
       if (newSegment.type !== 'straight') turns++
       added++
     }

@@ -62,10 +62,9 @@ export default function FountainRoom(props: any) {
 
   return (
     <group>
+      <Fountain position={segment.position} rotation={segment.rotation}/>
 
-      <group position={segment.position} rotation={segment.rotation}>
-        <Fountain rotation={[0, 0, Math.PI/4]}/>
-
+      <group position={segment.position} rotation={segment.rotation} visible={false}>
         { segment.connections.map((connection, index) => (
           <arrowHelper args={[connection.forward, connection.position, 1, 0xff0000]} key={index}/>
         ))}

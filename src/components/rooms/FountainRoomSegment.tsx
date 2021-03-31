@@ -9,6 +9,15 @@ export default class FountainRoomSegment extends MazeSegment {
     },
   ] as MazeConnection[]
 
+  public containsPoint(point: Vector3): boolean {
+    return (
+         point.x <= this.position.x + 8
+      && point.x >= this.position.x - 8
+      && point.y <= this.position.y + 8
+      && point.y >= this.position.y - 8
+    )
+  }
+
   constructor(position: Vector3, rotation: Euler, id?: number) {
     super('fountain-room', position, rotation, id)
   }
