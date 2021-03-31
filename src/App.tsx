@@ -2,7 +2,7 @@ import { Physics } from '@react-three/cannon'
 import { Stars } from '@react-three/drei'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
-import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
+import Fountain from './components/statues/Fountain'
 import Camera from './components/three/Camera'
 import FPSControls from './components/three/FPSControls'
 import GroundPlane from './components/three/GroundPlane'
@@ -67,7 +67,8 @@ export function PhysicsWorld() {
     <Suspense fallback={null}>
       <FPSControls setPaused={setPaused}/>
       <GroundPlane/>
-      <Infinite1DMaze/>
+      {/* <Infinite1DMaze/> */}
+      <Fountain />
     </Suspense>
   )
 }
