@@ -7,6 +7,7 @@ import Camera from './components/three/Camera'
 import FPSControls from './components/three/FPSControls'
 import GroundPlane from './components/three/GroundPlane'
 import Skydome from './components/three/Skydome'
+import { FOG_COLOR } from './theme'
 
 export default function App () {
   const contactMaterial = {
@@ -15,22 +16,24 @@ export default function App () {
   }
 
   return (
-    <Canvas shadowMap shadowMap-autoUpdate={true}>
+    <Canvas shadowMap>
       <Camera
         position={[0, 0, 15]}
         near={0.1}
         far={100000}
         rotation={[0, 0, 0, 'YZX']}
         up={[0, 0, 1]}
-      />
-      <fog attach="fog" args={['black', 1, 40]}/>
-      <ambientLight intensity={0.25} />
-      <directionalLight
+      >
+        {/* <pointLight color="orange" intensity={1} distance={10} /> */}
+      </Camera>
+      <fog attach="fog" args={[FOG_COLOR, 1, 40]}/>
+      <ambientLight intensity={0.5} />
+      <spotLight
         intensity={0.6}
-        position={[30, 45, 50]}
+        position={[50, 50, 50]}
         castShadow
-        shadow-mapSize-height={16384}
-        shadow-mapSize-width={16384}
+        // shadow-mapSize-height={16384}
+        // shadow-mapSize-width={16384}
       />
       <Skydome />
       <Stars
@@ -56,6 +59,9 @@ export function PhysicsWorld() {
       document.getElementById('pause')!.classList.remove('visible')
   }
   setPaused(document.pointerLockElement !== document.body)
+
+  // const {gl} = useThree()
+  // useEffect(() => {gl.shadowMap.autoUpdate = true})
 
   return (
     <Suspense fallback={null}>

@@ -1,11 +1,11 @@
 import { usePlane } from '@react-three/cannon'
+import { Plane } from '@react-three/drei'
+import { GROUND_COLOR } from '../../theme'
 
 export default function GroundPlane(props: any) {
-  const [plane] = usePlane(() => ({ type: 'Static' }))
+  usePlane(() => ({ type: 'Static' }))
 
-  return <mesh ref={plane} receiveShadow>
-    <planeBufferGeometry args={[1000, 1000]}>
-      <meshPhongMaterial attach="material" color="grey"/>
-    </planeBufferGeometry>
-  </mesh>
+  return <Plane args={[1000, 1000, 1000, 1000]} receiveShadow>
+      <meshPhongMaterial attach="material" color={GROUND_COLOR}/>
+    </Plane>
 }

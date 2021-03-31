@@ -2,6 +2,7 @@ import { useBox } from '@react-three/cannon';
 import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Frustum, Group, Vector3 } from 'three';
+import { WALL_COLOR } from '../../theme';
 import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary';
 
 export default function MazeCorner(props: any) {
@@ -60,17 +61,17 @@ export default function MazeCorner(props: any) {
     <group ref={ref}>
       <mesh ref={leftWall} castShadow receiveShadow>
         <boxBufferGeometry args={sideWallArgs}/>
-        <meshPhongMaterial attach="material" color="white"/>
+        <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
 
       <mesh ref={backWall} castShadow receiveShadow>
         <boxBufferGeometry args={sideWallArgs}/>
-        <meshPhongMaterial attach="material" color="white"/>
+        <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
 
       <mesh ref={cornerPillar} castShadow receiveShadow>
         <boxBufferGeometry args={cornerArgs}/>
-        <meshPhongMaterial attach="material" color="white"/>
+        <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
     </group>
   )

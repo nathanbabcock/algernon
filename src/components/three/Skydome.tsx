@@ -1,6 +1,7 @@
 import { Sphere } from '@react-three/drei';
 import React from 'react';
 import { BackSide, Color } from 'three';
+import { SKY_TOP_COLOR, SKY_BOTTOM_COLOR } from '../../theme';
 
 const vertexShader = `
 varying vec3 vWorldPosition;
@@ -30,8 +31,8 @@ void main() {
 }`
 
 const uniforms = {
-  "topColor": { value: new Color( 0x0077ff ) },
-  "bottomColor": { value: new Color( 0xffffff ) },
+  "topColor": { value: new Color(SKY_TOP_COLOR) },
+  "bottomColor": { value: new Color(SKY_BOTTOM_COLOR) },
   "offset": { value: 33 },
   "exponent": { value: 0.6 },
 }
