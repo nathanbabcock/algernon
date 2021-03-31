@@ -1,10 +1,12 @@
-import { Physics, usePlane } from '@react-three/cannon'
-import React, { Suspense } from 'react'
-import { Canvas } from 'react-three-fiber'
-import Camera from './components/Camera'
+import { Physics } from '@react-three/cannon'
+import React, { Suspense, useEffect } from 'react'
+import { Canvas, useThree } from 'react-three-fiber'
+import { Color, Fog } from 'three'
 import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
-import Skydome from './components/Skydome'
-import FPSControls from './FPSControls'
+import Camera from './components/three/Camera'
+import FPSControls from './components/three/FPSControls'
+import GroundPlane from './components/three/GroundPlane'
+import Skydome from './components/three/Skydome'
 
 export default function App () {
   const contactMaterial = {
@@ -12,8 +14,10 @@ export default function App () {
     friction: 0.001,
   }
 
+  const fog = new Fog(0x000000, 0.1, 10)
+
   return (
-    <Canvas shadowMap>
+    <Canvas shadowMap shadowMap-autoUpdate={true}>
       <Camera
         position={[0, 0, 15]}
         near={0.1}
@@ -21,12 +25,11 @@ export default function App () {
         rotation={[0, 0, 0, 'YZX']}
         up={[0, 0, 1]}
       />
-      <ambientLight intensity={0.5} />
-      <spotLight
+      <fog attach="fog" args={['black', 1, 40]}/>
+      <ambientLight intensity={0.25} />
+      <directionalLight
         intensity={0.6}
         position={[30, 45, 50]}
-        angle={0.2}
-        penumbra={1}
         castShadow
         shadow-mapSize-height={16384}
         shadow-mapSize-width={16384}
@@ -39,16 +42,6 @@ export default function App () {
   )
 }
 
-function GroundPlane() {
-  const [plane] = usePlane(() => ({ type: 'Static' }))
-
-  return <mesh ref={plane} receiveShadow>
-    <planeBufferGeometry args={[1000, 1000]}>
-      <meshPhongMaterial attach="material" color="grey"/>
-    </planeBufferGeometry>
-  </mesh>
-}
-
 export function PhysicsWorld() {
   const setPaused = (paused: boolean) => {
     if (paused)
@@ -58,15 +51,11 @@ export function PhysicsWorld() {
   }
   setPaused(document.pointerLockElement !== document.body)
 
-  return (<Suspense fallback={null}>
-
-    <FPSControls setPaused={setPaused}/>
-
-    <GroundPlane/>
-
-    {/* <NoFutureNoPast position={[10, 10, 0]} rotation={[0, 0, -Math.PI/2]}/> */}
-
-    <Infinite1DMaze/>
-
-  </Suspense>)
+  return (
+    <Suspense fallback={null}>
+      <FPSControls setPaused={setPaused}/>
+      <GroundPlane/>
+      <Infinite1DMaze/>
+    </Suspense>
+  )
 }
