@@ -61,12 +61,15 @@ export default function FountainRoom(props: any) {
   }))
 
   return (
-    <group {...props}>
-      <Fountain rotation={[0, 0, Math.PI/4]}/>
+    <group>
 
-      { segment.connections.map((connection, index) => (
-        <arrowHelper args={[connection.forward, connection.position, 1, 0xff0000]} key={index}/>
-      )) }
+      <group position={segment.position} rotation={segment.rotation}>
+        <Fountain rotation={[0, 0, Math.PI/4]}/>
+
+        { segment.connections.map((connection, index) => (
+          <arrowHelper args={[connection.forward, connection.position, 1, 0xff0000]} key={index}/>
+        ))}
+      </group>
 
       <mesh ref={leftWall1} castShadow receiveShadow>
         <boxBufferGeometry args={halfWallArgs}/>
