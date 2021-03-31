@@ -8,6 +8,7 @@ import { useGLTF } from '@react-three/drei'
 
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { useFrame, useThree } from 'react-three-fiber'
+import { useCylinder } from '@react-three/cannon'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -26,32 +27,40 @@ type GLTFResult = GLTF & {
 
 export default function Model(props: JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group>()
+  const mesh = useRef<THREE.Mesh>()
   
   const { nodes, materials } = useGLTF('models/fountain.glb') as GLTFResult
   materials['Material.001'].transparent = true
   materials['Material.001'].opacity = 0.3
   
-  const scale = 0.005
+  const { clock } = useThree()
   
-  const mesh = useRef<THREE.Mesh>()
-  useEffect(() => void(console.log(mesh.current)))
-
-  const three = useThree()
-  console.log(three)
-
   useFrame((_, delta) => {
     if(!mesh.current) return
     
-    const bounce = 501.71 + Math.sin(three.clock.elapsedTime * 25)
+    const bounce = 501.71 + Math.sin(clock.elapsedTime * 25)
     mesh.current!.position.setY(bounce)
-
+    
     const mat = mesh.current!.material! as THREE.MeshStandardMaterial
     const map: THREE.CanvasTexture = mat.map as THREE.CanvasTexture
     map.offset.setY(map.offset.y - delta/3)
   })
+  
+  const hitboxArgs: [number, number, number, number] = [0.75, 5, 6.5, 8]
+  const [hitbox] = useCylinder(() => ({
+    type: 'Static',
+    args: hitboxArgs,
+    rotation: [Math.PI/2, 0, 0],
+  }))
 
+  const scale = 0.005
   return (
     <group ref={group} {...props} dispose={null}>
+      <mesh ref={hitbox} visible={false}>
+        <cylinderBufferGeometry args={hitboxArgs}/>
+        <meshBasicMaterial color="green" wireframe/>
+      </mesh>
+
       <group scale={[scale, scale, scale]} rotation={[Math.PI/2, 0, 0]} position={[0, 0, -0.1]}>
         <mesh ref={mesh} material={materials['Material.001']} geometry={nodes.f.geometry} position={[0, 501.71, 5.93]} />
         <mesh material={materials['Material.004']} geometry={nodes.h_1.geometry} position={[0, 117.86, -6]} />
