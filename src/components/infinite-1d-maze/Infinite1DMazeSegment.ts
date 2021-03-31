@@ -3,6 +3,8 @@ import { getPossibleSegments, MazeSegment, MazeStraightSegment } from '../maze-p
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
 import FountainRoomSegment from '../rooms/FountainRoomSegment'
 
+const MAZE_BUFFER_SIZE = 2
+
 export default class Infinite1DMazeSegment extends MazeSegment  {
   public curIndex = 0
   public maze: MazeSegment[] = [] 
@@ -55,7 +57,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     // Under the current (POC) spawning model, you can see straight down diagonals
     // and witness new segments spawning in (an edge case)
     if ( (origin.type === 'corner' && segment.type === 'corner')
-      || (origin.type === 'no-future-no-past' && segment.type === 'no-future-no-past')
+      // || (origin.type === 'no-future-no-past' && segment.type === 'no-future-no-past')
     ) {
       this.removeSegment(toFront ? 0 : this.maze.length-1)
       return this.addSegment(toFront)
@@ -107,11 +109,11 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
 
     for (i = currentIndex + 1; i < this.maze.length; i++) {
       if (this.maze[i].type !== 'straight') turns++
-      if (turns >= 2) break
+      if (turns >= MAZE_BUFFER_SIZE) break
     }
 
     // Add turns to end
-    while (turns < 2) {
+    while (turns < MAZE_BUFFER_SIZE) {
       const newSegment = this.addSegment()
       if (!newSegment) break
       if (newSegment.type !== 'straight') turns++
@@ -139,11 +141,11 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
 
     for (i = currentIndex; i >= 0; i--) {
       if (this.maze[i].type !== 'straight') turns++
-      if (turns >= 2) break
+      if (turns >= MAZE_BUFFER_SIZE) break
     }
 
     // Add turns to start
-    while (turns < 2) {
+    while (turns < MAZE_BUFFER_SIZE) {
       const newSegment = this.addSegment(true)
       if (!newSegment) break
       if (newSegment.type !== 'straight') turns++
