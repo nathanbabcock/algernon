@@ -1,4 +1,5 @@
 import { Physics } from '@react-three/cannon'
+import { Stars } from '@react-three/drei'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import Infinite1DMaze from './components/infinite-1d-maze/Infinite1DMaze'
@@ -32,6 +33,14 @@ export default function App () {
         shadow-mapSize-width={16384}
       />
       <Skydome />
+      <Stars
+        radius={100} // Radius of the inner sphere (default=100)
+        depth={50} // Depth of area where stars should fit (default=50)
+        count={5000} // Amount of stars (default=5000)
+        factor={4} // Size factor (default=4)
+        saturation={0} // Saturation 0-1 (default=0)
+        fade // Faded dots (default=false)
+      />
       <Physics gravity={[0, 0, -25]} defaultContactMaterial={contactMaterial}>
         <PhysicsWorld />
       </Physics>
