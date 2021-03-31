@@ -10,11 +10,20 @@ export default function FountainRoom(props: any) {
   const parentRot: Euler = props.rotation || new Euler()
 
   const wallArgs: [number, number, number] = [1, 16, MAZEPIECE_HEIGHT]
-  const leftWallPos = parentPos.clone().add(new Vector3(-15/2, 0, MAZEPIECE_HEIGHT / 2).applyEuler(parentRot))
-  const [leftWall] = useBox(() => ({
+  const halfWallArgs: [number, number, number] = [1, 7, MAZEPIECE_HEIGHT]
+  const leftWall1Pos = parentPos.clone().add(new Vector3(-15/2, -4.5, MAZEPIECE_HEIGHT / 2).applyEuler(parentRot))
+  const [leftWall1] = useBox(() => ({
     type: 'Static',
-    args: wallArgs,
-    position: [leftWallPos.x, leftWallPos.y, leftWallPos.z],
+    args: halfWallArgs,
+    position: [leftWall1Pos.x, leftWall1Pos.y, leftWall1Pos.z],
+    rotation: [parentRot.x, parentRot.y, parentRot.z],
+  }))
+
+  const leftWall2Pos = parentPos.clone().add(new Vector3(-15/2, 4.5, MAZEPIECE_HEIGHT / 2).applyEuler(parentRot))
+  const [leftWall2] = useBox(() => ({
+    type: 'Static',
+    args: halfWallArgs,
+    position: [leftWall2Pos.x, leftWall2Pos.y, leftWall2Pos.z],
     rotation: [parentRot.x, parentRot.y, parentRot.z],
   }))
 
@@ -46,8 +55,13 @@ export default function FountainRoom(props: any) {
     <group {...props}>
       <Fountain/>
 
-      <mesh ref={leftWall} castShadow receiveShadow>
-        <boxBufferGeometry args={wallArgs}/>
+      <mesh ref={leftWall1} castShadow receiveShadow>
+        <boxBufferGeometry args={halfWallArgs}/>
+        <meshPhongMaterial attach="material" color={WALL_COLOR}/>
+      </mesh>
+
+      <mesh ref={leftWall2} castShadow receiveShadow>
+        <boxBufferGeometry args={halfWallArgs}/>
         <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
 
