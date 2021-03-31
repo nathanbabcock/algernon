@@ -61,12 +61,14 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
         <meshBasicMaterial color="green" wireframe/>
       </mesh>
 
+      <pointLight position={[0, 0, 7.5]} intensity={0.2} castShadow/>
+
       <group scale={[scale, scale, scale]} rotation={[Math.PI/2, 0, 0]} position={[0, 0, -0.1]}>
-        <mesh ref={mesh} material={materials['Material.001']} geometry={nodes.f.geometry} position={[0, 501.71, 5.93]} />
-        <mesh material={materials['Material.004']} geometry={nodes.h_1.geometry} position={[0, 117.86, -6]} />
-        <mesh material={materials['Material.001']} geometry={nodes.f_1.geometry} position={[0, 71.51, 0]} />
-        <mesh material={materials['Material.001']} geometry={nodes.f_3.geometry} position={[0, 330.9, 0]} />
-        <mesh material={materials['Material.001']} geometry={nodes.f_2.geometry} position={[0, 449.14, 0]} />
+        <mesh ref={mesh} material={materials['Material.001']} geometry={nodes.f.geometry} position={[0, 501.71, 5.93]} castShadow receiveShadow/>
+        <mesh material={materials['Material.004']} geometry={nodes.h_1.geometry} position={[0, 117.86, -6]} castShadow receiveShadow/>
+        <mesh material={materials['Material.001']} geometry={nodes.f_1.geometry} position={[0, 71.51, 0]} castShadow receiveShadow/>
+        <mesh material={materials['Material.001']} geometry={nodes.f_3.geometry} position={[0, 330.9, 0]} castShadow receiveShadow/>
+        <mesh material={materials['Material.001']} geometry={nodes.f_2.geometry} position={[0, 449.14, 0]} castShadow receiveShadow/>
         <mesh material={nodes.h.material} geometry={nodes.h.geometry} />
       </group>
     </group>

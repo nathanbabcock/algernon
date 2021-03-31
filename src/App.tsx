@@ -28,7 +28,7 @@ export default function App () {
         {/* <pointLight color="orange" intensity={1} distance={10} /> */}
       </Camera>
       <fog attach="fog" args={[FOG_COLOR, 1, 40]}/>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.2} />
       <spotLight
         intensity={0.6}
         position={[50, 50, 50]}
