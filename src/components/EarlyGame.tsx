@@ -9,7 +9,7 @@ import * as THREE from 'three'
 import { Vector3, Euler } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import MeshCollider from './three/MeshCollider'
-
+import { Text } from '@react-three/drei'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -115,7 +115,7 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
   const { camera } = useThree()
   useFrame(() => {
     if (algergone) return
-    if (camera.position.clone().sub(algernonPos).length() <= 4.5) setAlgergone(true)
+    if (camera.position.clone().sub(algernonPos).length() <= 5) setAlgergone(true)
   })
 
   return (
@@ -127,8 +127,32 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
           castShadow
           color="red"
         />
-        <MeshCollider {...parentTransform} material={materials.Mouse}    geometry={nodes.Mouse_Mouse_0.geometry}/>
+        <MeshCollider {...parentTransform} material={materials.Mouse} geometry={nodes.Mouse_Mouse_0.geometry}/>
       </group>}
+
+      <Text
+        color="black"
+        position={[11.999, 20, 1]}
+        rotation={[Math.PI/2, -Math.PI/2, 0]}
+        fontSize={.5}
+        fillOpacity={.15}
+      > {`<  ?  >`} </Text>
+
+      <Text
+        color="black"
+        position={[27.999, 28, 1]}
+        rotation={[Math.PI/2, -Math.PI/2, 0]}
+        fontSize={.5}
+        fillOpacity={.15}
+      > :( </Text>
+
+      <Text
+        color="black"
+        position={[30.999, 12, 1]}
+        rotation={[Math.PI/2, -Math.PI/2, 0]}
+        fontSize={.5}
+        fillOpacity={.15}
+      > :) </Text>
 
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.SpawnRoom.geometry} />
