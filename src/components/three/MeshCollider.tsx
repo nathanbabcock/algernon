@@ -22,7 +22,10 @@ export default function MeshCollider(props: any) {
     rotation: [props.parentRotation.x, props.parentRotation.y, props.parentRotation.z],
   }))
 
+  // The position is "baked into" the mesh (applied local transforms in blender)
+  // But it is applied AGAIN a second time by Cannonjs
+  // We'll reverse one of these
   return <group position={pos.clone().negate()}>
-    <mesh ref={ref} material={props.material} geometry={props.geometry}/>
+    <mesh ref={ref} material={props.material} geometry={props.geometry} castShadow receiveShadow/>
   </group>
 };

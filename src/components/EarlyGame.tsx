@@ -79,7 +79,6 @@ type GLTFResult = GLTF & {
     Corner007: THREE.Mesh
     Cube039: THREE.Mesh
     Cube038: THREE.Mesh
-    SketchUp: THREE.Mesh
     Cube044: THREE.Mesh
     Cube043: THREE.Mesh
     Cube042: THREE.Mesh
@@ -112,8 +111,8 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group ref={group} dispose={null}>
-      <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube.geometry} />
       <MeshCollider {...parentTransform} material={materials.Mouse}    geometry={nodes.Mouse_Mouse_0.geometry} />
+      <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.SpawnRoom.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube001.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube002.geometry} />
@@ -179,7 +178,6 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Corner007.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube039.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube038.geometry} />
-      <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.SketchUp.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube044.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube043.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube042.geometry} />

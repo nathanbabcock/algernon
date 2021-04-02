@@ -15,7 +15,8 @@
     "make": "npm run build && electron-forge make",
     "package": "npm run build && electron-forge package",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "import-gltf": "npx gltfjsx public/models/early-game.glb -t -r public"
   },
   "dependencies": {
     "@react-three/cannon": "^0.6.1",
