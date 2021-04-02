@@ -9,7 +9,9 @@ const PLAYER_RADIUS = 0.35
 const MOUSE_SENSITIVITY = 1000
 
 type FPSControlsProps = {
-  setPaused: any
+  setPaused: any,
+  rotation?: [number, number, number],
+  position?: [number, number, number],
 }
 
 export default function FPSControls(props: FPSControlsProps) {
@@ -19,7 +21,7 @@ export default function FPSControls(props: FPSControlsProps) {
     linearDamping: 0.5,
     fixedRotation: true,
     args: cylinderArgs,
-    rotation: [Math.PI/2, 0, 0],
+    position: props.position || [0, 0, 0],
   }))
 
   const { camera } = useThree()
@@ -27,8 +29,8 @@ export default function FPSControls(props: FPSControlsProps) {
   const [keyStates] = useState<any>({})
 
   useEffect(() => {
-    camera.rotation.x = Math.PI/2
-    camera.rotation.z = 0
+    camera.rotation.x = props.rotation ? props.rotation[0] : 0
+    camera.rotation.z = props.rotation ? props.rotation[2] : 0
 
     const onKeydown = (event: KeyboardEvent) => {
       keyStates[ event.code ] = true
@@ -112,7 +114,7 @@ export default function FPSControls(props: FPSControlsProps) {
   })
 
   return (
-    <mesh ref={playerCylinder} receiveShadow visible={false}>
+    <mesh ref={playerCylinder} visible={false}>
       <cylinderBufferGeometry args={cylinderArgs}/>
       <meshBasicMaterial color="green" wireframe/>
     </mesh>

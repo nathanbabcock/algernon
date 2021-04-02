@@ -91,8 +91,8 @@ type GLTFResult = GLTF & {
     Cube045: THREE.Mesh
   }
   materials: {
-    Material: THREE.MeshStandardMaterial
-    Mouse: THREE.MeshStandardMaterial
+    Material: THREE.MeshPhongMaterial
+    Mouse: THREE.MeshPhongMaterial
   }
 }
 
@@ -111,7 +111,16 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group ref={group} dispose={null}>
-      <MeshCollider {...parentTransform} material={materials.Mouse}    geometry={nodes.Mouse_Mouse_0.geometry} />
+      <spotLight
+        position={[-2, 0, 0.1]}
+        angle={Math.PI/16}
+        castShadow
+        color="red"
+        // shadow-mapSize-height={4096}
+        // shadow-mapSize-width={4096}
+      />
+
+      <MeshCollider {...parentTransform} material={materials.Mouse}    geometry={nodes.Mouse_Mouse_0.geometry}/>
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.SpawnRoom.geometry} />
       <MeshCollider {...parentTransform} material={materials.Material} geometry={nodes.Cube001.geometry} />
