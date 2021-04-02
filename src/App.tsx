@@ -2,6 +2,8 @@ import { Physics } from '@react-three/cannon'
 import { Stars } from '@react-three/drei'
 import React, { Suspense, useEffect } from 'react'
 import { Canvas } from 'react-three-fiber'
+import Whiteboard from './components/early-game/Whiteboard'
+import Whiteboard2 from './components/early-game/Whiteboard2'
 import EarlyGame from './components/EarlyGame'
 import Camera from './components/three/Camera'
 import FPSControls from './components/three/FPSControls'
@@ -70,7 +72,10 @@ export function PhysicsWorld() {
     <Suspense fallback={null}>
       <GroundPlane/>
       <FPSControls position={[8, 0, 1]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
-      <EarlyGame/>
+      {/* <EarlyGame/> */}
+
+      <Whiteboard />
+      <Whiteboard2 position={[10,10,0]} rotation={[0,0,Math.PI/2]}/>
     </Suspense>
   )
 }
