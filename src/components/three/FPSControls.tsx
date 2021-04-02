@@ -83,12 +83,17 @@ export default function FPSControls(props: FPSControlsProps) {
   }
 
   useFrame(() => {
+    // Copy position to camera
     const cylinderPos = playerCylinder!.current!.position
     camera.position.set(cylinderPos.x, cylinderPos.y, cylinderPos.z + PLAYER_HEIGHT/2)
 
+    // Debug position
+    const debug = document.getElementById('debug')
+    if (debug) debug.innerHTML = `(${camera.position.x.toFixed(3)}, ${camera.position.y.toFixed(3)}, ${camera.position.z.toFixed(3)})`;
+
+    // Handle keyboard controls
     const inputVelocity = new Vector3()
     const MOVESPEED = 5
-
     if (keyStates['KeyW'])
       inputVelocity.add(getForwardVector())
     if (keyStates['KeyS'])
@@ -101,6 +106,7 @@ export default function FPSControls(props: FPSControlsProps) {
     if (inputVelocity.x === 0 && inputVelocity.y === 0 && inputVelocity.z === 0)
       return
 
+    // Apply velocity to physics objects
     inputVelocity.normalize().multiplyScalar(MOVESPEED)
     cylinderBody.velocity.set(inputVelocity.x, inputVelocity.y, inputVelocity.z)
   })
