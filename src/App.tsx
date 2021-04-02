@@ -68,9 +68,8 @@ export function PhysicsWorld() {
 
   return (
     <Suspense fallback={null}>
-      <FPSControls setPaused={setPaused} position={[8, 0, 1]} rotation={[Math.PI/2, 0, -Math.PI/2]}/>
       <GroundPlane/>
-      {/* <Infinite1DMaze/> */}
+      <FPSControls position={[8, 0, 1]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
       <EarlyGame/>
     </Suspense>
   )

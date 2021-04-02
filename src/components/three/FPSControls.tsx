@@ -18,7 +18,7 @@ export default function FPSControls(props: FPSControlsProps) {
   const cylinderArgs: [number, number, number, number] = [PLAYER_RADIUS, PLAYER_RADIUS, PLAYER_HEIGHT, 8]
   const [playerCylinder, cylinderBody] = useCylinder(() => ({
     mass: 1,
-    linearDamping: 0.5,
+    linearDamping: 0.9999,
     fixedRotation: true,
     args: cylinderArgs,
     position: props.position || [0, 0, 0],
