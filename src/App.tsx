@@ -27,10 +27,10 @@ export default function App () {
         {/* <pointLight color="orange" intensity={1} distance={10} /> */}
       </Camera>
       <fog attach="fog" args={[FOG_COLOR, 1, 40]}/>
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.1} />
       <spotLight
-        intensity={0.6}
-        position={[50, 50, 50]}
+        intensity={0.3}
+        position={[100, 100, 100]}
         castShadow
         // shadow-mapSize-height={4096}
         // shadow-mapSize-width={4096}

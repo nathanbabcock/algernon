@@ -122,24 +122,24 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
       <Whiteboard position={whiteboardPos} rotation={[0, 0, -3 * Math.PI/4]}/>
       <Cheese position={cheesePos} visible={!cheeseAcquired} scale={[0.2, 0.2, 0.2]}/>
 
-      {/* <Text
+      <Text
         color="black"
         position={[39.25, 20, 0.01]}
         rotation={[0, 0, -Math.PI/2]}
         fontSize={.5}
         fillOpacity={.15}
-      >onward</Text> */}
+      >onward</Text>
 
       <Whiteboard2 position={whiteboard2Pos} rotation={[0, 0, Math.PI]}/>
       <Cheese position={cheese2Pos} visible={!cheese2Acquired} scale={[0.2, 0.2, 0.2]}/>
 
-      {/* <Text
+      <Text
         color="black"
         position={[64, 52.25, 0.01]}
         rotation={[0, 0, 0]}
         fontSize={.5}
         fillOpacity={.15}
-      >again</Text> */}
+      >again</Text>
 
       <MeshCollider material={materials.Material} geometry={nodes.Cube.geometry} position={[0, 1.5, 1]} />
       <MeshCollider material={materials.Material} geometry={nodes.SpawnRoom.geometry} position={[0, -1.5, 1]} />
