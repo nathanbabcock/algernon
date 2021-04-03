@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
 import Infinite1DMaze from '../infinite-1d-maze/Infinite1DMaze'
-import Infinite1DMazeSegment from '../infinite-1d-maze/Infinite1DMazeSegment'
-import { MazeCornerSegment, MazeDeadEndSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
+import Infinite1DMazeSegment, { CustomSegmentGenerationFunction } from '../infinite-1d-maze/Infinite1DMazeSegment'
+import { getPossibleSegments, MazeConnection, MazeCornerSegment, MazeDeadEndSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
+import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
+import FountainRoomSegment from '../rooms/FountainRoomSegment'
 import EarlyGame from './EarlyGame'
 
 function createPetal1(): Infinite1DMazeSegment {
@@ -33,6 +35,19 @@ function createPetal1(): Infinite1DMazeSegment {
   return petal
 }
 
+const spawnNoFutureNoPast: CustomSegmentGenerationFunction = (
+  originConnection: MazeConnection,
+  originSegment: MazeSegment,
+  parentSegment: Infinite1DMazeSegment
+) => {
+  const roll = Math.random()
+  if (roll < 0.015) {
+    return getPossibleSegments(originConnection, originSegment, [MazeNoFutureNoPastSegment])
+  } else {
+    return getPossibleSegments(originConnection, originSegment)
+  }
+}
+
 /**
  * Holds the entire scripted early game sequence,
  * plus the 11 possible transition paths towards the Flower Room
@@ -52,6 +67,7 @@ export default function EarlyGameMeta(props: any) {
     const petal0index = petals[0].maze.indexOf(petal0segment)
     if (petal0index < petals[0].maze.length - 2) return
 
+    petals[0].customSegmentGenerationFunction = spawnNoFutureNoPast
     petals[0].paused = false
     setStage3Complete(true)
     console.log('The world changes around you...')

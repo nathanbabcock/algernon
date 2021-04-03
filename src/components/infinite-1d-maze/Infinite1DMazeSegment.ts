@@ -1,9 +1,13 @@
-import { Vector3, Euler } from 'three'
-import { getPossibleSegments, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
-import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
-import FountainRoomSegment from '../rooms/FountainRoomSegment'
+import { Euler, Vector3 } from 'three'
+import { getPossibleSegments, MazeConnection, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
 
 const MAZE_BUFFER_SIZE = 2
+
+export type CustomSegmentGenerationFunction = (
+  originConnection: MazeConnection,
+  originSegment: MazeSegment,
+  parentSegment: Infinite1DMazeSegment,
+) => MazeSegment[]
 
 export default class Infinite1DMazeSegment extends MazeSegment  {
   public curIndex = 0
@@ -15,6 +19,8 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
    * even while a player moves through it
    */
   public paused = false
+
+  public customSegmentGenerationFunction?: CustomSegmentGenerationFunction
 
   public get endOfChain() {
     return this.maze[this.maze.length - 1]
@@ -47,12 +53,9 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
       return null
 
     let segments
-    const roll = Math.random()
-    if (roll < 0.015) {
-      segments = getPossibleSegments(connections[openIndex], origin, [FountainRoomSegment])
-    } else if (roll < 0.030) {
-      segments = getPossibleSegments(connections[openIndex], origin, [MazeNoFutureNoPastSegment])
-    } else { // Randomly choose a *special* maze segment
+    if (this.customSegmentGenerationFunction) {
+      segments = this.customSegmentGenerationFunction(connections[openIndex], origin, this)
+    } else {
       segments = getPossibleSegments(connections[openIndex], origin)
     }
     const segment = segments[Math.floor(Math.random() * segments.length)]
