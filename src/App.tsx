@@ -1,12 +1,11 @@
 import { Physics } from '@react-three/cannon'
 import { Stars } from '@react-three/drei'
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import EarlyGame from './components/EarlyGame'
 import Camera from './components/three/Camera'
 import FPSControls from './components/three/FPSControls'
 import GroundPlane from './components/three/GroundPlane'
-import preloadAssets from './components/three/preload'
 import Skydome from './components/three/Skydome'
 import { FOG_COLOR } from './theme'
 
@@ -15,8 +14,6 @@ export default function App () {
     contactEquationStiffness: 1e4,
     friction: 0.001,
   }
-
-  useEffect(preloadAssets)
 
   return (
     <Canvas shadowMap>
