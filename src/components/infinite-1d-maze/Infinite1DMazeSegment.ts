@@ -31,7 +31,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
   }
 
   constructor(position: Vector3, rotation: Euler, id?: number) {
-    super('infinite-1d', position, rotation)
+    super('infinite-1d', position, rotation, id)
 
     const straight = new MazeStraightSegment(
       position.clone(),

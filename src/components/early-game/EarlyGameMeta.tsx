@@ -2,15 +2,13 @@ import React, { useState } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
 import Infinite1DMaze from '../infinite-1d-maze/Infinite1DMaze'
-import Infinite1DMazeSegment, { CustomSegmentGenerationFunction } from '../infinite-1d-maze/Infinite1DMazeSegment'
-import { getPossibleSegments, MazeConnection, MazeCornerSegment, MazeDeadEndSegment, MazeSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
-import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
-import FountainRoomSegment from '../rooms/FountainRoomSegment'
+import Infinite1DMazeSegment from '../infinite-1d-maze/Infinite1DMazeSegment'
+import { spawnNoFutureNoPast } from '../maze-pieces/customSegmentGeneration'
+import { MazeCornerSegment, MazeDeadEndSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
 import EarlyGame from './EarlyGame'
-import { FlowerRoomSegment } from './FlowerRoom'
 
-function createPetal1(): Infinite1DMazeSegment {
-  const petal = new Infinite1DMazeSegment(new Vector3(), new Euler())
+function createPetal1(id: number): Infinite1DMazeSegment {
+  const petal = new Infinite1DMazeSegment(new Vector3(), new Euler(), id)
   petal.paused = true
   petal.curIndex = 0 // we will reset the maze and replace it with a pre-chosen seed
   const straight = new MazeStraightSegment(new Vector3(83, 53, 0), new Euler(0, 0, Math.PI/2), petal.curIndex++)
@@ -36,50 +34,26 @@ function createPetal1(): Infinite1DMazeSegment {
   return petal
 }
 
-const spawnNoFutureNoPast: CustomSegmentGenerationFunction = (
-  originConnection: MazeConnection,
-  originSegment: MazeSegment,
-  parentSegment: Infinite1DMazeSegment
-) => {
-  const roll = Math.random()
-  if (roll < 0.0333) {
-    parentSegment.customSegmentGenerationFunction = spawnFlower
-    // Modify the spawning algorithm to spawn the next scripted encounter
+function createPetal2(id: number): Infinite1DMazeSegment {
+  const petal = new Infinite1DMazeSegment(new Vector3(), new Euler(), id)
+  petal.paused = true
+  petal.curIndex = 0 // we will reset the maze and replace it with a pre-chosen seed
+  const straight = new MazeStraightSegment(new Vector3(88, 48, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const corner = new MazeCornerSegment(new Vector3(88, 44, 0), new Euler(0, 0, Math.PI/2), petal.curIndex++)
+  const deadend = new MazeDeadEndSegment(new Vector3(84, 44, 0), new Euler(0, 0, Math.PI/2), petal.curIndex++)
 
-    const segments = getPossibleSegments(originConnection, originSegment, [MazeNoFutureNoPastSegment])
-    return segments.filter(segment => !segment.connections[1].connectedTo) // Prevent this piece from spawning in backwards
-  } else {
-    return getPossibleSegments(originConnection, originSegment)
-  }
-}
+  straight.connections[1].connectedTo = corner
+  corner.connections[1].connectedTo = straight
 
-const spawnFlower: CustomSegmentGenerationFunction = (
-  originConnection: MazeConnection,
-  originSegment: MazeSegment,
-  parentSegment: Infinite1DMazeSegment
-) => {
-  const roll = Math.random()
-  if (roll < 0.0333) {
-    parentSegment.customSegmentGenerationFunction = spawnFountain
-    return getPossibleSegments(originConnection, originSegment, [FlowerRoomSegment])
-  } else {
-    return getPossibleSegments(originConnection, originSegment)
-  }
-}
+  corner.connections[0].connectedTo = deadend
+  deadend.connections[0].connectedTo = corner
 
-const spawnFountain: CustomSegmentGenerationFunction = (
-  originConnection: MazeConnection,
-  originSegment: MazeSegment,
-  parentSegment: Infinite1DMazeSegment
-) => {
-  const roll = Math.random()
-  if (roll < 0.0333) {
-    parentSegment.customSegmentGenerationFunction = undefined
-    // Now we enter the default/open world exploration behavior, no more scripting
-    return getPossibleSegments(originConnection, originSegment, [FountainRoomSegment])
-  } else {
-    return getPossibleSegments(originConnection, originSegment)
-  }
+  petal.maze = [
+    straight,
+    corner,
+    deadend,
+  ]
+  return petal
 }
 
 /**
@@ -88,8 +62,10 @@ const spawnFountain: CustomSegmentGenerationFunction = (
  * and into the MiddleGame infinite open world maze
  */
 export default function EarlyGameMeta(props: any) {
+  let curIndex = 0
   const [petals, setPetals] = useState([
-    createPetal1(),
+    createPetal1(curIndex++),
+    createPetal2(curIndex++),
   ] as Infinite1DMazeSegment[])
   const [stage3Complete, setStage3Complete] = useState(false)
   const { camera } = useThree()
@@ -115,6 +91,6 @@ export default function EarlyGameMeta(props: any) {
 
   return <>
     { !stage3Complete && <EarlyGame /> }
-    { petals.map((segment: Infinite1DMazeSegment, index: number) => <Infinite1DMaze segment={segment} key={index} />) }
+    { petals.map((segment: Infinite1DMazeSegment) => <Infinite1DMaze segment={segment} key={segment.id} />) }
   </>
 }
