@@ -1,6 +1,7 @@
 import { useBox } from '@react-three/cannon'
 import React, { useState } from 'react'
 import { Euler, Vector3 } from 'three'
+import { DEBUG_CONNECTIONS } from '../../config'
 import { WALL_COLOR } from '../../theme'
 import { MAZEPIECE_HEIGHT } from '../maze-pieces/MazeLibrary'
 import Fountain from './Fountain'
@@ -64,7 +65,7 @@ export default function FountainRoom(props: any) {
     <group>
       <Fountain position={segment.position} rotation={segment.rotation}/>
 
-      <group position={segment.position} rotation={segment.rotation} visible={false}>
+      <group position={segment.position} rotation={segment.rotation} visible={DEBUG_CONNECTIONS}>
         { segment.connections.map((connection, index) => (
           <arrowHelper args={[connection.forward, connection.position, 1, 0xff0000]} key={index}/>
         ))}

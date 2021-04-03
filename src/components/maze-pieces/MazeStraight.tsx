@@ -1,9 +1,10 @@
-import { useBox } from '@react-three/cannon';
-import React, { useRef } from 'react';
-import { useFrame, useThree } from 'react-three-fiber';
-import { Euler, Frustum, Group, Vector3 } from 'three';
-import { WALL_COLOR } from '../../theme';
-import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary';
+import { useBox } from '@react-three/cannon'
+import React, { useRef } from 'react'
+import { useFrame, useThree } from 'react-three-fiber'
+import { Euler, Frustum, Group, Vector3 } from 'three'
+import { WALL_COLOR } from '../../theme'
+import MazeConnectionHelper from '../three/MazeConnectionHelper'
+import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary'
 
 export default function MazeStraight(props: any) {
   const { camera } = useThree()
@@ -58,6 +59,8 @@ export default function MazeStraight(props: any) {
         <boxBufferGeometry args={wallArgs}/>
         <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
+
+      <MazeConnectionHelper segment={props.segment} />
     </group>
   )
 };
