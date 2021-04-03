@@ -35,7 +35,8 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <mesh material={materials.cheese} geometry={nodes.cheese.geometry} scale={[0.84, 1.14, 0.47]} />
+      <spotLight position={[0, 0, 2]} castShadow target={group.current} angle={Math.PI/4} />
+      <mesh material={materials.cheese} geometry={nodes.cheese.geometry} scale={[0.84, 1.14, 0.47]} castShadow receiveShadow/>
     </group>
   )
 }

@@ -10,6 +10,7 @@ import { Vector3 } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import Cheese from './early-game/Cheese'
 import Whiteboard from './early-game/Whiteboard'
+import Whiteboard2 from './early-game/Whiteboard2'
 import MeshCollider from './three/MeshCollider'
 
 type GLTFResult = GLTF & {
@@ -23,17 +24,17 @@ type GLTFResult = GLTF & {
 export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group>()
   const { nodes, materials } = useGLTF('models/early-game.glb') as GLTFResult
+  const { camera } = useThree()
 
   const algernonPos = new Vector3(2, 0, 0)
   const [algergone, setAlgergone] = useState(false)
-  const [stage1Complete, setStage1Complete] = useState(false)
-  const { camera } = useThree()
-
   const updateAlgernon = () => {
     if (algergone) return
     if (camera.position.clone().sub(algernonPos).length() <= 5) setAlgergone(true)
   }
-
+  
+  const [stage1Complete, setStage1Complete] = useState(false)
+  const whiteboardPos = new Vector3(34.5, 21.5, 0)
   const updateStage1 = () => {
     if (stage1Complete) return
     if (camera.position.clone().sub(whiteboardPos).length() <= 10) {
@@ -53,13 +54,34 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
     }
   }
 
+  const [stage2Complete, setStage2Complete] = useState(false)
+  const whiteboard2Pos = new Vector3(65, 47, 0)
+  const updateStage2 = () => {
+    if (stage2Complete) return
+    if (camera.position.clone().sub(whiteboard2Pos).length() <= 10) {
+      setStage2Complete(true)
+      new Audio('sounds/applause.wav').play()
+      new Audio('sounds/party-horn.wav').play()
+    }
+  }
+
+  const [cheese2Acquired, setCheese2Acquired] = useState(false)
+  const cheese2Pos = new Vector3(64, 51, 0.5)
+  const updateCheese2 = () => {
+    if (cheese2Acquired) return
+    if (camera.position.clone().sub(cheese2Pos).length() <= 0.5) {
+      setCheese2Acquired(true)
+      new Audio('sounds/munch.wav').play()
+    }
+  }
+
   useFrame(() => {
     updateAlgernon()
     updateStage1()
     updateCheese()
+    updateStage2()
+    updateCheese2()
   })
-
-  const whiteboardPos = new Vector3(34.5, 21.5, 0)
 
   return (
     <group ref={group} dispose={null}>
@@ -97,8 +119,7 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
         fillOpacity={.15}
       > :) </Text> */}
 
-      <Whiteboard position={whiteboardPos} rotation={[0,0,-3 * Math.PI/4]}/>
-
+      <Whiteboard position={whiteboardPos} rotation={[0, 0, -3 * Math.PI/4]}/>
       <Cheese position={cheesePos} visible={!cheeseAcquired} scale={[0.2, 0.2, 0.2]}/>
 
       {/* <Text
@@ -109,14 +130,16 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
         fillOpacity={.15}
       >onward</Text> */}
 
-      <Text
+      <Whiteboard2 position={whiteboard2Pos} rotation={[0, 0, Math.PI]}/>
+      <Cheese position={cheese2Pos} visible={!cheese2Acquired} scale={[0.2, 0.2, 0.2]}/>
+
+      {/* <Text
         color="black"
         position={[64, 52.25, 0.01]}
         rotation={[0, 0, 0]}
         fontSize={.5}
         fillOpacity={.15}
-      >again</Text>
-
+      >again</Text> */}
 
       <MeshCollider material={materials.Material} geometry={nodes.Cube.geometry} position={[0, 1.5, 1]} />
       <MeshCollider material={materials.Material} geometry={nodes.SpawnRoom.geometry} position={[0, -1.5, 1]} />
