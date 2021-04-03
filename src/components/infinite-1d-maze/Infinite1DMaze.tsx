@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Vector3, Euler } from 'three';
-import getCurrentSegment from '../maze-pieces/get-current-segment';
 import getSegmentComponent from '../maze-pieces/get-segment-component';
 import Infinite1DMazeSegment from './Infinite1DMazeSegment';
 
@@ -19,7 +18,7 @@ export default function Infinite1DMaze(props: any) {
   const { camera } = useThree()
 
   useFrame(() => {
-    const currentSegment = getCurrentSegment(mazeManager.maze, camera)
+    const currentSegment = mazeManager.getCurrentSegment(camera.position)
     if (!currentSegment) return
     const update = mazeManager.updateMaze(currentSegment)
     if (update.added > 0 || update.removed > 0) {
