@@ -7,7 +7,14 @@ const MAZE_BUFFER_SIZE = 2
 
 export default class Infinite1DMazeSegment extends MazeSegment  {
   public curIndex = 0
-  public maze: MazeSegment[] = [] 
+  public maze: MazeSegment[] = []
+
+  /**
+   * If the segment is paused, it will remain static
+   * and not add or remove and pieces from the maze,
+   * even while a player moves through it
+   */
+  public paused = false
 
   public get endOfChain() {
     return this.maze[this.maze.length - 1]
@@ -90,6 +97,8 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
    * (breaking line of sight)
    */
   public updateMaze(currentSegment: MazeSegment): { added: number, removed: number } {
+    if (this.paused) return { added: 0, removed: 0 }
+
     const forward = this.updateMazeForward(currentSegment)
     const reverse = this.updateMazeReverse(currentSegment)
 
