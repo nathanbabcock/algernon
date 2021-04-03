@@ -69,8 +69,8 @@ export function PhysicsWorld() {
       <GroundPlane/>
       <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
       {/* <FPSControls position={[96, 57, 0]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} /> */}
-      {/* <EarlyGameMeta /> */}
-      <FlowerRoom />
+      <EarlyGameMeta />
+      {/* <FlowerRoom /> */}
     </Suspense>
   )
 }

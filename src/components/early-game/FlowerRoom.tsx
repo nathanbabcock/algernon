@@ -8,6 +8,8 @@ import { useFrame, useThree } from 'react-three-fiber'
 import * as THREE from 'three'
 import { Vector3, Euler } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import { MazeConnection, MazeSegment } from '../maze-pieces/MazeLibrary'
+import MazeConnectionHelper from '../three/MazeConnectionHelper'
 import MeshCollider from '../three/MeshCollider'
 import Flowers from './Flowers'
 
@@ -18,7 +20,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
+export default function EarlyGame(props: any) {
   const group = useRef<THREE.Group>()
   const { nodes, materials } = useGLTF('models/flower-room.glb') as GLTFResult
 
@@ -32,6 +34,10 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
   if (props.scale instanceof Array) scale.set(...(props.scale as [number, number, number]))
   if (props.scale instanceof Vector3) scale.copy(props.scale)
 
+  const [ segment ] = useState<FlowerRoomSegment>(
+    props.segment || new FlowerRoomSegment(position, rotation)
+  )
+
   const { camera } = useThree()
   const [flowerPicked, setFlowerPicked] = useState(false)
   const flowerPos = position.clone().setZ(1)
@@ -39,6 +45,7 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
     if (flowerPicked) return
     if (camera.position.clone().sub(flowerPos).length() <= 1.5) {
       setFlowerPicked(true)
+      console.log('Flowers for Someone')
       new Audio('sounds/pick-flower.mp3').play()
     }
   }
@@ -50,6 +57,8 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
         <pointLight position={[0, 0, 1.25]} intensity={2} distance={4} color="orange"/>
         <Flowers position={flowerPos} scale={[0.05, 0.05, 0.05]}/>
       </group>
+
+      <MazeConnectionHelper segment={segment}/>
 
       <MeshCollider geometry={nodes.Cube001.geometry} material={materials.Material} position={new Vector3(0, 0, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
       <MeshCollider geometry={nodes.Cube002.geometry} material={materials.Material} position={new Vector3(-1, -1, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
@@ -151,3 +160,30 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
 }
 
 useGLTF.preload('models/flower-room.glb')
+
+
+export class FlowerRoomSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    {
+      position: new Vector3(-37, -4, 0),
+      forward: new Vector3(-1, 0, 0),
+    },
+    {
+      position: new Vector3(37, 4, 0),
+      forward: new Vector3(1, 0, 0),
+    },
+  ] as MazeConnection[]
+
+  public containsPoint(point: Vector3): boolean {
+    return (
+         point.x <= this.position.x + 37
+      && point.x >= this.position.x - 37
+      && point.y <= this.position.y + 37
+      && point.y >= this.position.y - 37
+    )
+  }
+
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('flower-room', position, rotation, id)
+  }
+}

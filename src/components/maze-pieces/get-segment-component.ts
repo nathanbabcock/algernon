@@ -1,4 +1,5 @@
 import React from 'react'
+import FlowerRoom from '../early-game/FlowerRoom'
 import NoFuture from '../no-future-no-past/NoFuture'
 import NoFutureNoPast from '../no-future-no-past/NoFutureNoPast'
 import NoPast from '../no-future-no-past/NoPast'
@@ -17,6 +18,7 @@ export default function getSegmentComponent(type: string): React.FC<any> {
     case 'no-past': return NoPast
     case 'no-future-no-past': return NoFutureNoPast
     case 'fountain-room': return FountainRoom
+    case 'flower-room': return FlowerRoom
     default: throw new Error(`Unknown segment type ${type}`)
   }
 }

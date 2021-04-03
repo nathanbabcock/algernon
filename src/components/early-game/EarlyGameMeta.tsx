@@ -7,6 +7,7 @@ import { getPossibleSegments, MazeConnection, MazeCornerSegment, MazeDeadEndSegm
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
 import FountainRoomSegment from '../rooms/FountainRoomSegment'
 import EarlyGame from './EarlyGame'
+import { FlowerRoomSegment } from './FlowerRoom'
 
 function createPetal1(): Infinite1DMazeSegment {
   const petal = new Infinite1DMazeSegment(new Vector3(), new Euler())
@@ -42,11 +43,25 @@ const spawnNoFutureNoPast: CustomSegmentGenerationFunction = (
 ) => {
   const roll = Math.random()
   if (roll < 0.0333) {
-    parentSegment.customSegmentGenerationFunction = spawnFountain
+    parentSegment.customSegmentGenerationFunction = spawnFlower
     // Modify the spawning algorithm to spawn the next scripted encounter
 
     const segments = getPossibleSegments(originConnection, originSegment, [MazeNoFutureNoPastSegment])
     return segments.filter(segment => !segment.connections[1].connectedTo) // Prevent this piece from spawning in backwards
+  } else {
+    return getPossibleSegments(originConnection, originSegment)
+  }
+}
+
+const spawnFlower: CustomSegmentGenerationFunction = (
+  originConnection: MazeConnection,
+  originSegment: MazeSegment,
+  parentSegment: Infinite1DMazeSegment
+) => {
+  const roll = Math.random()
+  if (roll < 0.0333) {
+    parentSegment.customSegmentGenerationFunction = spawnFountain
+    return getPossibleSegments(originConnection, originSegment, [FlowerRoomSegment])
   } else {
     return getPossibleSegments(originConnection, originSegment)
   }
