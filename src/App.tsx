@@ -2,7 +2,7 @@ import { Physics } from '@react-three/cannon'
 import { Stars } from '@react-three/drei'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
-import EarlyGame from './components/EarlyGame'
+import EarlyGame from './components/early-game/EarlyGame'
 import Camera from './components/three/Camera'
 import Effects from './components/three/Effects'
 import FPSControls from './components/three/FPSControls'
@@ -60,15 +60,14 @@ export function PhysicsWorld() {
   }
   setPaused(document.pointerLockElement !== document.body)
 
-  // const {gl} = useThree()
-  // useEffect(() => {gl.shadowMap.autoUpdate = true})
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const spawn: [number, number, number] = [8, 0, 1]
 
   return (
     <Suspense fallback={null}>
       <GroundPlane/>
-      <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
-      {/* <FPSControls position={[34, 22, 0]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} /> */}
+      {/* <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} /> */}
+      <FPSControls position={[96, 57, 0]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
       <EarlyGame/>
     </Suspense>
   )
