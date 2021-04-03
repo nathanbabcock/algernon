@@ -66,7 +66,7 @@ export default function Model(props: any) {
       </mesh>
 
       <group position={parentPos} rotation={parentRot}>
-        <pointLight position={[0, 0, 7.5]} intensity={0.2} castShadow/>
+        {/* <pointLight position={[0, 0, 7.5]} intensity={0.2} castShadow/> */}
 
         <group scale={[scale, scale, scale]} rotation={[Math.PI/2, 0, 0]} position={[0, 0, -0.1]}>
           <mesh ref={mesh} material={materials['Material.001']} geometry={nodes.f.geometry} position={[0, 501.71, 5.93]} castShadow receiveShadow/>
