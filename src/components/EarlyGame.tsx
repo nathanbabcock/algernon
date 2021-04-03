@@ -8,6 +8,7 @@ import { useFrame, useThree } from 'react-three-fiber'
 import * as THREE from 'three'
 import { Vector3 } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import Cheese from './early-game/Cheese'
 import Whiteboard from './early-game/Whiteboard'
 import MeshCollider from './three/MeshCollider'
 
@@ -42,9 +43,20 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
     }
   }
 
+  const [cheeseAcquired, setCheeseAcquired] = useState(false)
+  const cheesePos = new Vector3(39, 20, 0.5)
+  const updateCheese = () => {
+    if (cheeseAcquired) return
+    if (camera.position.clone().sub(cheesePos).length() <= 0.5) {
+      setCheeseAcquired(true)
+      new Audio('sounds/munch.wav').play()
+    }
+  }
+
   useFrame(() => {
     updateAlgernon()
     updateStage1()
+    updateCheese()
   })
 
   const whiteboardPos = new Vector3(34.5, 21.5, 0)
@@ -85,13 +97,17 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
         fillOpacity={.15}
       > :) </Text> */}
 
-      <Text
+      <Whiteboard position={whiteboardPos} rotation={[0,0,-3 * Math.PI/4]}/>
+
+      <Cheese position={cheesePos} visible={!cheeseAcquired} scale={[0.2, 0.2, 0.2]}/>
+
+      {/* <Text
         color="black"
         position={[39.25, 20, 0.01]}
         rotation={[0, 0, -Math.PI/2]}
         fontSize={.5}
         fillOpacity={.15}
-      >onward</Text>
+      >onward</Text> */}
 
       <Text
         color="black"
@@ -101,7 +117,6 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
         fillOpacity={.15}
       >again</Text>
 
-      <Whiteboard position={whiteboardPos} rotation={[0,0,-3 * Math.PI/4]}/>
 
       <MeshCollider material={materials.Material} geometry={nodes.Cube.geometry} position={[0, 1.5, 1]} />
       <MeshCollider material={materials.Material} geometry={nodes.SpawnRoom.geometry} position={[0, -1.5, 1]} />

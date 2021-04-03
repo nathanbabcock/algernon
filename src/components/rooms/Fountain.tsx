@@ -39,7 +39,7 @@ export default function Model(props: any) {
   const { clock } = useThree()
   
   useFrame((_, delta) => {
-    if(!mesh.current) return
+    if (!mesh.current) return
     
     const bounce = 501.71 + Math.sin(clock.elapsedTime * 25)
     mesh.current!.position.setY(bounce)
