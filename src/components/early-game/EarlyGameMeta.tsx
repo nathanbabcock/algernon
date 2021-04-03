@@ -12,6 +12,16 @@ function createPetal1(): Infinite1DMazeSegment {
   const corner1 = new MazeCornerSegment(new Vector3(79, 53, 0), new Euler(0, 0, -Math.PI/2))
   const corner2 = new MazeCornerSegment(new Vector3(79, 49, 0), new Euler(0, 0, 0))
   const deadend = new MazeDeadEndSegment(new Vector3(83, 49, 0), new Euler(0, 0, -Math.PI/2))
+
+  straight.connections[0].connectedTo = corner1
+  corner1.connections[0].connectedTo = straight
+
+  corner1.connections[1].connectedTo = corner2
+  corner2.connections[0].connectedTo = corner1
+
+  corner2.connections[1].connectedTo = deadend
+  deadend.connections[0].connectedTo = corner2
+
   petal.maze = [
     straight,
     corner1,

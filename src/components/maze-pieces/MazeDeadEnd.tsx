@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import { Euler, Frustum, Group, Vector3 } from 'three';
 import { WALL_COLOR } from '../../theme';
+import MazeConnectionHelper from '../three/MazeConnectionHelper'
 import { MAZEPIECE_HEIGHT, MazeSegment } from './MazeLibrary';
 
 export default function MazeDeadEnd(props: any) {
@@ -72,6 +73,8 @@ export default function MazeDeadEnd(props: any) {
         <boxBufferGeometry args={backWallArgs}/>
         <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
+
+      <MazeConnectionHelper segment={props.segment} />
     </group>
   )
 };

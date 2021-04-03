@@ -2,6 +2,7 @@ import { useCylinder } from '@react-three/cannon'
 import { useEffect, useState } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 import { Vector3 } from 'three'
+import { DEBUG_POSITION } from '../../config'
 
 const PLAYER_HEIGHT = 1
 // const PLAYER_CROUCH_HEIGHT = 0.5
@@ -91,7 +92,7 @@ export default function FPSControls(props: FPSControlsProps) {
 
     // Debug position
     const debug = document.getElementById('debug')
-    if (debug) debug.innerHTML = `(${camera.position.x.toFixed(3)}, ${camera.position.y.toFixed(3)}, ${camera.position.z.toFixed(3)})`;
+    if (debug && DEBUG_POSITION) debug.innerHTML = `(${camera.position.x.toFixed(3)}, ${camera.position.y.toFixed(3)}, ${camera.position.z.toFixed(3)})`;
 
     // Handle keyboard controls
     const inputVelocity = new Vector3()

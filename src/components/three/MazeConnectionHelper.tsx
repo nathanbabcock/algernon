@@ -9,7 +9,7 @@ export default function MazeConnectionHelper(props: { segment: MazeSegment }) {
       { props.segment.connections.map((connection, index) => (
         <group key={index}>
           <arrowHelper args={[connection.forward, connection.position, 1, 0xff0000]}/>
-          <Text position={connection.position.clone().setZ(0.25)} rotation={[Math.PI/2, 0, 0]}>
+          <Text position={connection.position.clone().setZ(0.25).add(connection.forward.clone().multiplyScalar(-0.5))} rotation={[Math.PI/2, 0, 0]}>
             {index}
           </Text>
         </group>
