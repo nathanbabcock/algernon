@@ -33,6 +33,7 @@ export default function MeshCollider(props: any) {
     type: 'Static',
     args: [dims.x, dims.y, dims.z],
     position: [pos.x, pos.y, pos.z],
+    rotation: [rotation.x, rotation.y, rotation.z],
     scale: [scale.x, scale.y, scale.z],
   }))
 
