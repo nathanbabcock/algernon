@@ -30,9 +30,29 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
   const [algergone, setAlgergone] = useState(false)
   const updateAlgernon = () => {
     if (algergone) return
-    if (camera.position.clone().sub(algernonPos).length() <= 5) setAlgergone(true)
+    if (camera.position.clone().sub(algernonPos).length() <= 5) {
+      setAlgergone(true)
+      squeaks.forEach(squeak => squeak.pause())
+    }
   }
-  
+
+  const squeaks = [
+    new Audio('sounds/squeak-1.mp3'),
+    new Audio('sounds/squeak-2.mp3'),
+    new Audio('sounds/squeak-3.mp3'),
+    new Audio('sounds/squeak-4.mp3'),
+    new Audio('sounds/squeak-5.mp3'),
+    new Audio('sounds/squeak-6.mp3'),
+  ]
+  const playSqueak = () => {
+    if (algergone) return
+    const randomSqueak = squeaks[Math.floor(Math.random() * squeaks.length)]
+    randomSqueak.currentTime = 0
+    randomSqueak.volume = .5
+    randomSqueak.play()
+  }
+  playSqueak()
+
   const [stage1Complete, setStage1Complete] = useState(false)
   const whiteboardPos = new Vector3(34.5, 21.5, 0)
   const updateStage1 = () => {
