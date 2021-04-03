@@ -3,6 +3,7 @@ import { Stars } from '@react-three/drei'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import EarlyGameMeta from './components/early-game/EarlyGameMeta'
+import FlowerRoom from './components/early-game/FlowerRoom'
 import Camera from './components/three/Camera'
 import Effects from './components/three/Effects'
 import FPSControls from './components/three/FPSControls'
@@ -66,9 +67,10 @@ export function PhysicsWorld() {
   return (
     <Suspense fallback={null}>
       <GroundPlane/>
-      {/* <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} /> */}
-      <FPSControls position={[96, 57, 0]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
-      <EarlyGameMeta />
+      <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
+      {/* <FPSControls position={[96, 57, 0]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} /> */}
+      {/* <EarlyGameMeta /> */}
+      <FlowerRoom />
     </Suspense>
   )
 }
