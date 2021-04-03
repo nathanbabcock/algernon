@@ -93,7 +93,29 @@ function createPetal3(id: number): Infinite1DMazeSegment {
     corner1,
     straight4,
     corner2,
-    deadend
+    deadend,
+  ]
+  return petal
+}
+
+function createPetal4(id: number): Infinite1DMazeSegment {
+  const petal = new Infinite1DMazeSegment(new Vector3(), new Euler(), id)
+  petal.paused = true
+  petal.curIndex = 0
+  const straight = new MazeStraightSegment(new Vector3(96, 48, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const corner = new MazeCornerSegment(new Vector3(96, 44, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const deadend = new MazeDeadEndSegment(new Vector3(100, 44, 0), new Euler(0, 0, -Math.PI/2), petal.curIndex++)
+
+  straight.connections[1].connectedTo = corner
+  corner.connections[0].connectedTo = straight
+
+  corner.connections[1].connectedTo = deadend
+  deadend.connections[0].connectedTo = corner
+
+  petal.maze = [
+    straight,
+    corner,
+    deadend,
   ]
   return petal
 }
@@ -109,6 +131,7 @@ export default function EarlyGameMeta(props: any) {
     createPetal1(curIndex++),
     createPetal2(curIndex++),
     createPetal3(curIndex++),
+    createPetal4(curIndex++),
   ] as Infinite1DMazeSegment[])
   const [stage3Complete, setStage3Complete] = useState(false)
   const { camera } = useThree()
