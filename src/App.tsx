@@ -4,6 +4,7 @@ import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import EarlyGame from './components/EarlyGame'
 import Camera from './components/three/Camera'
+import Effects from './components/three/Effects'
 import FPSControls from './components/three/FPSControls'
 import GroundPlane from './components/three/GroundPlane'
 import Skydome from './components/three/Skydome'
@@ -23,9 +24,8 @@ export default function App () {
         far={100000}
         rotation={[0, 0, 0, 'YZX']}
         up={[0, 0, 1]}
-      >
-        {/* <pointLight color="orange" intensity={1} distance={10} /> */}
-      </Camera>
+      />
+      <Effects />
       <fog attach="fog" args={[FOG_COLOR, 1, 40]}/>
       <ambientLight intensity={0.1} />
       <spotLight
