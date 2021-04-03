@@ -8,6 +8,7 @@ import * as THREE from 'three'
 import { Vector3, Euler } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import MeshCollider from '../three/MeshCollider'
+import Flowers from './Flowers'
 
 type GLTFResult = GLTF & {
   nodes: any,
@@ -32,6 +33,9 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group ref={group} dispose={null}>
+      <pointLight position={[0, 0, 1.25]} intensity={2} distance={4} color="orange"/>
+      <Flowers position={position.clone().setZ(1)} scale={[0.05, 0.05, 0.05]}/>
+
       <MeshCollider geometry={nodes.Cube001.geometry} material={materials.Material} position={new Vector3(0, 0, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
       <MeshCollider geometry={nodes.Cube002.geometry} material={materials.Material} position={new Vector3(-1, -1, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
       <MeshCollider geometry={nodes.Cube003.geometry} material={materials.Material} position={new Vector3(1, 1, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
