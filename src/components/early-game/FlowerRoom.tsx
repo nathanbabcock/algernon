@@ -54,7 +54,7 @@ export default function EarlyGame(props: any) {
   return (
     <group ref={group} dispose={null}>
       <group visible={!flowerPicked}>
-        <pointLight position={[0, 0, 1.25]} intensity={2} distance={4} color="orange"/>
+        <pointLight position={flowerPos.clone().setZ(1.25)} intensity={2} distance={4} color="orange"/>
         <Flowers position={flowerPos} scale={[0.05, 0.05, 0.05]}/>
       </group>
 

@@ -88,23 +88,29 @@ const spawnFountain: CustomSegmentGenerationFunction = (
  * and into the MiddleGame infinite open world maze
  */
 export default function EarlyGameMeta(props: any) {
-  const [petals] = useState([
+  const [petals, setPetals] = useState([
     createPetal1(),
   ] as Infinite1DMazeSegment[])
   const [stage3Complete, setStage3Complete] = useState(false)
   const { camera } = useThree()
 
   useFrame(() => {
-    if (!petals[0].paused) return
-    const petal0segment = petals[0].getCurrentSegment(camera.position)
-    if (!petal0segment) return
-    const petal0index = petals[0].maze.indexOf(petal0segment)
-    if (petal0index < petals[0].maze.length - 2) return
+    if (stage3Complete) return
 
-    petals[0].customSegmentGenerationFunction = spawnNoFutureNoPast
-    petals[0].paused = false
-    setStage3Complete(true)
-    console.log('The world changes around you...')
+    petals.forEach(petal => {
+      if (stage3Complete) return
+      if (!petal.paused) return
+      const petalSegment = petal.getCurrentSegment(camera.position)
+      if (!petalSegment) return
+      const petalIndex = petal.maze.indexOf(petalSegment)
+      if (petalIndex < petal.maze.length - 2) return
+  
+      petal.customSegmentGenerationFunction = spawnNoFutureNoPast
+      petal.paused = false
+      setStage3Complete(true)
+      setPetals([petal]) // delete all other paths
+      console.log('The world changes around you...')
+    })
   })
 
   return <>
