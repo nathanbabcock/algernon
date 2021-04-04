@@ -1,9 +1,11 @@
 import { useBox } from '@react-three/cannon'
 import React, { useState } from 'react'
+import { useFrame, useThree } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
-import { DEBUG_CONNECTIONS } from '../../config'
+import { NUM_LOCATIONS, DEBUG_CONNECTIONS } from '../../config'
 import { WALL_COLOR } from '../../theme'
 import { MAZEPIECE_HEIGHT } from '../maze-pieces/MazeLibrary'
+import showLocationDiscoveredUI from '../ui/locationDiscovered'
 import Fountain from './Fountain'
 import FountainRoomSegment from './FountainRoomSegment'
 
@@ -61,6 +63,17 @@ export default function FountainRoom(props: any) {
     rotation: [segment.rotation.x, segment.rotation.y, segment.rotation.z + Math.PI/2],
   }))
 
+  const { camera } = useThree()
+  const [ discovered, setDiscovered ] = useState(false)
+  const updateDiscovered = () => {
+    if (discovered) return
+    if (segment.containsPoint(camera.position)) {
+      setDiscovered(true)
+      showLocationDiscoveredUI('Fountain Discovered', `Location 2/${NUM_LOCATIONS}`)
+    }
+  }
+  useFrame(updateDiscovered)
+
   return (
     <group>
       <Fountain position={segment.position} rotation={segment.rotation}/>
@@ -95,7 +108,6 @@ export default function FountainRoom(props: any) {
         <boxBufferGeometry args={wallArgs}/>
         <meshPhongMaterial attach="material" color={WALL_COLOR}/>
       </mesh>
-  </group>
-
+    </group>
   )
 }

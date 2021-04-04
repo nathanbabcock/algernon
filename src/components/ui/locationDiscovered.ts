@@ -1,4 +1,4 @@
-export default function locationDiscovered(mainText: string, subText: string) {
+export default function showLocationDiscoveredUI(mainText: string, subText: string) {
   const discoveredUI = document.getElementById('discovered-ui')
   if (!discoveredUI) return
   console.log(mainText)
