@@ -50,9 +50,10 @@ export default function TheEnd(props: any) {
       if (event.code !== 'KeyF') return
       setRespectsPaid(true)
 
-      const fade = document.getElementById('fade-to-black')
-      if (fade) fade.classList.add('show')
+      const fade = document.getElementById('fade-to-black')!
+      fade.classList.add('show')
       setTimeout(playSqueak, 12000)
+      setTimeout(() => fade.innerHTML = 'Thanks for playing', 14000)
 
       if (discovered) return
       setDiscovered(true)

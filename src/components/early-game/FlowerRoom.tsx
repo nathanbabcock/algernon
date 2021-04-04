@@ -191,10 +191,10 @@ export class FlowerRoomSegment extends MazeSegment {
 
   public containsPoint(point: Vector3): boolean {
     return (
-         point.x <= this.position.x + 37
-      && point.x >= this.position.x - 37
-      && point.y <= this.position.y + 37
-      && point.y >= this.position.y - 37
+         point.x <= this.position.x + 20
+      && point.x >= this.position.x - 20
+      && point.y <= this.position.y + 20
+      && point.y >= this.position.y - 20
     )
   }
 
