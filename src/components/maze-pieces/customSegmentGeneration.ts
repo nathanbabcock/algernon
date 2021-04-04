@@ -4,6 +4,7 @@ import Infinite1DMazeSegment, { CustomSegmentGenerationFunction } from '../infin
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
 import { DeerRoomSegment } from '../rooms/DeerRoom'
 import { FountainRoomSegment } from '../rooms/FountainRoom'
+import { OrbRoomSegment } from '../rooms/OrbRoom'
 import { getPossibleSegments, MazeConnection, MazeDeadEndSegment, MazeSegment } from './MazeLibrary'
 
 // const spawnChance = 0.0333
@@ -62,9 +63,24 @@ export const spawnDeer: CustomSegmentGenerationFunction = (
 ) => {
   const roll = Math.random()
   if (roll < spawnChance) {
-    parentSegment.customSegmentGenerationFunction = spawnTheEnd
+    parentSegment.customSegmentGenerationFunction = spawnOrb
     // Now we enter the default/open world exploration behavior, no more scripting
     return getPossibleSegments(originConnection, originSegment, [DeerRoomSegment])
+  } else {
+    return getPossibleSegments(originConnection, originSegment)
+  }
+}
+
+export const spawnOrb: CustomSegmentGenerationFunction = (
+  originConnection: MazeConnection,
+  originSegment: MazeSegment,
+  parentSegment: Infinite1DMazeSegment
+) => {
+  const roll = Math.random()
+  if (roll < spawnChance) {
+    parentSegment.customSegmentGenerationFunction = spawnTheEnd
+    // Now we enter the default/open world exploration behavior, no more scripting
+    return getPossibleSegments(originConnection, originSegment, [OrbRoomSegment])
   } else {
     return getPossibleSegments(originConnection, originSegment)
   }

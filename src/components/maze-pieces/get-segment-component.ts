@@ -9,6 +9,7 @@ import DeerRoom from '../rooms/DeerRoom'
 import MazeCorner from './MazeCorner'
 import MazeDeadEnd from './MazeDeadEnd'
 import MazeStraight from './MazeStraight'
+import OrbRoom from '../rooms/OrbRoom'
 
 // TODO this function may indicate that MazeX and MazeXSegment need to be unified
 export default function getSegmentComponent(type: string): React.FC<any> {
@@ -22,6 +23,7 @@ export default function getSegmentComponent(type: string): React.FC<any> {
     case 'fountain-room': return FountainRoom
     case 'flower-room': return FlowerRoom
     case 'deer-room': return DeerRoom
+    case 'orb-room': return OrbRoom
     case 'the-end': return TheEnd
     default: throw new Error(`Unknown segment type ${type}`)
   }

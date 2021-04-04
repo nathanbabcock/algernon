@@ -3,6 +3,7 @@ import { Stars } from '@react-three/drei'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
 import EarlyGameMeta from './components/early-game/EarlyGameMeta'
+import OrbRoom from './components/rooms/OrbRoom'
 import Camera from './components/three/Camera'
 import Effects from './components/three/Effects'
 import FPSControls from './components/three/FPSControls'
@@ -59,7 +60,7 @@ export function PhysicsWorld() {
       document.getElementById('pause')!.classList.remove('visible')
   }
   setPaused(document.pointerLockElement !== document.body)
-  
+
   const spawn: [number, number, number] = [8, 0, 1]
   return (
     <Suspense fallback={null}>
