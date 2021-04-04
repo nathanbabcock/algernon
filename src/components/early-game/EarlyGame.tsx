@@ -38,11 +38,27 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
   }
   if (!algergone) playSqueak()
 
+  const deadEnd1 = new Vector3(30, 25.5, 1)
+  const deadEnd2 = new Vector3(30, 14.5, 1)
+  const [ showDeadEnd1, setShowDeadEnd1 ] = useState(false)
+  const [ showDeadEnd2, setShowDeadEnd2 ] = useState(false)
+  function updateDeadEnds() {
+    if (showDeadEnd1 || showDeadEnd2) return
+
+    const spawnDist = 4
+    if (camera.position.clone().sub(deadEnd1).length() <= spawnDist) {
+      setShowDeadEnd1(true)
+    } else if (camera.position.clone().sub(deadEnd2).length() <= spawnDist) {
+      setShowDeadEnd2(true)
+    }
+  }
+
   const [stage1Complete, setStage1Complete] = useState(false)
   const whiteboardPos = new Vector3(34.5, 21.5, 0)
   const updateStage1 = () => {
     if (stage1Complete) return
-    if (camera.position.clone().sub(whiteboardPos).length() <= 10) {
+    if (!showDeadEnd1 && !showDeadEnd2) return
+    if (camera.position.clone().sub(whiteboardPos).length() <= 6) {
       setStage1Complete(true)
       new Audio('sounds/applause.wav').play()
       new Audio('sounds/party-horn.wav').play()
@@ -82,6 +98,7 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
 
   useFrame(() => {
     updateAlgernon()
+    updateDeadEnds()
     updateStage1()
     updateCheese()
     updateStage2()
@@ -118,13 +135,27 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
         fillOpacity={.15}
       > {`<  ?  >`} </Text>
 
-      <Text
-        color="black"
-        position={[30, 26.001, 1]}
-        rotation={[Math.PI/2, 0, 0]}
-        fontSize={.5}
-        fillOpacity={.15}
-      > :( </Text>
+      { showDeadEnd1 && <group>
+        <MeshCollider geometry={nodes.ExitBlocked.geometry} material={materials.Material} position={deadEnd1} />
+        <Text
+          color="black"
+          position={[30, 26.001, 1]}
+          rotation={[Math.PI/2, 0, 0]}
+          fontSize={.5}
+          fillOpacity={.15}
+        > :( </Text>
+      </group> }
+
+      { showDeadEnd2 && <group>
+        <MeshCollider geometry={nodes.ExitBlocked.geometry} material={materials.Material} position={deadEnd2} />
+        <Text
+          color="black"
+          position={[30, 13.999, 1]}
+          rotation={[Math.PI/2, 0, 0]}
+          fontSize={.5}
+          fillOpacity={.15}
+        > :( </Text>
+      </group> }
 
       {/* <Text
         color="black"
@@ -231,7 +262,6 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
       <MeshCollider geometry={nodes.Corner009.geometry} material={materials.Material} position={[31.5, 28, 1]} />
       <MeshCollider geometry={nodes.Cube034.geometry} material={materials.Material} position={[28.5, 26.5, 1]} />
       <MeshCollider geometry={nodes.Cube031.geometry} material={materials.Material} position={[30, 29.5, 1]} />
-      <MeshCollider geometry={nodes.ExitBlocked.geometry} material={materials.Material} position={[30, 25.5, 1]} />
       <MeshCollider geometry={nodes.Cube040.geometry} material={materials.Material} position={[42.5, 23, 1]} />
       <MeshCollider geometry={nodes.Corner010.geometry} material={materials.Material} position={[42.5, 27, 1]} />
       <MeshCollider geometry={nodes.Cube049.geometry} material={materials.Material} position={[44, 28.5, 1]} />
