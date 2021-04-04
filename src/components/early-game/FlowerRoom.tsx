@@ -60,101 +60,101 @@ export default function EarlyGame(props: any) {
 
       <MazeConnectionHelper segment={segment}/>
 
-      <MeshCollider geometry={nodes.Cube001.geometry} material={materials.Material} position={new Vector3(0, 0, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube002.geometry} material={materials.Material} position={new Vector3(-1, -1, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube003.geometry} material={materials.Material} position={new Vector3(1, 1, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube004.geometry} material={materials.Material} position={new Vector3(2, -2, 0.3).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube005.geometry} material={materials.Material} position={new Vector3(-2, 2, 0.3).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube006.geometry} material={materials.Material} position={new Vector3(0, 0, 0.4).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube007.geometry} material={materials.Material} position={new Vector3(4, -4, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube008.geometry} material={materials.Material} position={new Vector3(-4, 4, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube009.geometry} material={materials.Material} position={new Vector3(3, 3, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube010.geometry} material={materials.Material} position={new Vector3(-3, -3, 0.2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube011.geometry} material={materials.Material} position={new Vector3(0, 0, 0.5).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube012.geometry} material={materials.Material} position={new Vector3(-1.5, -1.5, 0.4).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube013.geometry} material={materials.Material} position={new Vector3(1.5, 1.5, 0.4).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube014.geometry} material={materials.Material} position={new Vector3(5, 5, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube015.geometry} material={materials.Material} position={new Vector3(5, -5, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube016.geometry} material={materials.Material} position={new Vector3(-5, -5, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube017.geometry} material={materials.Material} position={new Vector3(-5, 5, 0.1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube018.geometry} material={materials.Material} position={new Vector3(27, 1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube024.geometry} material={materials.Material} position={new Vector3(27, -1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube022.geometry} material={materials.Material} position={new Vector3(3.66, 12.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube019.geometry} material={materials.Material} position={new Vector3(31, -1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube020.geometry} material={materials.Material} position={new Vector3(29.5, 1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube021.geometry} material={materials.Material} position={new Vector3(32.5, 0, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube023.geometry} material={materials.Material} position={new Vector3(29.5, 4, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube025.geometry} material={materials.Material} position={new Vector3(32.5, 2.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube026.geometry} material={materials.Material} position={new Vector3(31, 5.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube027.geometry} material={materials.Material} position={new Vector3(35, 2.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube028.geometry} material={materials.Material} position={new Vector3(35, 5.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube029.geometry} material={materials.Material} position={new Vector3(-35, -2.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube030.geometry} material={materials.Material} position={new Vector3(-35, -5.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube031.geometry} material={materials.Material} position={new Vector3(-31, -5.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube032.geometry} material={materials.Material} position={new Vector3(-32.5, -2.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube033.geometry} material={materials.Material} position={new Vector3(-29.5, -4, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube034.geometry} material={materials.Material} position={new Vector3(-32.5, 0, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube035.geometry} material={materials.Material} position={new Vector3(-29.5, -1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube036.geometry} material={materials.Material} position={new Vector3(-31, 1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube037.geometry} material={materials.Material} position={new Vector3(-27, -1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube038.geometry} material={materials.Material} position={new Vector3(-27, 1.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube039.geometry} material={materials.Material} position={new Vector3(13.66, 7.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube040.geometry} material={materials.Material} position={new Vector3(4.66, -14.71, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube041.geometry} material={materials.Material} position={new Vector3(13.66, -7.71, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube042.geometry} material={materials.Material} position={new Vector3(-15.34, 5.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube043.geometry} material={materials.Material} position={new Vector3(-7.34, 13.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube044.geometry} material={materials.Material} position={new Vector3(-13.34, -5.71, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube045.geometry} material={materials.Material} position={new Vector3(-9.34, -16.71, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube046.geometry} material={materials.Material} position={new Vector3(-21.34, -11.71, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube047.geometry} material={materials.Material} position={new Vector3(-19.34, 15.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube048.geometry} material={materials.Material} position={new Vector3(14.66, 15.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube049.geometry} material={materials.Material} position={new Vector3(22.66, -15.71, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube050.geometry} material={materials.Material} position={new Vector3(-14.5, 13, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube051.geometry} material={materials.Material} position={new Vector3(-13, 14.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube052.geometry} material={materials.Material} position={new Vector3(15, -18.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube053.geometry} material={materials.Material} position={new Vector3(16.5, -17, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube054.geometry} material={materials.Material} position={new Vector3(22.5, 11, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube055.geometry} material={materials.Material} position={new Vector3(21, 12.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube056.geometry} material={materials.Material} position={new Vector3(-17.5, -13, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube057.geometry} material={materials.Material} position={new Vector3(-16, -14.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube058.geometry} material={materials.Material} position={new Vector3(-19.34, 1.29, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube063.geometry} material={materials.Material} position={new Vector3(36.5, 14.8, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube064.geometry} material={materials.Material} position={new Vector3(36.5, -7, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube079.geometry} material={materials.Material} position={new Vector3(-1, 19.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube092.geometry} material={materials.Material} position={new Vector3(0, -21.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube106.geometry} material={materials.Material} position={new Vector3(26, 2.5, 2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube107.geometry} material={materials.Material} position={new Vector3(0, 18.5, 2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube108.geometry} material={materials.Material} position={new Vector3(-26, -2.5, 2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube109.geometry} material={materials.Material} position={new Vector3(0, -20.5, 2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube059.geometry} material={materials.Material} position={new Vector3(-36.5, 7.8, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube060.geometry} material={materials.Material} position={new Vector3(25.5, -19, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube061.geometry} material={materials.Material} position={new Vector3(27, -17.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube062.geometry} material={materials.Material} position={new Vector3(28.5, -15, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube065.geometry} material={materials.Material} position={new Vector3(30, -13.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube066.geometry} material={materials.Material} position={new Vector3(32.5, -11, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube067.geometry} material={materials.Material} position={new Vector3(34, -9.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube068.geometry} material={materials.Material} position={new Vector3(-36.5, -15, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube069.geometry} material={materials.Material} position={new Vector3(-25.5, -19, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube070.geometry} material={materials.Material} position={new Vector3(-27, -17.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube071.geometry} material={materials.Material} position={new Vector3(-29.5, -15, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube072.geometry} material={materials.Material} position={new Vector3(-31, -13.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube073.geometry} material={materials.Material} position={new Vector3(-33.5, -11, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube074.geometry} material={materials.Material} position={new Vector3(-35, -9.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube075.geometry} material={materials.Material} position={new Vector3(-28, 16.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube076.geometry} material={materials.Material} position={new Vector3(-26.5, 18, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube077.geometry} material={materials.Material} position={new Vector3(-32, 12.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube078.geometry} material={materials.Material} position={new Vector3(-30.5, 14, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube080.geometry} material={materials.Material} position={new Vector3(-35, 8.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube081.geometry} material={materials.Material} position={new Vector3(-33.5, 10, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube084.geometry} material={materials.Material} position={new Vector3(26.5, 18, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube085.geometry} material={materials.Material} position={new Vector3(28, 16.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube086.geometry} material={materials.Material} position={new Vector3(29.5, 15, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube087.geometry} material={materials.Material} position={new Vector3(31, 13.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube088.geometry} material={materials.Material} position={new Vector3(32.5, 12, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube089.geometry} material={materials.Material} position={new Vector3(34, 10.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube082.geometry} material={materials.Material} position={new Vector3(25, 19.5, 1).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube083.geometry} material={materials.Material} position={new Vector3(-26, 2.5, 2).add(position).applyEuler(rotation)} rotation={rotation} />
-      <MeshCollider geometry={nodes.Cube090.geometry} material={materials.Material} position={new Vector3(26, -2.5, 2).add(position).applyEuler(rotation)} rotation={rotation} />
+      <MeshCollider geometry={nodes.Cube001.geometry} material={materials.Material} position={new Vector3(0, 0, 0.2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube002.geometry} material={materials.Material} position={new Vector3(-1, -1, 0.1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube003.geometry} material={materials.Material} position={new Vector3(1, 1, 0.1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube004.geometry} material={materials.Material} position={new Vector3(2, -2, 0.3).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube005.geometry} material={materials.Material} position={new Vector3(-2, 2, 0.3).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube006.geometry} material={materials.Material} position={new Vector3(0, 0, 0.4).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube007.geometry} material={materials.Material} position={new Vector3(4, -4, 0.2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube008.geometry} material={materials.Material} position={new Vector3(-4, 4, 0.2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube009.geometry} material={materials.Material} position={new Vector3(3, 3, 0.2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube010.geometry} material={materials.Material} position={new Vector3(-3, -3, 0.2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube011.geometry} material={materials.Material} position={new Vector3(0, 0, 0.5).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube012.geometry} material={materials.Material} position={new Vector3(-1.5, -1.5, 0.4).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube013.geometry} material={materials.Material} position={new Vector3(1.5, 1.5, 0.4).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube014.geometry} material={materials.Material} position={new Vector3(5, 5, 0.1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube015.geometry} material={materials.Material} position={new Vector3(5, -5, 0.1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube016.geometry} material={materials.Material} position={new Vector3(-5, -5, 0.1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube017.geometry} material={materials.Material} position={new Vector3(-5, 5, 0.1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube018.geometry} material={materials.Material} position={new Vector3(27, 1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube024.geometry} material={materials.Material} position={new Vector3(27, -1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube022.geometry} material={materials.Material} position={new Vector3(3.66, 12.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube019.geometry} material={materials.Material} position={new Vector3(31, -1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube020.geometry} material={materials.Material} position={new Vector3(29.5, 1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube021.geometry} material={materials.Material} position={new Vector3(32.5, 0, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube023.geometry} material={materials.Material} position={new Vector3(29.5, 4, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube025.geometry} material={materials.Material} position={new Vector3(32.5, 2.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube026.geometry} material={materials.Material} position={new Vector3(31, 5.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube027.geometry} material={materials.Material} position={new Vector3(35, 2.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube028.geometry} material={materials.Material} position={new Vector3(35, 5.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube029.geometry} material={materials.Material} position={new Vector3(-35, -2.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube030.geometry} material={materials.Material} position={new Vector3(-35, -5.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube031.geometry} material={materials.Material} position={new Vector3(-31, -5.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube032.geometry} material={materials.Material} position={new Vector3(-32.5, -2.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube033.geometry} material={materials.Material} position={new Vector3(-29.5, -4, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube034.geometry} material={materials.Material} position={new Vector3(-32.5, 0, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube035.geometry} material={materials.Material} position={new Vector3(-29.5, -1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube036.geometry} material={materials.Material} position={new Vector3(-31, 1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube037.geometry} material={materials.Material} position={new Vector3(-27, -1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube038.geometry} material={materials.Material} position={new Vector3(-27, 1.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube039.geometry} material={materials.Material} position={new Vector3(13.66, 7.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube040.geometry} material={materials.Material} position={new Vector3(4.66, -14.71, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube041.geometry} material={materials.Material} position={new Vector3(13.66, -7.71, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube042.geometry} material={materials.Material} position={new Vector3(-15.34, 5.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube043.geometry} material={materials.Material} position={new Vector3(-7.34, 13.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube044.geometry} material={materials.Material} position={new Vector3(-13.34, -5.71, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube045.geometry} material={materials.Material} position={new Vector3(-9.34, -16.71, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube046.geometry} material={materials.Material} position={new Vector3(-21.34, -11.71, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube047.geometry} material={materials.Material} position={new Vector3(-19.34, 15.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube048.geometry} material={materials.Material} position={new Vector3(14.66, 15.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube049.geometry} material={materials.Material} position={new Vector3(22.66, -15.71, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube050.geometry} material={materials.Material} position={new Vector3(-14.5, 13, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube051.geometry} material={materials.Material} position={new Vector3(-13, 14.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube052.geometry} material={materials.Material} position={new Vector3(15, -18.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube053.geometry} material={materials.Material} position={new Vector3(16.5, -17, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube054.geometry} material={materials.Material} position={new Vector3(22.5, 11, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube055.geometry} material={materials.Material} position={new Vector3(21, 12.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube056.geometry} material={materials.Material} position={new Vector3(-17.5, -13, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube057.geometry} material={materials.Material} position={new Vector3(-16, -14.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube058.geometry} material={materials.Material} position={new Vector3(-19.34, 1.29, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube063.geometry} material={materials.Material} position={new Vector3(36.5, 14.8, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube064.geometry} material={materials.Material} position={new Vector3(36.5, -7, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube079.geometry} material={materials.Material} position={new Vector3(-1, 19.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube092.geometry} material={materials.Material} position={new Vector3(0, -21.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube106.geometry} material={materials.Material} position={new Vector3(26, 2.5, 2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube107.geometry} material={materials.Material} position={new Vector3(0, 18.5, 2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube108.geometry} material={materials.Material} position={new Vector3(-26, -2.5, 2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube109.geometry} material={materials.Material} position={new Vector3(0, -20.5, 2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube059.geometry} material={materials.Material} position={new Vector3(-36.5, 7.8, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube060.geometry} material={materials.Material} position={new Vector3(25.5, -19, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube061.geometry} material={materials.Material} position={new Vector3(27, -17.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube062.geometry} material={materials.Material} position={new Vector3(28.5, -15, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube065.geometry} material={materials.Material} position={new Vector3(30, -13.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube066.geometry} material={materials.Material} position={new Vector3(32.5, -11, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube067.geometry} material={materials.Material} position={new Vector3(34, -9.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube068.geometry} material={materials.Material} position={new Vector3(-36.5, -15, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube069.geometry} material={materials.Material} position={new Vector3(-25.5, -19, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube070.geometry} material={materials.Material} position={new Vector3(-27, -17.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube071.geometry} material={materials.Material} position={new Vector3(-29.5, -15, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube072.geometry} material={materials.Material} position={new Vector3(-31, -13.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube073.geometry} material={materials.Material} position={new Vector3(-33.5, -11, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube074.geometry} material={materials.Material} position={new Vector3(-35, -9.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube075.geometry} material={materials.Material} position={new Vector3(-28, 16.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube076.geometry} material={materials.Material} position={new Vector3(-26.5, 18, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube077.geometry} material={materials.Material} position={new Vector3(-32, 12.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube078.geometry} material={materials.Material} position={new Vector3(-30.5, 14, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube080.geometry} material={materials.Material} position={new Vector3(-35, 8.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube081.geometry} material={materials.Material} position={new Vector3(-33.5, 10, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube084.geometry} material={materials.Material} position={new Vector3(26.5, 18, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube085.geometry} material={materials.Material} position={new Vector3(28, 16.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube086.geometry} material={materials.Material} position={new Vector3(29.5, 15, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube087.geometry} material={materials.Material} position={new Vector3(31, 13.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube088.geometry} material={materials.Material} position={new Vector3(32.5, 12, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube089.geometry} material={materials.Material} position={new Vector3(34, 10.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube082.geometry} material={materials.Material} position={new Vector3(25, 19.5, 1).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube083.geometry} material={materials.Material} position={new Vector3(-26, 2.5, 2).applyEuler(rotation).add(position)} rotation={rotation}/>
+      <MeshCollider geometry={nodes.Cube090.geometry} material={materials.Material} position={new Vector3(26, -2.5, 2).applyEuler(rotation).add(position)} rotation={rotation}/>
     </group>
   )
 }
