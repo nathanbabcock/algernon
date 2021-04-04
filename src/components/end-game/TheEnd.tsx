@@ -1,5 +1,5 @@
 import { useGLTF } from '@react-three/drei'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useThree, useFrame } from 'react-three-fiber'
 import { Vector3, Euler } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -8,6 +8,7 @@ import MazeDeadEnd from '../maze-pieces/MazeDeadEnd'
 import { MazeSegment, MazeConnection, MAZEPIECE_HALFWIDTH } from '../maze-pieces/MazeLibrary'
 import showLocationDiscoveredUI from '../ui/locationDiscovered'
 import { Text } from '@react-three/drei'
+import Flowers from '../early-game/Flowers'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -41,6 +42,22 @@ export default function TheEnd(props: any) {
   }
   useFrame(updateDiscovered)
 
+  const [ respectsPaid, setRespectsPaid ] = useState(false)
+
+  useEffect(() => {
+    const onKeydown = (event: KeyboardEvent) => {
+      console.log('key key')
+      if (event.code !== 'KeyF') return
+      setRespectsPaid(true)
+
+      if (discovered) return
+      setDiscovered(true)
+      showLocationDiscoveredUI(`Algernon's Grave Discovered`, `Location ${NUM_LOCATIONS}/${NUM_LOCATIONS}`)
+    }
+    document.addEventListener('keydown', onKeydown)
+    return () => { document.removeEventListener('keydown', onKeydown) }
+  })
+
   const { nodes, materials } = useGLTF('/models/tombstone.glb') as GLTFResult
   return <group>
     <MazeDeadEnd segment={segment} rotation={props.rotation} position={props.position}/>
@@ -58,15 +75,17 @@ export default function TheEnd(props: any) {
         {`RIP\nAlgernon`}
       </Text>
 
-      <Text
+      { !respectsPaid && <Text
         color="white"
+        textAlign="center"
         position={[0, -.6, .001]}
         rotation={[0, 0, 0]}
         fontSize={0.15}
-        textAlign="center"
       >
         {`Press F\nto place Flowers`}
-      </Text>
+      </Text> }
+
+      { respectsPaid && <Flowers position={[-.2, -.6, .1]} scale={[0.05, 0.05, 0.05]} rotation={[0, Math.PI/2 + Math.PI/8, 0]}/> }
 
     </group>
   </group>
