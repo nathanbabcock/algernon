@@ -7,8 +7,9 @@ import React, { useRef } from 'react'
 import { PositionalAudio, useGLTF } from '@react-three/drei'
 
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
-import { useFrame, useThree } from 'react-three-fiber'
+import { useFrame, useLoader, useThree } from 'react-three-fiber'
 import { useCylinder } from '@react-three/cannon'
+import { AudioLoader } from 'three'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -83,3 +84,4 @@ export default function Model(props: any) {
 }
 
 useGLTF.preload('models/fountain.glb')
+useLoader.preload(AudioLoader, 'sounds/fountain.wav')

@@ -1,8 +1,8 @@
 import { useBox, useCylinder } from '@react-three/cannon'
 import { Icosahedron, PositionalAudio } from '@react-three/drei'
 import React, { useRef, useState } from 'react'
-import { useFrame, useThree } from 'react-three-fiber'
-import { Euler, Mesh, Vector3 } from 'three'
+import { useFrame, useLoader, useThree } from 'react-three-fiber'
+import { AudioLoader, Euler, Mesh, Vector3 } from 'three'
 import { DEBUG_CONNECTIONS, NUM_LOCATIONS } from '../../config'
 import { WALL_COLOR } from '../../theme'
 import { MazeConnection, MAZEPIECE_HEIGHT, MazeSegment } from '../maze-pieces/MazeLibrary'
@@ -163,3 +163,5 @@ export class OrbRoomSegment extends MazeSegment {
     super('orb-room', position, rotation, id)
   }
 }
+
+useLoader.preload(AudioLoader, 'sounds/orb.wav')

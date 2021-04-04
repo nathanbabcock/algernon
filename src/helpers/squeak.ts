@@ -1,10 +1,12 @@
+import { squeak1, squeak2, squeak3, squeak4, squeak5, squeak6 } from './sound'
+
 export const squeaks = [
-  new Audio('sounds/squeak-1.mp3'),
-  new Audio('sounds/squeak-2.mp3'),
-  new Audio('sounds/squeak-3.mp3'),
-  new Audio('sounds/squeak-4.mp3'),
-  new Audio('sounds/squeak-5.mp3'),
-  new Audio('sounds/squeak-6.mp3'),
+  squeak1,
+  squeak2,
+  squeak3,
+  squeak4,
+  squeak5,
+  squeak6,
 ]
 
 export function playSqueak() {
