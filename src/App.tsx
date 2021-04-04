@@ -27,10 +27,10 @@ export default function App () {
       />
       <Effects />
       <fog attach="fog" args={[FOG_COLOR, 1, 40]}/>
-      <ambientLight intensity={0.1} />
-      <spotLight
-        intensity={0.3}
-        position={[100, 100, 100]}
+      <ambientLight intensity={0.25} />
+      <directionalLight
+        intensity={0.25}
+        position={[2000, 2000, 1000]}
         castShadow
         // shadow-mapSize-height={4096}
         // shadow-mapSize-width={4096}

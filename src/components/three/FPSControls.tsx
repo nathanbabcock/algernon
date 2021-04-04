@@ -99,7 +99,9 @@ export default function FPSControls(props: FPSControlsProps) {
 
     // Handle keyboard controls
     const inputVelocity = new Vector3()
-    const MOVESPEED = 10 // 5
+    let MOVESPEED = 5
+    if (keyStates['ShiftLeft']) MOVESPEED *= 2
+
     if (keyStates['KeyW'])
       inputVelocity.add(getForwardVector())
     if (keyStates['KeyS'])

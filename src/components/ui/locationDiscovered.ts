@@ -7,6 +7,7 @@ export default function showLocationDiscoveredUI(mainText: string, subText: stri
   discoveredUI.querySelector('.main-text')!.innerHTML = mainText
   discoveredUI.querySelector('.sub-text')!.innerHTML = subText
   discoveredUI.classList.add('visible')
+  locationDiscovered.currentTime = 0
   locationDiscovered.play()
   setTimeout(() => discoveredUI.classList.remove('visible'), 5000)
 }

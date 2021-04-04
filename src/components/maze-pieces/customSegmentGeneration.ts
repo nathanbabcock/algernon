@@ -15,8 +15,7 @@ export const spawnNoFutureNoPast: CustomSegmentGenerationFunction = (
   originSegment: MazeSegment,
   parentSegment: Infinite1DMazeSegment
 ) => {
-  const roll = Math.random()
-  if (roll < spawnChance) {
+  if (Math.random() < spawnChance) {
     parentSegment.customSegmentGenerationFunction = spawnFlower
     // Modify the spawning algorithm to spawn the next scripted encounter
 
@@ -32,8 +31,7 @@ export const spawnFlower: CustomSegmentGenerationFunction = (
   originSegment: MazeSegment,
   parentSegment: Infinite1DMazeSegment
 ) => {
-  const roll = Math.random()
-  if (roll < spawnChance) {
+  if (Math.random() < spawnChance) {
     parentSegment.customSegmentGenerationFunction = spawnFountain
     return getPossibleSegments(originConnection, originSegment, [FlowerRoomSegment])
   } else {
@@ -46,8 +44,7 @@ export const spawnFountain: CustomSegmentGenerationFunction = (
   originSegment: MazeSegment,
   parentSegment: Infinite1DMazeSegment
 ) => {
-  const roll = Math.random()
-  if (roll < spawnChance) {
+  if (Math.random() < spawnChance) {
     parentSegment.customSegmentGenerationFunction = spawnDeer
     // Now we enter the default/open world exploration behavior, no more scripting
     return getPossibleSegments(originConnection, originSegment, [FountainRoomSegment])
@@ -61,8 +58,7 @@ export const spawnDeer: CustomSegmentGenerationFunction = (
   originSegment: MazeSegment,
   parentSegment: Infinite1DMazeSegment
 ) => {
-  const roll = Math.random()
-  if (roll < spawnChance) {
+  if (Math.random() < spawnChance) {
     parentSegment.customSegmentGenerationFunction = spawnOrb
     // Now we enter the default/open world exploration behavior, no more scripting
     return getPossibleSegments(originConnection, originSegment, [DeerRoomSegment])
@@ -76,8 +72,7 @@ export const spawnOrb: CustomSegmentGenerationFunction = (
   originSegment: MazeSegment,
   parentSegment: Infinite1DMazeSegment
 ) => {
-  const roll = Math.random()
-  if (roll < spawnChance) {
+  if (Math.random() < spawnChance) {
     parentSegment.customSegmentGenerationFunction = spawnTheEnd
     // Now we enter the default/open world exploration behavior, no more scripting
     return getPossibleSegments(originConnection, originSegment, [OrbRoomSegment])
@@ -91,8 +86,7 @@ export const spawnTheEnd: CustomSegmentGenerationFunction = (
   originSegment: MazeSegment,
   parentSegment: Infinite1DMazeSegment
 ) => {
-  const roll = Math.random()
-  if (roll < spawnChance) {
+  if (Math.random() < spawnChance) {
     parentSegment.customSegmentGenerationFunction = spawnDeadEndsOnly
     // Now we enter the default/open world exploration behavior, no more scripting
     return getPossibleSegments(originConnection, originSegment, [TheEndSegment])
