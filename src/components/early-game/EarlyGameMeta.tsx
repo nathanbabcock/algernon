@@ -339,6 +339,8 @@ export default function EarlyGameMeta(props: any) {
     createPetal10(curIndex++),
     createPetal11(curIndex++),
   ] as Infinite1DMazeSegment[])
+
+  const [deadEnds, setDeadEnds] = useState(0)
   const [stage3Complete, setStage3Complete] = useState(false)
   const { camera } = useThree()
 
@@ -352,6 +354,10 @@ export default function EarlyGameMeta(props: any) {
       if (!petalSegment) return
       const petalIndex = petal.maze.indexOf(petalSegment)
       if (petalIndex < petal.maze.length - 2) return
+      if (petal.hasBeenSeen) return
+      petal.hasBeenSeen = true
+      setDeadEnds(deadEnds + 1)
+      if (deadEnds < 2) return
   
       petal.customSegmentGenerationFunction = spawnNoFutureNoPast
       petal.paused = false
