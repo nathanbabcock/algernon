@@ -4,10 +4,9 @@ import { useFrame, useThree } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
 import { NUM_LOCATIONS, DEBUG_CONNECTIONS } from '../../config'
 import { WALL_COLOR } from '../../theme'
-import { MAZEPIECE_HEIGHT } from '../maze-pieces/MazeLibrary'
+import { MazeConnection, MAZEPIECE_HEIGHT, MazeSegment } from '../maze-pieces/MazeLibrary'
 import showLocationDiscoveredUI from '../ui/locationDiscovered'
 import Fountain from './Fountain'
-import FountainRoomSegment from './FountainRoomSegment'
 
 export default function FountainRoom(props: any) {
   let position = new Vector3()
@@ -110,4 +109,26 @@ export default function FountainRoom(props: any) {
       </mesh>
     </group>
   )
+}
+
+export class FountainRoomSegment extends MazeSegment {
+  public connections: MazeConnection[] = [
+    {
+      position: new Vector3(-8, 0, 0),
+      forward: new Vector3(-1, 0, 0),
+    },
+  ] as MazeConnection[]
+
+  public containsPoint(point: Vector3): boolean {
+    return (
+         point.x <= this.position.x + 8
+      && point.x >= this.position.x - 8
+      && point.y <= this.position.y + 8
+      && point.y >= this.position.y - 8
+    )
+  }
+
+  constructor(position: Vector3, rotation: Euler, id?: number) {
+    super('fountain-room', position, rotation, id)
+  }
 }

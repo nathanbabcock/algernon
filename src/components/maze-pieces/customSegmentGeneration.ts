@@ -1,7 +1,7 @@
 import { FlowerRoomSegment } from '../early-game/FlowerRoom'
 import Infinite1DMazeSegment, { CustomSegmentGenerationFunction } from '../infinite-1d-maze/Infinite1DMazeSegment'
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
-import FountainRoomSegment from '../rooms/FountainRoomSegment'
+import { FountainRoomSegment } from '../rooms/FountainRoom'
 import { MazeConnection, MazeSegment, getPossibleSegments } from './MazeLibrary'
 
 export const spawnNoFutureNoPast: CustomSegmentGenerationFunction = (
