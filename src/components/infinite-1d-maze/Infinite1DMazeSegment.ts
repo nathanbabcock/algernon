@@ -120,7 +120,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     let removed = 0
 
     for (i = currentIndex + 1; i < this.maze.length; i++) {
-      if (!['straight', 'no-future-no-past'].includes(this.maze[i].type)) turns++
+      if (this.maze[i].type === 'corner') turns++
       if (turns >= MAZE_BUFFER_SIZE) break
     }
 
@@ -128,7 +128,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     while (turns < MAZE_BUFFER_SIZE) {
       const newSegment = this.addSegment()
       if (!newSegment) break
-      if (!['straight', 'no-future-no-past'].includes(newSegment.type)) turns++
+      if (newSegment.type === 'corner') turns++
       added++
     }
 
@@ -152,7 +152,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     let removed = 0
 
     for (i = currentIndex; i >= 0; i--) {
-      if (!['straight', 'no-future-no-past'].includes(this.maze[i].type)) turns++
+      if (this.maze[i].type === 'corner') turns++
       if (turns >= MAZE_BUFFER_SIZE) break
     }
 
@@ -160,7 +160,7 @@ export default class Infinite1DMazeSegment extends MazeSegment  {
     while (turns < MAZE_BUFFER_SIZE) {
       const newSegment = this.addSegment(true)
       if (!newSegment) break
-      if (!['straight', 'no-future-no-past'].includes(newSegment.type)) turns++
+      if (newSegment.type === 'corner') turns++
       added++
     }
 

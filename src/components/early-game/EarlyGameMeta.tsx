@@ -233,6 +233,43 @@ function createPetal8(id: number): Infinite1DMazeSegment {
   return petal
 }
 
+function createPetal9(id: number): Infinite1DMazeSegment {
+  const petal = new Infinite1DMazeSegment(new Vector3(), new Euler(), id)
+  petal.paused = true
+  petal.curIndex = 0 // we will reset the maze and replace it with a pre-chosen seed
+  const straight1 = new MazeStraightSegment(new Vector3(92, 66, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const straight2 = new MazeStraightSegment(new Vector3(92, 70, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const straight3 = new MazeStraightSegment(new Vector3(92, 74, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const corner1 =  new MazeCornerSegment(new Vector3(92, 78, 0), new Euler(0, 0, -Math.PI/2), petal.curIndex++)
+  const corner2 = new MazeCornerSegment(new Vector3(96, 78, 0), new Euler(0, 0, Math.PI/2), petal.curIndex++)
+  const deadend = new MazeDeadEndSegment(new Vector3(96, 82, 0), new Euler(0, 0, 0), petal.curIndex++)
+
+  straight1.connections[0].connectedTo = straight2
+  straight2.connections[1].connectedTo = straight1
+
+  straight2.connections[0].connectedTo = straight3
+  straight3.connections[1].connectedTo = straight2
+
+  straight3.connections[0].connectedTo = corner1
+  corner1.connections[1].connectedTo = straight3
+
+  corner1.connections[0].connectedTo = corner2
+  corner2.connections[0].connectedTo = corner1
+
+  corner2.connections[1].connectedTo = deadend
+  deadend.connections[0].connectedTo = corner2
+
+  petal.maze = [
+    straight1,
+    straight2,
+    straight3,
+    corner1,
+    corner2,
+    deadend,
+  ]
+  return petal
+}
+
 /**
  * Holds the entire scripted early game sequence,
  * plus the 11 possible transition paths towards the Flower Room
@@ -249,6 +286,7 @@ export default function EarlyGameMeta(props: any) {
     createPetal6(curIndex++),
     createPetal7(curIndex++),
     createPetal8(curIndex++),
+    createPetal9(curIndex++),
   ] as Infinite1DMazeSegment[])
   const [stage3Complete, setStage3Complete] = useState(false)
   const { camera } = useThree()
