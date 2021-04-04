@@ -2,9 +2,9 @@ import { FlowerRoomSegment } from '../early-game/FlowerRoom'
 import { TheEndSegment } from '../end-game/TheEnd'
 import Infinite1DMazeSegment, { CustomSegmentGenerationFunction } from '../infinite-1d-maze/Infinite1DMazeSegment'
 import { MazeNoFutureNoPastSegment } from '../no-future-no-past/NoFutureNoPastSegment'
-import { DeerRoomSegment } from '../rooms/DeerRoom'
-import { FountainRoomSegment } from '../rooms/FountainRoom'
-import { OrbRoomSegment } from '../rooms/OrbRoom'
+import { DeerRoomSegment } from '../mid-game/DeerRoom'
+import { FountainRoomSegment } from '../mid-game/FountainRoom'
+import { OrbRoomSegment } from '../mid-game/OrbRoom'
 import { getPossibleSegments, MazeConnection, MazeDeadEndSegment, MazeSegment } from './MazeLibrary'
 
 // const spawnChance = 0.0333

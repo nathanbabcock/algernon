@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 import { Euler, Vector3 } from 'three'
-import Infinite1DMaze from '../infinite-1d-maze/Infinite1DMaze'
-import Infinite1DMazeSegment from '../infinite-1d-maze/Infinite1DMazeSegment'
-import { spawnNoFutureNoPast } from '../maze-pieces/customSegmentGeneration'
-import { MazeCornerSegment, MazeDeadEndSegment, MazeStraightSegment } from '../maze-pieces/MazeLibrary'
-import EarlyGame from './EarlyGame'
+import Infinite1DMaze from './infinite-1d-maze/Infinite1DMaze'
+import Infinite1DMazeSegment from './infinite-1d-maze/Infinite1DMazeSegment'
+import { spawnNoFutureNoPast } from './maze-pieces/customSegmentGeneration'
+import { MazeCornerSegment, MazeDeadEndSegment, MazeStraightSegment } from './maze-pieces/MazeLibrary'
+import EarlyGame from './early-game/EarlyGame'
 
 function createPetal1(id: number): Infinite1DMazeSegment {
   const petal = new Infinite1DMazeSegment(new Vector3(), new Euler(), id)
@@ -324,7 +324,7 @@ function createPetal11(id: number): Infinite1DMazeSegment {
  * plus the 11 possible transition paths towards the Flower Room
  * and into the MiddleGame infinite open world maze
  */
-export default function EarlyGameMeta(props: any) {
+export default function GameDirector(props: any) {
   let curIndex = 0
   const [petals, setPetals] = useState([
     createPetal1(curIndex++),

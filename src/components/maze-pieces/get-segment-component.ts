@@ -4,12 +4,12 @@ import TheEnd from '../end-game/TheEnd'
 import NoFuture from '../no-future-no-past/NoFuture'
 import NoFutureNoPast from '../no-future-no-past/NoFutureNoPast'
 import NoPast from '../no-future-no-past/NoPast'
-import FountainRoom from '../rooms/FountainRoom'
-import DeerRoom from '../rooms/DeerRoom'
+import FountainRoom from '../mid-game/FountainRoom'
+import DeerRoom from '../mid-game/DeerRoom'
 import MazeCorner from './MazeCorner'
 import MazeDeadEnd from './MazeDeadEnd'
 import MazeStraight from './MazeStraight'
-import OrbRoom from '../rooms/OrbRoom'
+import OrbRoom from '../mid-game/OrbRoom'
 
 // TODO this function may indicate that MazeX and MazeXSegment need to be unified
 export default function getSegmentComponent(type: string): React.FC<any> {

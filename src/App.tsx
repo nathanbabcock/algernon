@@ -2,7 +2,7 @@ import { Physics } from '@react-three/cannon'
 import { Stars } from '@react-three/drei'
 import React, { Suspense } from 'react'
 import { Canvas } from 'react-three-fiber'
-import EarlyGameMeta from './components/early-game/EarlyGameMeta'
+import GameDirector from './components/GameDirector'
 import Camera from './components/three/Camera'
 import Effects from './components/three/Effects'
 import FPSControls from './components/three/FPSControls'
@@ -65,7 +65,7 @@ export function PhysicsWorld() {
     <Suspense fallback={null}>
       <GroundPlane/>
       <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
-      <EarlyGameMeta />
+      <GameDirector />
     </Suspense>
   )
 }
