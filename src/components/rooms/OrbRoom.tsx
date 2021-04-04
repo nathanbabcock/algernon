@@ -101,7 +101,7 @@ export default function OrbRoom(props: any) {
       </mesh>
 
       <group position={segment.position} rotation={segment.rotation}>
-        <PositionalAudio url="sounds/orb.wav" distance={1} loop />  
+        <PositionalAudio url="sounds/orb.wav" distance={2} loop />  
 
         <Icosahedron ref={mesh} args={[1]} position={[0, 0, 2]}>
           <meshPhongMaterial attach="material" color="crimson" />

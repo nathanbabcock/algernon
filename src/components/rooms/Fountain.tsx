@@ -67,7 +67,7 @@ export default function Model(props: any) {
 
       <group position={parentPos} rotation={parentRot}>
 
-        <PositionalAudio url="sounds/fountain.wav" distance={1} loop />
+        <PositionalAudio url="sounds/fountain.wav" distance={2} loop />
 
         <group scale={[scale, scale, scale]} rotation={[Math.PI/2, 0, 0]} position={[0, 0, -0.1]}>
           <mesh ref={mesh} material={materials['Material.001']} geometry={nodes.f.geometry} position={[0, 501.71, 5.93]} castShadow receiveShadow/>
