@@ -1,5 +1,5 @@
 import { useBox, useCylinder } from '@react-three/cannon'
-import { Icosahedron } from '@react-three/drei'
+import { Icosahedron, PositionalAudio } from '@react-three/drei'
 import React, { useRef, useState } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 import { Euler, Mesh, Vector3 } from 'three'
@@ -101,6 +101,8 @@ export default function OrbRoom(props: any) {
       </mesh>
 
       <group position={segment.position} rotation={segment.rotation}>
+        <PositionalAudio url="sounds/orb.wav" distance={1} loop />  
+
         <Icosahedron ref={mesh} args={[1]} position={[0, 0, 2]}>
           <meshPhongMaterial attach="material" color="crimson" />
         </Icosahedron>
