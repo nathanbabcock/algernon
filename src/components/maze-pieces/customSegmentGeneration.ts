@@ -7,8 +7,8 @@ import { FountainRoomSegment } from '../mid-game/FountainRoom'
 import { OrbRoomSegment } from '../mid-game/OrbRoom'
 import { getPossibleSegments, MazeConnection, MazeDeadEndSegment, MazeSegment } from './MazeLibrary'
 
-// const spawnChance = 0.0333
-const spawnChance = 0.1
+const spawnChance = 0.0333
+// const spawnChance = 0.1
 
 export const spawnNoFutureNoPast: CustomSegmentGenerationFunction = (
   originConnection: MazeConnection,
