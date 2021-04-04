@@ -9,6 +9,7 @@ import { MazeSegment, MazeConnection, MAZEPIECE_HALFWIDTH } from '../maze-pieces
 import showLocationDiscoveredUI from '../ui/locationDiscovered'
 import { Text } from '@react-three/drei'
 import Flowers from '../early-game/Flowers'
+import { playSqueak } from '../../helpers/squeak'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -46,9 +47,12 @@ export default function TheEnd(props: any) {
 
   useEffect(() => {
     const onKeydown = (event: KeyboardEvent) => {
-      console.log('key key')
       if (event.code !== 'KeyF') return
       setRespectsPaid(true)
+
+      const fade = document.getElementById('fade-to-black')
+      if (fade) fade.classList.add('show')
+      setTimeout(playSqueak, 12000)
 
       if (discovered) return
       setDiscovered(true)

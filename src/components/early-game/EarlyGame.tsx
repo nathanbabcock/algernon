@@ -12,6 +12,7 @@ import Cheese from './Cheese'
 import Whiteboard from './Whiteboard'
 import Whiteboard2 from './Whiteboard2'
 import MeshCollider from '../three/MeshCollider'
+import { playSqueak, squeaks } from '../../helpers/squeak'
 
 type GLTFResult = GLTF & {
   nodes: any,
@@ -35,23 +36,7 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
       squeaks.forEach(squeak => squeak.pause())
     }
   }
-
-  const squeaks = [
-    new Audio('sounds/squeak-1.mp3'),
-    new Audio('sounds/squeak-2.mp3'),
-    new Audio('sounds/squeak-3.mp3'),
-    new Audio('sounds/squeak-4.mp3'),
-    new Audio('sounds/squeak-5.mp3'),
-    new Audio('sounds/squeak-6.mp3'),
-  ]
-  const playSqueak = () => {
-    if (algergone) return
-    const randomSqueak = squeaks[Math.floor(Math.random() * squeaks.length)]
-    randomSqueak.currentTime = 0
-    randomSqueak.volume = .5
-    randomSqueak.play()
-  }
-  playSqueak()
+  if (!algergone) playSqueak()
 
   const [stage1Complete, setStage1Complete] = useState(false)
   const whiteboardPos = new Vector3(34.5, 21.5, 0)
