@@ -59,17 +59,13 @@ export function PhysicsWorld() {
       document.getElementById('pause')!.classList.remove('visible')
   }
   setPaused(document.pointerLockElement !== document.body)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  
   const spawn: [number, number, number] = [8, 0, 1]
-
   return (
     <Suspense fallback={null}>
       <GroundPlane/>
       <FPSControls position={spawn} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} />
-      {/* <FPSControls position={[96, 57, 0]} rotation={[Math.PI/2, 0, -Math.PI/2]} setPaused={setPaused} /> */}
       <EarlyGameMeta />
-      {/* <TheEnd /> */}
     </Suspense>
   )
 }

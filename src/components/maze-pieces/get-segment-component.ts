@@ -5,6 +5,7 @@ import NoFuture from '../no-future-no-past/NoFuture'
 import NoFutureNoPast from '../no-future-no-past/NoFutureNoPast'
 import NoPast from '../no-future-no-past/NoPast'
 import FountainRoom from '../rooms/FountainRoom'
+import DeerRoom from '../rooms/DeerRoom'
 import MazeCorner from './MazeCorner'
 import MazeDeadEnd from './MazeDeadEnd'
 import MazeStraight from './MazeStraight'
@@ -20,6 +21,7 @@ export default function getSegmentComponent(type: string): React.FC<any> {
     case 'no-future-no-past': return NoFutureNoPast
     case 'fountain-room': return FountainRoom
     case 'flower-room': return FlowerRoom
+    case 'deer-room': return DeerRoom
     case 'the-end': return TheEnd
     default: throw new Error(`Unknown segment type ${type}`)
   }
