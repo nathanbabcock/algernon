@@ -270,6 +270,28 @@ function createPetal9(id: number): Infinite1DMazeSegment {
   return petal
 }
 
+function createPetal10(id: number): Infinite1DMazeSegment {
+  const petal = new Infinite1DMazeSegment(new Vector3(), new Euler(), id)
+  petal.paused = true
+  petal.curIndex = 0 // we will reset the maze and replace it with a pre-chosen seed
+  const straight = new MazeStraightSegment(new Vector3(88, 66, 0), new Euler(0, 0, 0), petal.curIndex++)
+  const corner = new MazeCornerSegment(new Vector3(88, 70, 0), new Euler(0, 0, Math.PI), petal.curIndex++)
+  const deadend = new MazeDeadEndSegment(new Vector3(84, 70, 0), new Euler(0, 0, Math.PI/2), petal.curIndex++)
+
+  straight.connections[0].connectedTo = corner
+  corner.connections[0].connectedTo = straight
+
+  corner.connections[1].connectedTo = deadend
+  deadend.connections[0].connectedTo = corner
+
+  petal.maze = [
+    straight,
+    corner,
+    deadend,
+  ]
+  return petal
+}
+
 /**
  * Holds the entire scripted early game sequence,
  * plus the 11 possible transition paths towards the Flower Room
@@ -287,6 +309,7 @@ export default function EarlyGameMeta(props: any) {
     createPetal7(curIndex++),
     createPetal8(curIndex++),
     createPetal9(curIndex++),
+    createPetal10(curIndex++),
   ] as Infinite1DMazeSegment[])
   const [stage3Complete, setStage3Complete] = useState(false)
   const { camera } = useThree()
