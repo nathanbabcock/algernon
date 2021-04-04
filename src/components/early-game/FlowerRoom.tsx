@@ -8,9 +8,11 @@ import { useFrame, useThree } from 'react-three-fiber'
 import * as THREE from 'three'
 import { Vector3, Euler } from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import { NUM_LOCATIONS } from '../../config'
 import { MazeConnection, MazeSegment } from '../maze-pieces/MazeLibrary'
 import MazeConnectionHelper from '../three/MazeConnectionHelper'
 import MeshCollider from '../three/MeshCollider'
+import showLocationDiscoveredUI from '../ui/locationDiscovered'
 import Flowers from './Flowers'
 
 type GLTFResult = GLTF & {
@@ -49,7 +51,20 @@ export default function EarlyGame(props: any) {
       new Audio('sounds/pick-flower.mp3').play()
     }
   }
-  useFrame(updateFlower)
+
+  const [ discovered, setDiscovered ] = useState(false)
+  const updateDiscovered = () => {
+    if (discovered) return
+    if (segment.containsPoint(camera.position)) {
+      setDiscovered(true)
+      showLocationDiscoveredUI('Flower Discovered', `Location 1/${NUM_LOCATIONS}`)
+    }
+  }
+
+  useFrame(() => {
+    updateFlower()
+    updateDiscovered()
+  })
 
   return (
     <group ref={group} dispose={null}>

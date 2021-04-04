@@ -70,3 +70,29 @@ body {
   left: 0;
   z-index: var(--watermark-z-index);
 }
+
+#discovered-ui {
+  position: fixed;
+  top: -150px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--watermark-z-index);
+  width: 100vw;
+  font-size: 48px;
+  font-family: 'Montserrat';
+  color: #ffffff;
+  margin-top: 32px;
+  transition: .5s ease-in-out top;
+
+  &.visible {
+    top: 0;
+  }
+
+  .sub-text {
+    font-size: 32px;
+    color: #ffffff80;
+  }
+}
