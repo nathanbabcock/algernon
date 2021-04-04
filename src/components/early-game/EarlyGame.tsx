@@ -91,6 +91,16 @@ export default function EarlyGame(props: JSX.IntrinsicElements['group']) {
   return (
     <group ref={group} dispose={null}>
       <group visible={!algergone}>
+        <Text
+          color="white"
+          position={[2.05, 0, 0.45]}
+          rotation={[Math.PI/2, Math.PI/2, 0]}
+          fontSize={0.1}
+          fillOpacity={1}
+        >
+          (algernon)
+        </Text>
+
         <spotLight
           position={[-2, 0, 0.1]}
           angle={Math.PI/16}
