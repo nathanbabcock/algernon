@@ -18,7 +18,7 @@ type GLTFResult = GLTF & {
 
 export default function Model(props: JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group>()
-  const { nodes, materials } = useGLTF('/models/tombstone.glb') as GLTFResult
+  const { nodes, materials } = useGLTF('models/tombstone.glb') as GLTFResult
   return (
     <group ref={group} {...props} dispose={null}>
       <mesh geometry={nodes.tomstonesobj.geometry} material={materials.wire_086086086} scale={[0.17, 0.17, 0.17]} />
@@ -26,4 +26,4 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/models/tombstone.glb')
+useGLTF.preload('models/tombstone.glb')

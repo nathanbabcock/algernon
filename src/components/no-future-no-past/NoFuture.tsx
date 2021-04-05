@@ -1,6 +1,8 @@
 import React from 'react';
 import MazeDeadEnd from '../maze-pieces/MazeDeadEnd';
 import { Text } from '@react-three/drei'
+import { useLoader } from 'react-three-fiber'
+import { FontLoader } from 'three'
 
 export default function NoFuture(props: any) {
   return <group>
@@ -19,4 +21,4 @@ export default function NoFuture(props: any) {
   </group>
 };
 
-
+useLoader.preload(FontLoader, 'fonts/empires.otf')

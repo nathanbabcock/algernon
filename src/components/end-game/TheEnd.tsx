@@ -63,7 +63,7 @@ export default function TheEnd(props: any) {
     return () => { document.removeEventListener('keydown', onKeydown) }
   })
 
-  const { nodes, materials } = useGLTF('/models/tombstone.glb') as GLTFResult
+  const { nodes, materials } = useGLTF('models/tombstone.glb') as GLTFResult
   return <group>
     <MazeDeadEnd segment={segment} rotation={props.rotation} position={props.position}/>
     <group position={props.position} rotation={props.rotation}>
@@ -108,3 +108,5 @@ export class TheEndSegment extends MazeSegment {
     super('the-end', position, rotation, id)
   }
 }
+
+useGLTF.preload('models/tombstone.glb')
