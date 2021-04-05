@@ -39,7 +39,8 @@ export default function FPSControls(props: FPSControlsProps) {
       if (event.code === 'Escape' && document.pointerLockElement === document.body) {
         props.setPaused(true)
         document.exitPointerLock()
-      } else if (event.code === 'KeyU') {
+      }
+      else if (event.code === 'KeyR') {
         console.log('Hackermode enabled')
         cylinderBody.position.set(91, 56, 0)
       }
