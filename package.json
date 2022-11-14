@@ -28,7 +28,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.1",
     "react-three-fiber": "^5.3.19",
     "sass": "^1.32.8",
     "three": "^0.126.1",
